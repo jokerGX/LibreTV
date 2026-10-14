@@ -250,22 +250,22 @@
     {
       "name": "360资源（原站）",
       "url": "https://360zy.com/api.php/provide/vod",
-      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/config.js"
     },
     {
       "name": "天涯资源",
       "url": "https://tyyszy.com/api.php/provide/vod",
-      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/config.js"
     },
     {
       "name": "黑木耳",
       "url": "https://json.heimuer.xyz/api.php/provide/vod",
-      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+      "discoveredAt": "https://github.com/kelegele/libretv/blob/main/js/config.js"
     },
     {
       "name": "非凡（旧接口）",
       "url": "http://ffzy5.tv/api.php/provide/vod",
-      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+      "discoveredAt": "https://github.com/kelegele/libretv/blob/main/js/config.js"
     },
     {
       "name": "开放电影",
