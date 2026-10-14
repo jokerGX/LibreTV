@@ -54,10 +54,12 @@ def cms(url, **params):
     query = urllib.parse.urlencode(params)
     body, final, ms = request(url + ('&' if '?' in url else '?') + query)
     data = json.loads(body.decode('utf-8-sig'))
-    if not isinstance(data, dict) or not isinstance(data.get('list'), list):
+    if not isinstance(data, dict) or 'list' not in data or (data['list'] is not None and not isinstance(data['list'], list)):
         raise ValueError('not an Apple CMS JSON list')
     if data.get('code') not in (None, 1, '1'):
         raise ValueError('CMS error response')
+    if data['list'] is None:
+        data['list'] = []
     return data, ms
 
 
@@ -108,16 +110,24 @@ def probe(source):
         data, ms = cms(source['url'], ac='videolist', pg=1)
         row.update(apiOk=True, apiMs=ms, total=data.get('total'))
         # Common broad keywords cover drama, animation, films and short series.
+        search_errors = []
         for keyword in ('龙', '爱', 'test'):
-            result, ms = cms(source['url'], ac='videolist', wd=keyword, pg=1)
+            try:
+                result, ms = cms(source['url'], ac='videolist', wd=keyword, pg=1)
+            except Exception as exc:
+                search_errors.append(str(exc))
+                continue
             matches = [v for v in result['list'] if isinstance(v, dict) and keyword.lower() in str(v.get('vod_name', '')).lower() and v.get('vod_id') is not None]
             if matches:
                 row.update(searchOk=True, keyword=keyword, searchMs=ms, searchCount=len(matches))
                 break
         if not row['searchOk']:
-            raise ValueError('no relevant search results')
+            raise ValueError('no relevant search results: ' + '; '.join(search_errors))
         sample_errors = []
-        for sample in matches[:2]:
+        # Include recent entries so stale episodes in a search result do not
+        # incorrectly disqualify an otherwise usable catalogue.
+        samples = matches[:2] + [v for v in data['list'][:2] if isinstance(v, dict) and v.get('vod_id') is not None]
+        for sample in samples:
             try:
                 detail, _ = cms(source['url'], ac='videolist', ids=sample['vod_id'])
                 items = [v for v in detail['list'] if isinstance(v, dict) and str(v.get('vod_id')) == str(sample['vod_id'])]
@@ -151,11 +161,15 @@ def main():
     sources = [{k: r[k] for k in ('name', 'url', 'detail') if k in r} for r in working]
     report = {'checkedAt': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'location': 'GitHub Actions ubuntu-latest; deployment-network results may differ', 'tested': len(rows), 'apiPassed': sum(r['apiOk'] for r in rows), 'searchPassed': sum(r['searchOk'] for r in rows), 'playbackPassed': len(sources), 'results': rows}
     subscription = {'name': 'LibreTV 实测点播源', 'version': 2, 'sources': sources}
+    api_sources = [{k: r[k] for k in ('name', 'url', 'detail') if k in r} for r in rows if r['searchOk'] and r['detailOk']]
+    api_subscription = {'name': 'LibreTV 搜索详情通过（播放需部署端复测）', 'version': 2, 'sources': api_sources}
     output.mkdir(parents=True, exist_ok=True)
     (output / 'source-health.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
     (output / 'verified-sources.json').write_text(json.dumps(subscription, ensure_ascii=False, indent=2) + '\n')
+    (output / 'api-sources.json').write_text(json.dumps(api_subscription, ensure_ascii=False, indent=2) + '\n')
     print('SOURCE_REPORT ' + json.dumps(report, ensure_ascii=False), flush=True)
     print('VERIFIED_SOURCES ' + json.dumps(subscription, ensure_ascii=False), flush=True)
+    print('API_SOURCES ' + json.dumps(api_subscription, ensure_ascii=False), flush=True)
     if not sources:
         raise SystemExit('No source passed playback checks; existing defaults must be preserved.')
 
