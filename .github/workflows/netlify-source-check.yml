@@ -13,6 +13,9 @@ permissions:
 
 jobs:
   public-status:
+    if: ${{ vars.NETLIFY_SITE_URL != '' }}
+    env:
+      NETLIFY_SITE_URL: ${{ vars.NETLIFY_SITE_URL }}
     runs-on: ubuntu-latest
     timeout-minutes: 6
     steps:
@@ -22,9 +25,9 @@ jobs:
       - name: Wait for Netlify to serve the source snapshot
         run: |
           python3 - <<'PY'
-          import json, time, urllib.request
+          import json, os, time, urllib.request
           expected = {s['url'] for s in json.load(open('public/verified-sources.json'))['sources']}
-          url = 'https://jokergxtv.netlify.app/api/status'
+          url = os.environ['NETLIFY_SITE_URL'].rstrip('/') + '/api/status'
           for attempt in range(24):
               try:
                   req = urllib.request.Request(url, headers={'Cache-Control': 'no-cache'})

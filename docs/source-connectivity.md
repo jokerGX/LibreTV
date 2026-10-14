@@ -17,7 +17,7 @@
 
 上述播放检测在 GitHub Actions Ubuntu（centralus）运行，不保证所有影片、集数、浏览器解码及所有地区均可播放。
 
-已通过公开状态接口确认 https://jokergxtv.netlify.app 使用本 fork，并下发之前的17个默认源。站点有密码保护，本次没有使用登录凭证，因此没有从Netlify受保护的搜索/播放代理接口发起检测。更新main后，Netlify source deployment check工作流会核对线上默认源是否与本次提交一致；它验证部署结果，不代替播放检测。
+已通过用户提供站点的公开状态接口确认它使用本 fork，并下发之前的17个默认源。站点有密码保护，本次没有使用登录凭证，因此没有从Netlify受保护的搜索/播放代理接口发起检测。可选：在 GitHub 仓库 Settings → Secrets and variables → Actions → Variables 配置 `NETLIFY_SITE_URL` 为站点根地址，Netlify source deployment check工作流即可核对线上默认源是否与提交一致。未配置时部署状态检测跳过，不影响应用部署或接口检测。站点地址不写入仓库；部署检测不代替播放检测。
 
 ## Netlify 使用
 

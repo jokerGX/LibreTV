@@ -17,14 +17,17 @@ permissions:
 
 jobs:
   deployment-status:
+    if: ${{ vars.NETLIFY_SITE_URL != '' }}
+    env:
+      NETLIFY_SITE_URL: ${{ vars.NETLIFY_SITE_URL }}
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
       - name: Inspect Netlify public status
         run: |
           python3 - <<'PY'
-          import json, urllib.request
-          url = 'https://jokergxtv.netlify.app/api/status'
+          import json, os, urllib.request
+          url = os.environ['NETLIFY_SITE_URL'].rstrip('/') + '/api/status'
           with urllib.request.urlopen(url, timeout=20) as response:
               data = json.load(response)
           print('NETLIFY_STATUS', json.dumps({'version': data.get('version'), 'passwordRequired': data.get('passwordRequired'), 'sourceCount': len(data.get('defaultSources', [])), 'sources': [{'name': s['name'], 'url': s['url']} for s in data.get('defaultSources', [])]}))
