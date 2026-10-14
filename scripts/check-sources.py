@@ -127,6 +127,8 @@ def probe(source):
         # Include recent entries so stale episodes in a search result do not
         # incorrectly disqualify an otherwise usable catalogue.
         samples = matches[:2] + [v for v in data['list'][:2] if isinstance(v, dict) and v.get('vod_id') is not None]
+        samples = list({str(s['vod_id']): s for s in samples}.values())
+        passed_samples = []
         for sample in samples:
             try:
                 detail, _ = cms(source['url'], ac='videolist', ids=sample['vod_id'])
@@ -137,12 +139,17 @@ def probe(source):
                 if not urls or '.m3u8' not in urls[0]:
                     raise ValueError('no compatible HLS episode')
                 row.update(detailOk=True, sampleId=str(sample['vod_id']), sampleTitle=str(sample.get('vod_name', '')))
-                row.update(hls(urls[0]), playbackOk=True)
-                break
+                evidence = hls(urls[0])
+                passed_samples.append(dict(evidence, sampleId=str(sample['vod_id']), sampleTitle=str(sample.get('vod_name', ''))))
+                row.update(evidence)
+                if len(passed_samples) >= 2:
+                    break
             except Exception as exc:
                 sample_errors.append(str(exc))
+        row['playbackSamples'] = passed_samples
+        row['playbackOk'] = len(passed_samples) >= 2
         if not row['playbackOk']:
-            raise ValueError('; '.join(sample_errors))
+            raise ValueError('fewer than two playable titles: ' + '; '.join(sample_errors))
     except Exception as exc:
         row['error'] = str(exc)
     row['elapsedMs'] = round((time.monotonic() - started) * 1000)

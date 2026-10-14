@@ -16,6 +16,19 @@ permissions:
   contents: read
 
 jobs:
+  deployment-status:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Inspect Netlify public status
+        run: |
+          python3 - <<'PY'
+          import json, urllib.request
+          url = 'https://jokergxtv.netlify.app/api/status'
+          with urllib.request.urlopen(url, timeout=20) as response:
+              data = json.load(response)
+          print('NETLIFY_STATUS', json.dumps({'version': data.get('version'), 'passwordRequired': data.get('passwordRequired'), 'sourceCount': len(data.get('defaultSources', [])), 'sources': [{'name': s['name'], 'url': s['url']} for s in data.get('defaultSources', [])]}))
+          PY
   probe:
     runs-on: ubuntu-latest
     timeout-minutes: 15
