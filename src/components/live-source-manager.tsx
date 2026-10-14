@@ -32,6 +32,7 @@ interface LiveRow {
   preset: boolean;
   lastSync?: number;
   fromSubscriptions: string[];
+  isAdult?: boolean;
 }
 
 export function LiveSourceManager() {
@@ -51,6 +52,7 @@ export function LiveSourceManager() {
       epgUrl: s.epg,
       preset: true,
       fromSubscriptions: [],
+      isAdult: s.isAdult,
     }));
     const subs: LiveRow[] = store.liveSubscriptions.map((s) => ({
       url: s.url,
@@ -59,6 +61,7 @@ export function LiveSourceManager() {
       preset: false,
       lastSync: s.lastSync,
       fromSubscriptions: s.fromSubscriptions,
+      isAdult: s.isAdult,
     }));
     const all = [...preset, ...subs];
     const q = query.trim().toLowerCase();
@@ -79,7 +82,8 @@ export function LiveSourceManager() {
     window.open(api.liveExportUrl(url), '_blank', 'noopener');
   };
 
-  const allEnabled = rows.length > 0 && rows.every((r) => store.liveSelectedUrls.includes(r.url));
+  const yellowFilter = store.yellowFilter;
+  const allEnabled = rows.length > 0 && rows.every((r) => store.liveSelectedUrls.includes(r.url) || (r.isAdult && yellowFilter));
   const toggleAll = () => {
     // 只翻转状态与目标不一致的源，一次批量 set 完成（逐条 toggle 会触发 O(n) 次持久化）
     const targets = rows
@@ -183,6 +187,7 @@ export function LiveSourceManager() {
               {rows.map((row) => {
                 const enabled = store.liveSelectedUrls.includes(row.url);
                 const fromSubscription = row.fromSubscriptions.length > 0;
+                const adultBlocked = !!row.isAdult && yellowFilter;
                 return (
                   <li
                     key={row.url}
@@ -197,13 +202,21 @@ export function LiveSourceManager() {
                         type="checkbox"
                         className="h-4 w-4 accent-accent shrink-0"
                         checked={enabled}
+                        disabled={adultBlocked && !enabled}
                         onChange={() => useAppStore.getState().toggleLiveSelected(row.url)}
                         aria-label={enabled ? `停用 ${row.label}` : `启用 ${row.label}`}
-                        title={enabled ? '已启用，取消勾选可停用' : '已停用，勾选后生效'}
+                        title={
+                          adultBlocked
+                            ? '成人内容过滤开启中，需先关闭过滤才能启用此源'
+                            : enabled
+                              ? '已启用，取消勾选可停用'
+                              : '已停用，勾选后生效'
+                        }
                       />
                       <div className="flex-1 min-w-0">
                         <div className="text-sm font-medium text-content truncate">
                           {row.label}
+                          {row.isAdult && <span className="text-pink-400 text-xs ml-1">(18+)</span>}
                           {row.preset && (
                             <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded bg-chip text-faint align-middle">
                               部署者预置

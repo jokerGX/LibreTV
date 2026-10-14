@@ -10,10 +10,11 @@ describe('默认点播源与部署者覆盖', () => {
   it('未配置时直接下发实测源，URL key 在重复读取时保持稳定', () => {
     vi.stubEnv('DEFAULT_SOURCES', '');
     const sources = getEnvSources();
-    expect(sources.length).toBe(49);
+    expect(sources.length).toBe(68);
     expect(new Set(sources.map((s) => s.url))).toEqual(new Set(searchSources.sources.map((s) => s.url)));
     expect(sources.slice(0, verifiedSources.sources.length).every((s) => getPlaybackStatus(s.url) === 'verified')).toBe(true);
-    expect(sources.filter((s) => getPlaybackStatus(s.url) === 'pending')).toHaveLength(24);
+    expect(sources.filter((s) => getPlaybackStatus(s.url) === 'pending')).toHaveLength(25);
+    expect(sources.filter((s) => s.isAdult)).toHaveLength(19);
     expect(new Set(sources.map((s) => s.url)).size).toBe(sources.length);
     expect(sources.every((s) => s.key.startsWith('builtin_') && /^https?:\/\//.test(s.url))).toBe(true);
     expect(getEnvSources()).toEqual(sources);

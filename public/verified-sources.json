@@ -115,6 +115,114 @@
       "name": "如意资源",
       "url": "https://cj.rycjapi.com/api.php/provide/vod",
       "detail": "https://www.ryzyw.com"
+    },
+    {
+      "name": "麻豆视频",
+      "url": "https://91md.me/api.php/provide/vod",
+      "detail": "https://91md.me",
+      "isAdult": true
+    },
+    {
+      "name": "番号资源",
+      "url": "http://fhapi9.com/api.php/provide/vod",
+      "detail": "http://fhapi9.com",
+      "isAdult": true
+    },
+    {
+      "name": "小鸡资源",
+      "url": "https://api.xiaojizy.live/provide/vod",
+      "detail": "https://api.xiaojizy.live",
+      "isAdult": true
+    },
+    {
+      "name": "jkun资源",
+      "url": "https://jkunzyapi.com/api.php/provide/vod",
+      "detail": "https://jkunzyapi.com",
+      "isAdult": true
+    },
+    {
+      "name": "乐播资源",
+      "url": "https://lbapi9.com/api.php/provide/vod",
+      "detail": "https://lbapi9.com",
+      "isAdult": true
+    },
+    {
+      "name": "奶香资源",
+      "url": "https://naixxzy.com/api.php/provide/vod",
+      "detail": "https://naixxzy.com",
+      "isAdult": true
+    },
+    {
+      "name": "森林资源",
+      "url": "https://beiyong.slapibf.com/api.php/provide/vod",
+      "detail": "https://beiyong.slapibf.com",
+      "isAdult": true
+    },
+    {
+      "name": "森林资源（备用）",
+      "url": "https://slapibf.com/api.php/provide/vod",
+      "detail": "https://slapibf.com",
+      "isAdult": true
+    },
+    {
+      "name": "辣椒资源",
+      "url": "https://apilj.com/api.php/provide/vod",
+      "detail": "https://apilj.com",
+      "isAdult": true
+    },
+    {
+      "name": "豆豆资源",
+      "url": "https://api.douapi.cc/api.php/provide/vod",
+      "detail": "https://api.douapi.cc",
+      "isAdult": true
+    },
+    {
+      "name": "滴滴资源",
+      "url": "https://api.ddapi.cc/api.php/provide/vod",
+      "detail": "https://api.ddapi.cc",
+      "isAdult": true
+    },
+    {
+      "name": "桃花资源",
+      "url": "https://thzy1.me/api.php/provide/vod",
+      "detail": "https://thzy1.me",
+      "isAdult": true
+    },
+    {
+      "name": "精品资源",
+      "url": "https://www.jingpinx.com/api.php/provide/vod",
+      "detail": "https://www.jingpinx.com",
+      "isAdult": true
+    },
+    {
+      "name": "155资源",
+      "url": "https://155api.com/api.php/provide/vod",
+      "detail": "https://155api.com",
+      "isAdult": true
+    },
+    {
+      "name": "玉兔资源",
+      "url": "https://apiyutu.com/api.php/provide/vod",
+      "detail": "https://apiyutu.com",
+      "isAdult": true
+    },
+    {
+      "name": "LSB资源",
+      "url": "https://apilsbzy1.com/api.php/provide/vod",
+      "detail": "https://apilsbzy1.com",
+      "isAdult": true
+    },
+    {
+      "name": "黄色仓库",
+      "url": "https://hsckzy.xyz/api.php/provide/vod",
+      "detail": "https://hsckzy.xyz",
+      "isAdult": true
+    },
+    {
+      "name": "鲨鱼资源",
+      "url": "https://shayuapi.com/api.php/provide/vod",
+      "detail": "https://shayuapi.com",
+      "isAdult": true
     }
   ]
 }

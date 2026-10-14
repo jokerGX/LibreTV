@@ -1,10 +1,10 @@
 # 点播源接入与连通性报告
 
-本 fork 现默认启用 **49 个搜索和详情检查通过的接口**，其中 **25 个播放已验证、24 个播放待验证**。接口按地址去重，搜索并行且逐源显示结果，不等待较慢的接口。
+本 fork 现默认启用 **68 个搜索和详情检查通过的接口**，其中 **43 个播放已验证、25 个播放待验证**。另有 1 份内置直播列表，含 24 个已测通频道。带过滤标记的源在对应开关开启时不会自动勾选。接口按地址去重，搜索并行且逐源显示结果，不等待较慢的接口。
 
 设置 → 源管理 → 点播源和搜索结果展开后的来源按钮均显示播放状态。展开后已验证来源排前，同等级保持结果返回顺序；只有待验证来源返回时也立即显示。新增来源返回不会收起已展开的影片。标签表示历史抽查结果，不承诺所有影片均能播放。
 
-部分入口是同一资源站的备用域名或M3U8入口，接口数量不等于独立片库数量。下面25个列表专指播放验证快照；以前移出的暴风、艾旦和爱奇艺现在作为待验证源参与搜索。
+部分入口是同一资源站的备用域名或M3U8入口，接口数量不等于独立片库数量。下面表格是早前的播放验证快照，其后新增的接口见两份 JSON。以前移出的暴风、艾旦和爱奇艺现在作为待验证源参与搜索。
 
 ## 实测结果
 
@@ -29,8 +29,9 @@
 
 未配置或清空 `DEFAULT_SOURCES` 时使用内置列表；非空变量完全覆盖内置列表，显式 `[]` 关闭默认源。源使用稳定URL标识，排序变化不会改变其标识。
 
-- 播放已验证订阅（25个）：`https://raw.githubusercontent.com/jokerGX/LibreTV/main/public/verified-sources.json`
-- 全部搜索接口订阅（49个，包含24个播放待验证源，内置默认已覆盖）：`https://raw.githubusercontent.com/jokerGX/LibreTV/main/public/api-sources.json`
+- 播放已验证订阅（43个）：`https://raw.githubusercontent.com/jokerGX/LibreTV/main/public/verified-sources.json`
+- 全部搜索接口订阅（68个，包含25个播放待验证源，内置默认已覆盖）：`https://raw.githubusercontent.com/jokerGX/LibreTV/main/public/api-sources.json`
+- 内置直播列表（24个频道）：站点内 `/ext-live.m3u`
 
 两份列表有重叠，选择一份即可，均为有日期的实测快照。设置 → 源管理 → 测试全部可以核对Netlify服务器的API搜索响应，但不检查播放分片。
 
@@ -65,6 +66,8 @@ Docker需从本fork源码构建：`docker compose up -d --build`。
 | 猫眼资源 | https://api.maoyanapi.top/api.php/provide/vod |
 | 吉吉资源 | https://caiji.jjzyapi.com/api.php/provide/vod |
 | 如意资源 | https://cj.rycjapi.com/api.php/provide/vod |
+
+其后补入的接口与这一节使用同一套连通性标准（搜索、详情，播放已验证的再抽查两部影片的分片），地址都在上面两份 JSON 里，这里不再单列。内置直播列表为 `/ext-live.m3u`。
 
 ## 复测与来源
 

@@ -77,6 +77,8 @@ export interface LiveSubscription {
   epg?: string;
   /** 上次同步成功时间 */
   lastSync?: number;
+  /** 成人内容标记。过滤开启时不自动启用、不可勾选 */
+  isAdult?: boolean;
   /**
    * 引用该直播源的订阅 URL 列表（多归属：同一 M3U 可被多个订阅共享引用）。
    * 空数组表示用户手动添加的源；删除某个订阅时只移除自己的归属，
@@ -257,7 +259,23 @@ interface AppState extends AppSettings {
 
 /** 全部可用直播源（预置 + 用户订阅）合并视图 */
 export function allLiveSources(state: Pick<AppState, 'liveEnvSources' | 'liveSubscriptions'>): LiveSourceConfig[] {
-  return [...state.liveEnvSources, ...state.liveSubscriptions.map((s) => ({ key: `sub_${s.url}`, name: s.name || s.url, url: s.url, epg: s.epg }))];
+  return [
+    ...state.liveEnvSources,
+    ...state.liveSubscriptions.map((s) => ({
+      key: `sub_${s.url}`,
+      name: s.name || s.url,
+      url: s.url,
+      epg: s.epg,
+      isAdult: s.isAdult,
+    })),
+  ];
+}
+
+function isAdultLiveUrl(state: Pick<AppState, 'liveEnvSources' | 'liveSubscriptions'>, url: string): boolean {
+  return (
+    state.liveEnvSources.some((s) => s.url === url && s.isAdult) ||
+    state.liveSubscriptions.some((s) => s.url === url && s.isAdult)
+  );
 }
 
 function nextCustomKey(apiList: SourceConfig[]): string {
@@ -479,7 +497,13 @@ export const useAppStore = create<AppState>()(
         for (const s of list) {
           const current = byUrl.get(s.url);
           if (!current) {
-            nextByUrl.set(s.url, { url: s.url, name: s.name, epg: s.epg, fromSubscriptions: [subUrl] });
+            nextByUrl.set(s.url, {
+              url: s.url,
+              name: s.name,
+              epg: s.epg,
+              isAdult: s.isAdult === true || undefined,
+              fromSubscriptions: [subUrl],
+            });
           } else if (current.fromSubscriptions.length === 0 || current.fromSubscriptions.includes(subUrl)) {
             nextByUrl.set(s.url, current);
           } else {
@@ -504,7 +528,10 @@ export const useAppStore = create<AppState>()(
         }
 
         // 仅首次出现的源自动启用；已存在的维持用户勾选（停用不会被同步反复勾回）
-        const freshUrls = [...nextByUrl.values()].filter((s) => !byUrl.has(s.url)).map((s) => s.url);
+        // 过滤开关开启时，带标记的直播源不自动启用
+        const freshUrls = [...nextByUrl.values()]
+          .filter((s) => !byUrl.has(s.url) && (!s.isAdult || !get().yellowFilter))
+          .map((s) => s.url);
 
         set({
           liveSubscriptions: [...nextByUrl.values()],
@@ -522,8 +549,11 @@ export const useAppStore = create<AppState>()(
 
       setLiveEnvSources: (list) => {
         // 预置直播源首次出现时自动启用；用户此后停用不会被反复勾回
+        // 过滤开关开启时，带标记的直播源不自动启用
         const seen = new Set(get().liveEnvKeysSeen);
-        const freshUrls = list.filter((s) => !seen.has(s.key)).map((s) => s.url);
+        const freshUrls = list
+          .filter((s) => !seen.has(s.key) && (!s.isAdult || !get().yellowFilter))
+          .map((s) => s.url);
         set({
           liveEnvSources: list,
           liveEnvKeysSeen: [...get().liveEnvKeysSeen, ...list.map((s) => s.key)],
@@ -574,11 +604,13 @@ export const useAppStore = create<AppState>()(
 
       toggleLiveSelected: (url) => {
         const cur = get().liveSelectedUrls;
-        set({
-          liveSelectedUrls: cur.includes(url)
-            ? cur.filter((u) => u !== url)
-            : [...cur, url],
-        });
+        if (cur.includes(url)) {
+          set({ liveSelectedUrls: cur.filter((u) => u !== url) });
+          return;
+        }
+        // 过滤开关开启时不允许勾选带标记的直播源
+        if (get().yellowFilter && isAdultLiveUrl(get(), url)) return;
+        set({ liveSelectedUrls: [...cur, url] });
       },
 
       // 批量启停：一次 set 替代 N 次逐条 toggle（每条都会触发一次完整 persist 序列化）
@@ -586,7 +618,11 @@ export const useAppStore = create<AppState>()(
         const cur = get().liveSelectedUrls;
         let next = cur;
         for (const url of urls) {
-          next = next.includes(url) ? next.filter((u) => u !== url) : [...next, url];
+          if (next.includes(url)) {
+            next = next.filter((u) => u !== url);
+          } else if (!(get().yellowFilter && isAdultLiveUrl(get(), url))) {
+            next = [...next, url];
+          }
         }
         set({ liveSelectedUrls: next });
       },
@@ -720,11 +756,15 @@ export const useAppStore = create<AppState>()(
               .filter((s) => s.isAdult)
               .map((s) => s.key)
           );
+          const adultLiveUrls = new Set(
+            [...get().liveEnvSources, ...get().liveSubscriptions].filter((s) => s.isAdult).map((s) => s.url)
+          );
           set({
             ...patch,
             ...(touched ? { recommendSourceTouched: true } : null),
             ...(imageTouched ? { imageProxyModeTouched: true } : null),
             selectedKeys: get().selectedKeys.filter((k) => !adultKeys.has(k)),
+            liveSelectedUrls: get().liveSelectedUrls.filter((u) => !adultLiveUrls.has(u)),
           });
           return;
         }

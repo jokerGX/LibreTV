@@ -118,6 +118,8 @@ export interface LiveSourceConfig {
   url: string;
   /** 可选：XMLTV 节目单地址 */
   epg?: string;
+  /** 成人内容标记。过滤开启时不可勾选、不自动启用 */
+  isAdult?: boolean;
 }
 
 /** 单个直播频道（由 M3U 解析得到） */
