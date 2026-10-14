@@ -4,9 +4,12 @@ import { getEnvLiveSources } from './env-live-sources';
 afterEach(() => vi.unstubAllEnvs());
 
 describe('默认直播源', () => {
-  it('未配置时不下发直播源', () => {
+  it('未配置时下发内置直播列表，重复读取 key 不变', () => {
     vi.stubEnv('DEFAULT_LIVE_SOURCES', '');
-    expect(getEnvLiveSources()).toEqual([]);
+    const list = getEnvLiveSources();
+    expect(list.map((s) => s.name)).toEqual(['央视频道', '卫视频道']);
+    expect(list.every((s) => s.url.startsWith('https://') && s.key.startsWith('builtinlive_') && s.isAdult === false)).toBe(true);
+    expect(getEnvLiveSources()).toEqual(list);
   });
 
   it('显式空数组也不下发', () => {

@@ -123,6 +123,45 @@ describe('POST /api/search', () => {
     expect(lines[lines.length - 1].type).toBe('done');
   });
 
+  it('adultMode=only 保留带标记源的结果和其它源的伦理分类', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (input: RequestInfo | URL) => {
+        const url = String(input);
+        if (url.includes('cms-adult')) {
+          return new Response(
+            cmsList([
+              { vod_id: 1, vod_name: '普通片名', type_name: '国产视频' },
+              { vod_id: 2, vod_name: '分类片名', type_name: '伦理片' },
+            ]),
+            { status: 200, headers: { 'content-type': 'application/json' } }
+          );
+        }
+        if (url.includes('cms-plain')) {
+          return new Response(
+            cmsList([
+              { vod_id: 9, vod_name: '剧情样本', type_name: '剧情片' },
+              { vod_id: 8, vod_name: '伦理样本', type_name: '伦理片' },
+            ]),
+            { status: 200, headers: { 'content-type': 'application/json' } }
+          );
+        }
+        return new Response('not found', { status: 404 });
+      })
+    );
+    const sources = [
+      { key: 'ad', name: '标记源', url: 'https://cms-adult.example/api.php', isAdult: true },
+      { key: 'pl', name: '普通源', url: 'https://cms-plain.example/api.php' },
+    ];
+    const onlyRes = await POST(makeRequest({ wd: '范围检测', adultMode: 'only', sources }));
+    const only = (await onlyRes.json()) as { list: Array<{ name: string }> };
+    expect(only.list.map((i) => i.name).sort()).toEqual(['伦理样本', '分类片名', '普通片名']);
+
+    const excludeRes = await POST(makeRequest({ wd: '范围检测', adultMode: 'exclude', sources }));
+    const excluded = (await excludeRes.json()) as { list: Array<{ name: string }> };
+    expect(excluded.list.map((i) => i.name)).toEqual(['剧情样本']);
+  });
+
   it('未登录返回 401，未配置密码返回 503', async () => {
     vi.stubGlobal('fetch', vi.fn());
     const saved = process.env.PASSWORD;

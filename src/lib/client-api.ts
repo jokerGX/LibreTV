@@ -1,6 +1,6 @@
 'use client';
 
-import type { SearchResponse, SearchStreamEvent, SourceSearchOutcome, VideoDetail, DoubanResponse, BangumiCalendarResponse, AuthStatusResponse, SourceConfig, SearchResultItem, LivePlaylistResponse, LiveEpgResponse, SourceListPayload } from './types';
+import type { AdultMode, SearchResponse, SearchStreamEvent, SourceSearchOutcome, VideoDetail, DoubanResponse, BangumiCalendarResponse, AuthStatusResponse, SourceConfig, SearchResultItem, LivePlaylistResponse, LiveEpgResponse, SourceListPayload } from './types';
 
 /**
  * 客户端 API 封装。401 时触发全局事件打开登录框，
@@ -132,7 +132,7 @@ export const api = {
   search: async (
     wd: string,
     sources: SourceConfig[],
-    filterAdult: boolean,
+    adultMode: AdultMode,
     opts?: { signal?: AbortSignal; onSource?: (outcome: SourceSearchOutcome) => void }
   ): Promise<SearchResponse> => {
     const signal = opts?.signal;
@@ -141,11 +141,11 @@ export const api = {
       return request<SearchResponse>('/api/search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ wd, sources, filterAdult }),
+        body: JSON.stringify({ wd, sources, adultMode }),
         signal,
       });
     }
-    return searchStream(wd, sources, filterAdult, onSource, signal);
+    return searchStream(wd, sources, adultMode, onSource, signal);
   },
 
   detail: (id: string, source: SourceConfig, signal?: AbortSignal) => {
@@ -281,14 +281,14 @@ export interface SearchFailure {
 async function searchStream(
   wd: string,
   sources: SourceConfig[],
-  filterAdult: boolean,
+  adultMode: AdultMode,
   onSource: (outcome: SourceSearchOutcome) => void,
   signal?: AbortSignal
 ): Promise<SearchResponse> {
   const res = await fetch('/api/search?stream=1', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ wd, sources, filterAdult }),
+    body: JSON.stringify({ wd, sources, adultMode }),
     signal,
   });
     throwForAuthStatus(res);

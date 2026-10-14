@@ -1,16 +1,17 @@
 import type { LiveSourceConfig } from './types';
+import bundledLive from '../../public/live-sources.json';
 
 /**
  * 部署者通过 DEFAULT_LIVE_SOURCES 环境变量预置的直播源（M3U 订阅）。
- * 未配置时不下发。显式设置 [] 同样为空。
+ * 未配置时下发内置列表。显式设置 [] 则不下发。
  * 格式为 JSON 数组：[{"name":"源名","url":"https://.../list.m3u","epg":"https://.../epg.xml.gz","isAdult":false}]
  * 解析失败时告警并整体忽略，不影响站点运行。
  */
 export function getEnvLiveSources(): LiveSourceConfig[] {
   const raw = process.env.DEFAULT_LIVE_SOURCES;
-  if (!raw || !raw.trim()) return [];
+  const useBundled = !raw || !raw.trim();
   try {
-    const parsed: unknown = JSON.parse(raw);
+    const parsed: unknown = useBundled ? bundledLive.sources : JSON.parse(raw!);
     if (!Array.isArray(parsed)) throw new Error('必须是 JSON 数组');
     const list: LiveSourceConfig[] = parsed.map((item, i) => {
       if (typeof item !== 'object' || item === null) {
@@ -23,10 +24,11 @@ export function getEnvLiveSources(): LiveSourceConfig[] {
       if (typeof url !== 'string' || !/^https?:\/\//.test(url.trim())) {
         throw new Error(`第 ${i + 1} 项的 url 必须以 http:// 或 https:// 开头`);
       }
+      const normalized = url.trim().replace(/\/+$/, '');
       return {
-        key: `envlive_${i}`,
+        key: useBundled ? `builtinlive_${encodeURIComponent(normalized)}` : `envlive_${i}`,
         name: name.trim(),
-        url: url.trim().replace(/\/+$/, ''),
+        url: normalized,
         epg: typeof epg === 'string' && epg.trim() ? epg.trim() : undefined,
         isAdult: isAdult === true,
       };

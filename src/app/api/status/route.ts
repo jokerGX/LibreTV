@@ -19,7 +19,7 @@ export async function GET(req: Request) {
     version: process.env.APP_VERSION || 'dev',
     // 部署者通过 DEFAULT_SOURCES 预置的采集站
     defaultSources: getEnvSources(),
-    // 部署者通过 DEFAULT_LIVE_SOURCES 预置的直播源（M3U 订阅）
+    // 部署者通过 DEFAULT_LIVE_SOURCES 预置的直播源；未配置时为内置列表
     defaultLiveSources: getEnvLiveSources(),
     // 部署者通过 DEFAULT_SUBSCRIPTIONS 预置的 SourceList 订阅链接
     defaultSubscriptions: getEnvSubscriptions(),

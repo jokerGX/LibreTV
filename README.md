@@ -1,6 +1,6 @@
 # LibreTV
 
-> 本 fork 默认下发 68 个搜索和详情检查通过的点播接口，其中 43 个播放已验证、25 个播放待验证。部分源带过滤标记，对应开关开启时不会自动勾选。搜索边返回边显示，展开来源时已验证接口优先，未配置 `DEFAULT_SOURCES` 时自动加载。完整清单、检测结果与部署方式见 [接口接入报告](docs/source-connectivity.md)。
+> 本 fork 默认下发 68 个搜索和详情检查通过的点播接口，其中 43 个播放已验证、25 个播放待验证。部分源带过滤标记，内容范围为「不含 18+」时不会自动勾选。搜索可以按「不含 18+」「仅 18+」或「全部」切换；「仅 18+」包含带标记的源，以及其它源里的伦理片等分类。未配置 `DEFAULT_LIVE_SOURCES` 时另下发央视、卫视两份直播列表。搜索边返回边显示，展开来源时已验证接口优先，未配置 `DEFAULT_SOURCES` 时自动加载。完整清单、检测结果与部署方式见 [接口接入报告](docs/source-connectivity.md)。
 
 LibreTV Next.js 迁移版：免费在线视频聚合搜索与观看平台。基于 Next.js 15（App Router）+ TypeScript + Tailwind CSS，播放内核为 ArtPlayer + hls.js，支持亮暗双主题。
 
@@ -100,7 +100,7 @@ PASSWORD=your-password npm start   # 监听 8080
 | `FALLBACK_CORS_PROXY` | 否 | 豆瓣推荐数据直连被拒时降级使用的 CORS 代理地址 |
 | `COOKIE_SECURE` | 否 | 显式覆盖会话 cookie 的 `Secure` 标记（`true` / `false`）；默认按请求协议自动推导。反向代理未正确传递 `x-forwarded-proto` 导致 HTTPS 下登录失效时，设为 `true` 可解 |
 | `60S_API_BASE` | 否 | 影视榜单推荐源（60s API）实例地址，默认 `https://60s.crystelf.top`；有限流，高频使用可[自部署](https://github.com/vikiboss/60s) |
-| `DEFAULT_LIVE_SOURCES` | 否 | 预置直播源（M3U 订阅），JSON 数组：`[{"name":"源名","url":"https://.../list.m3u","epg":"https://.../epg.xml.gz"}]`，`epg` 为可选的 XMLTV 节目单地址 |
+| `DEFAULT_LIVE_SOURCES` | 否 | 预置直播源（M3U 订阅），JSON 数组：`[{"name":"源名","url":"https://.../list.m3u","epg":"https://.../epg.xml.gz"}]`，`epg` 为可选的 XMLTV 节目单地址。未设置时使用内置的央视、卫视列表；设为 `[]` 则不下发 |
 | `DEFAULT_SUBSCRIPTIONS` | 否 | 预置数据源订阅（LibreTV-SourceList JSON 链接，也接受 TVBOX 配置地址），JSON 数组：`["https://.../sources.json", {"url":"https://.../list.json","name":"名称"}]`。首次访问自动导入点播源与直播源，之后每 24h 静默刷新；用户删除后不再自动加回 |
 | `DEFAULT_RECOMMEND_SOURCE` | 否 | 首页推荐数据源的默认值（`douban` / `bangumi` / `hot-list`，出厂默认 `hot-list`）；仅对未在设置中主动选择过的用户生效，用户的选择始终优先 |
 | `LIVE_ALLOW_PRIVATE` | 否 | 设为 `1` 时允许直播流代理访问内网/保留地址（自建 IPTV 场景），默认关闭以维持 SSRF 防护 |
@@ -164,7 +164,7 @@ PASSWORD=your-password npm start   # 监听 8080
 | `sources[].name` | 项 | string | 否 | 源显示名；缺省时使用 URL 主机名 |
 | `sources[].url` | 项 | string | **是** | Apple CMS 采集接口地址（公网 http/https），结尾 `/` 自动去除 |
 | `sources[].detail` | 项 | string | 否 | 详情页根地址，用于列表接口拿不到播放地址、需要爬详情页提取 m3u8 的源 |
-| `sources[].isAdult` | 项 | boolean | 否 | 成人内容标记，默认 `false`。标记为 `true` 的源名称旁显示 **(18+)** 徽章；设置中的「成人内容过滤」开启（默认开启）时该源不可勾选、不参与搜索，需先关闭过滤才能启用 |
+| `sources[].isAdult` | 项 | boolean | 否 | 18+ 标记，默认 `false`。标记为 `true` 的源名称旁显示 **(18+)** 徽章。设置里的「内容范围」默认是「不含 18+」：这类源不会自动勾选，也不能手动勾选。改成「仅 18+」时会自动勾上；改成「全部」后可以手动勾选 |
 | `liveSources` | 顶层 | array | 否 | **直播源**数组（M3U 播放列表），最多 50 个，超出部分截断 |
 | `liveSources[].name` | 项 | string | 否 | 源显示名；缺省时使用 URL 主机名 |
 | `liveSources[].url` | 项 | string | **是** | M3U 播放列表地址（http/https） |

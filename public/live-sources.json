@@ -1,0 +1,14 @@
+{
+  "name": "LibreTV 直播列表",
+  "version": 1,
+  "sources": [
+    {
+      "name": "央视频道",
+      "url": "https://raw.githubusercontent.com/best-fan/iptv-sources/main/cn_cctv.m3u8"
+    },
+    {
+      "name": "卫视频道",
+      "url": "https://raw.githubusercontent.com/best-fan/iptv-sources/main/cn_province.m3u8"
+    }
+  ]
+}

@@ -21,7 +21,7 @@ import { loadCacheSettings, saveCacheSettings, getCacheSummary, clearVideoCache,
 import { EmptyState, Spinner } from './states';
 import { useSourceProbe } from './use-source-probe';
 import { allLiveSources, isSourceDisabled, keyBelongsToSubscription, resolveSource, subKeyPrefix, useAppStore } from '@/lib/store';
-import type { SourceConfig } from '@/lib/types';
+import type { AdultMode, SourceConfig } from '@/lib/types';
 import { useToast } from './toast';
 import { formatRelativeTime, hostnameOf, validateSourceUrl, cn } from '@/lib/utils';
 import { exportConfig, importConfig } from '@/lib/db';
@@ -258,7 +258,7 @@ function VodSourcesPanel() {
     const eligible = filtered.filter((s) => !(s.isAdult && store.yellowFilter)).map((s) => s.key);
     const skipped = filtered.length - eligible.length;
     store.setSelectedKeys([...new Set([...store.selectedKeys, ...eligible])]);
-    if (skipped > 0) toast(`已启用 ${eligible.length} 个；${skipped} 个成人源因过滤开启被跳过`, 'info');
+    if (skipped > 0) toast(`已启用 ${eligible.length} 个；${skipped} 个 18+ 源因当前范围被跳过`, 'info');
   };
 
   const runAll = async () => {
@@ -479,7 +479,7 @@ function VodSourceRow({
           checked={selected}
           onChange={() => useAppStore.getState().toggleSourceSelected(api.key)}
           disabled={adultBlocked}
-          title={adultBlocked ? '成人内容过滤开启中，需先关闭过滤才能启用此源' : undefined}
+          title={adultBlocked ? '内容范围是「不含 18+」时无法启用此源' : undefined}
           aria-label={`选择 ${api.name}`}
         />
         <div className="flex-1 min-w-0">
@@ -699,11 +699,22 @@ function HomePanel() {
     <section>
       <SectionTitle title="首页与内容过滤" />
       <div className="space-y-3">
-        <ToggleRow
-          label="成人内容过滤"
-          description="过滤“伦理片”等分类的结果"
-          checked={store.yellowFilter}
-          onChange={(v) => store.updateSettings({ yellowFilter: v })}
+        <SelectRow
+          label="内容范围"
+          value={store.adultMode}
+          onChange={(v) => store.updateSettings({ adultMode: v as AdultMode })}
+          description={
+            store.adultMode === 'only'
+              ? '只保留 18+ 源，以及其它源里的伦理片等分类'
+              : store.adultMode === 'all'
+                ? '已勾选的源都参与搜索，不过滤分类'
+                : '不搜索 18+ 源，并去掉伦理片等分类'
+          }
+          options={[
+            { value: 'exclude', label: '不含 18+' },
+            { value: 'only', label: '仅 18+' },
+            { value: 'all', label: '全部' },
+          ]}
         />
         <ToggleRow
           label="首页推荐"
@@ -1258,7 +1269,7 @@ function SourceForm({
           checked={isAdult}
           onChange={(e) => setIsAdult(e.target.checked)}
         />
-        标记为成人内容源（受成人过滤控制）
+        标记为 18+ 源（受内容范围控制）
       </label>
       <div className="flex gap-2 justify-end">
         <button className="btn-ghost btn-sm" onClick={onCancel}>

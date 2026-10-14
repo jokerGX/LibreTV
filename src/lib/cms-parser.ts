@@ -1,4 +1,4 @@
-import type { SearchResultItem, VideoDetail } from './types';
+import type { AdultMode, SearchResultItem, VideoDetail } from './types';
 
 /**
  * Apple CMS（苹果CMS）资源站响应解析
@@ -162,9 +162,32 @@ export function isAdultContent(typeName: string | undefined): boolean {
   return ADULT_KEYWORDS.some((k) => typeName.includes(k));
 }
 
-export function filterAdultResults<T extends { typeName?: string }>(items: T[], enabled: boolean): T[] {
-  if (!enabled) return items;
-  return items.filter((item) => !isAdultContent(item.typeName));
+/** 带标记的源整库算 18+；其它源里命中分类关键词（含伦理片）的条目也算 */
+export function resultIsAdult(item: { typeName?: string; isAdult?: boolean }): boolean {
+  return item.isAdult === true || isAdultContent(item.typeName);
+}
+
+export function resolveAdultMode(input: { adultMode?: unknown; filterAdult?: unknown }): AdultMode {
+  if (input.adultMode === 'exclude' || input.adultMode === 'only' || input.adultMode === 'all') {
+    return input.adultMode;
+  }
+  return input.filterAdult === false ? 'all' : 'exclude';
+}
+
+export function filterByAdultMode<T extends { typeName?: string; isAdult?: boolean }>(
+  items: T[],
+  mode: AdultMode
+): T[] {
+  if (mode === 'all') return items;
+  if (mode === 'only') return items.filter((item) => resultIsAdult(item));
+  return items.filter((item) => !resultIsAdult(item));
+}
+
+export function filterAdultResults<T extends { typeName?: string; isAdult?: boolean }>(
+  items: T[],
+  enabled: boolean
+): T[] {
+  return filterByAdultMode(items, enabled ? 'exclude' : 'all');
 }
 
 /**
