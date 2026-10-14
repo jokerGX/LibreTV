@@ -71,11 +71,32 @@ describe('checkPassword', () => {
 
   it('未配置 PASSWORD 时一律拒绝', () => {
     const saved = process.env.PASSWORD;
+    const savedLower = process.env.password;
     delete process.env.PASSWORD;
+    delete process.env.password;
     try {
       expect(checkPassword(TEST_PASSWORD)).toBe(false);
     } finally {
       process.env.PASSWORD = saved;
+      if (savedLower !== undefined) process.env.password = savedLower;
+    }
+  });
+
+  it('支持小写 password 环境变量作为回退', () => {
+    const saved = process.env.PASSWORD;
+    const savedLower = process.env.password;
+    delete process.env.PASSWORD;
+    process.env.password = 'lowercase-secret';
+    try {
+      expect(checkPassword('lowercase-secret')).toBe(true);
+      expect(checkPassword('wrong')).toBe(false);
+    } finally {
+      process.env.PASSWORD = saved;
+      if (savedLower !== undefined) {
+        process.env.password = savedLower;
+      } else {
+        delete process.env.password;
+      }
     }
   });
 });
