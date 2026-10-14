@@ -1,47 +1,22 @@
 {
-  "checkedAt": "2026-10-14T12:50:53.821463+00:00",
+  "checkedAt": "2026-10-14T12:55:48.678487+00:00",
   "location": "GitHub Actions ubuntu-latest; deployment-network results may differ",
   "tested": 238,
   "apiPassed": 67,
   "searchPassed": 51,
-  "playbackPassed": 26,
+  "playbackPassed": 31,
   "results": [
     {
       "name": "爱奇艺",
       "url": "https://iqiyizyapi.com/api.php/provide/vod",
       "detail": "https://iqiyizyapi.com",
       "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json",
-      "apiOk": true,
-      "searchOk": true,
-      "detailOk": true,
-      "playbackOk": true,
-      "apiMs": 1394,
-      "total": 69216,
-      "keyword": "龙",
-      "searchMs": 2462,
-      "searchCount": 20,
-      "sampleId": "86487",
-      "sampleTitle": "七龙珠超：比鲁斯",
-      "playlistUrl": "https://play.ly166.com:65/videos/20261012/6acc5656339f684cac405907/c3990f/index.m3u8",
-      "segmentUrl": "https://play.ly166.com:65/videos/20261012/6acc5656339f684cac405907/c3990f/indexBgGa6eEfCdAbB38C.jpeg",
-      "segmentBytes": 1024,
-      "playbackSamples": [
-        {
-          "playlistUrl": "https://play.ly166.com:65/videos/20261009/6ac863d05c14f34ca51cccd1/c7e489/index.m3u8",
-          "segmentUrl": "https://play.ly166.com:65/videos/20261009/6ac863d05c14f34ca51cccd1/c7e489/indexFb4b3ad77Ga2D0eA.jpeg",
-          "segmentBytes": 1024,
-          "sampleId": "86319",
-          "sampleTitle": "潜龙无意惹红妆"
-        },
-        {
-          "playlistUrl": "https://play.ly166.com:65/videos/20261012/6acc5656339f684cac405907/c3990f/index.m3u8",
-          "segmentUrl": "https://play.ly166.com:65/videos/20261012/6acc5656339f684cac405907/c3990f/indexBgGa6eEfCdAbB38C.jpeg",
-          "segmentBytes": 1024,
-          "sampleId": "86487",
-          "sampleTitle": "七龙珠超：比鲁斯"
-        }
-      ],
-      "elapsedMs": 12758
+      "apiOk": false,
+      "searchOk": false,
+      "detailOk": false,
+      "playbackOk": false,
+      "error": "HTTP Error 503: Service Temporarily Unavailable",
+      "elapsedMs": 959
     },
     {
       "name": "豆瓣资源",
@@ -52,10 +27,10 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "apiMs": 618,
-      "total": 147405,
+      "apiMs": 811,
+      "total": 147406,
       "error": "no relevant search results: not an Apple CMS JSON list; not an Apple CMS JSON list; not an Apple CMS JSON list",
-      "elapsedMs": 3890
+      "elapsedMs": 3553
     },
     {
       "name": "茅台资源",
@@ -66,10 +41,10 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "apiMs": 1606,
+      "apiMs": 2116,
       "total": 150181,
       "error": "no relevant search results: not an Apple CMS JSON list; not an Apple CMS JSON list; not an Apple CMS JSON list",
-      "elapsedMs": 5043
+      "elapsedMs": 6262
     },
     {
       "name": "卧龙资源",
@@ -81,7 +56,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 1116
+      "elapsedMs": 1388
     },
     {
       "name": "iKun资源",
@@ -92,10 +67,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 331,
+      "apiMs": 126,
       "total": 67315,
       "keyword": "龙",
-      "searchMs": 205,
+      "searchMs": 132,
       "searchCount": 20,
       "sampleId": "70560",
       "sampleTitle": "七龙珠超：比鲁斯",
@@ -118,7 +93,7 @@
           "sampleTitle": "七龙珠超：比鲁斯"
         }
       ],
-      "elapsedMs": 3656
+      "elapsedMs": 1907
     },
     {
       "name": "电影天堂",
@@ -129,16 +104,16 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": false,
-      "apiMs": 914,
+      "apiMs": 91,
       "total": 84515,
       "keyword": "龙",
-      "searchMs": 357,
+      "searchMs": 284,
       "searchCount": 20,
       "sampleId": "84819",
       "sampleTitle": "璀璨之城粤语",
       "playbackSamples": [],
       "error": "fewer than two playable titles: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 12869
+      "elapsedMs": 9382
     },
     {
       "name": "猫眼资源",
@@ -149,33 +124,33 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 1692,
+      "apiMs": 1420,
       "total": 34253,
       "keyword": "龙",
-      "searchMs": 1348,
+      "searchMs": 1034,
       "searchCount": 30,
-      "sampleId": "157935",
-      "sampleTitle": "进化中文版",
-      "playlistUrl": "https://play.maoyanplay.top/20260918/7rihXuRs/1475kb/hls/index.m3u8",
-      "segmentUrl": "https://play.maoyanplay.top/20260918/7rihXuRs/1475kb/hls/2XfGejmg.ts",
+      "sampleId": "157653",
+      "sampleTitle": "财神窦占龙",
+      "playlistUrl": "https://play.maoyanplay.top/20260816/vCsJBmcg/2792kb/hls/index.m3u8",
+      "segmentUrl": "https://play.maoyanplay.top/20260816/vCsJBmcg/2792kb/hls/sHEh0eH0.ts",
       "segmentBytes": 1024,
       "playbackSamples": [
+        {
+          "playlistUrl": "https://play.maoyanplay.top/20261012/5ii2eLFU/2321kb/hls/index.m3u8",
+          "segmentUrl": "https://play.maoyanplay.top/20261012/5ii2eLFU/2321kb/hls/dO6W33Ly.ts",
+          "segmentBytes": 1024,
+          "sampleId": "158151",
+          "sampleTitle": "七龙珠超：比鲁斯"
+        },
         {
           "playlistUrl": "https://play.maoyanplay.top/20260816/vCsJBmcg/2792kb/hls/index.m3u8",
           "segmentUrl": "https://play.maoyanplay.top/20260816/vCsJBmcg/2792kb/hls/sHEh0eH0.ts",
           "segmentBytes": 1024,
           "sampleId": "157653",
           "sampleTitle": "财神窦占龙"
-        },
-        {
-          "playlistUrl": "https://play.maoyanplay.top/20260918/7rihXuRs/1475kb/hls/index.m3u8",
-          "segmentUrl": "https://play.maoyanplay.top/20260918/7rihXuRs/1475kb/hls/2XfGejmg.ts",
-          "segmentBytes": 1024,
-          "sampleId": "157935",
-          "sampleTitle": "进化中文版"
         }
       ],
-      "elapsedMs": 20366
+      "elapsedMs": 7069
     },
     {
       "name": "量子资源",
@@ -185,17 +160,34 @@
       "apiOk": true,
       "searchOk": true,
       "detailOk": true,
-      "playbackOk": false,
-      "apiMs": 338,
+      "playbackOk": true,
+      "apiMs": 51,
       "total": 158962,
       "keyword": "龙",
-      "searchMs": 351,
+      "searchMs": 133,
       "searchCount": 20,
-      "sampleId": "161143",
-      "sampleTitle": "璀璨之城国语",
-      "playbackSamples": [],
-      "error": "fewer than two playable titles: HTTP Error 404: Not Found; HTTP Error 404: Not Found; HTTP Error 404: Not Found; HTTP Error 404: Not Found",
-      "elapsedMs": 7010
+      "sampleId": "32467",
+      "sampleTitle": "龙八",
+      "playlistUrl": "https://v.lzcdn24.com/20250602/31389_6e57a1cf/2000k/hls/mixed.m3u8",
+      "segmentUrl": "https://v.lzcdn24.com/20250602/31389_6e57a1cf/2000k/hls/1ad7f688477000000.ts",
+      "segmentBytes": 1024,
+      "playbackSamples": [
+        {
+          "playlistUrl": "https://v.cdnlz21.com/20250227/6292_45057277/2000k/hls/mixed.m3u8",
+          "segmentUrl": "https://v.cdnlz21.com/20250227/6292_45057277/2000k/hls/1deda63f07b000000.ts",
+          "segmentBytes": 1024,
+          "sampleId": "102603",
+          "sampleTitle": "龙塔罗"
+        },
+        {
+          "playlistUrl": "https://v.lzcdn24.com/20250602/31389_6e57a1cf/2000k/hls/mixed.m3u8",
+          "segmentUrl": "https://v.lzcdn24.com/20250602/31389_6e57a1cf/2000k/hls/1ad7f688477000000.ts",
+          "segmentBytes": 1024,
+          "sampleId": "32467",
+          "sampleTitle": "龙八"
+        }
+      ],
+      "elapsedMs": 10731
     },
     {
       "name": "360 资源",
@@ -206,10 +198,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 415,
+      "apiMs": 213,
       "total": 72893,
       "keyword": "龙",
-      "searchMs": 568,
+      "searchMs": 373,
       "searchCount": 20,
       "sampleId": "107521",
       "sampleTitle": "龙王归处皆安宁    AI",
@@ -232,7 +224,7 @@
           "sampleTitle": "龙王归处皆安宁    AI"
         }
       ],
-      "elapsedMs": 12338
+      "elapsedMs": 5736
     },
     {
       "name": "极速资源",
@@ -243,16 +235,16 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": false,
-      "apiMs": 110,
+      "apiMs": 35,
       "total": 113733,
       "keyword": "龙",
-      "searchMs": 310,
+      "searchMs": 283,
       "searchCount": 20,
       "sampleId": "153336",
       "sampleTitle": "妈妈发疯了",
       "playbackSamples": [],
       "error": "fewer than two playable titles: private/reserved address rejected; private/reserved address rejected; private/reserved address rejected; private/reserved address rejected",
-      "elapsedMs": 1771
+      "elapsedMs": 1684
     },
     {
       "name": "魔都资源",
@@ -263,10 +255,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 758,
+      "apiMs": 922,
       "total": 90262,
       "keyword": "龙",
-      "searchMs": 583,
+      "searchMs": 193,
       "searchCount": 20,
       "sampleId": "89733",
       "sampleTitle": "龙图录：绣衣定乾坤",
@@ -289,7 +281,7 @@
           "sampleTitle": "龙图录：绣衣定乾坤"
         }
       ],
-      "elapsedMs": 4715
+      "elapsedMs": 2840
     },
     {
       "name": "非凡资源",
@@ -300,10 +292,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": false,
-      "apiMs": 1461,
+      "apiMs": 303,
       "total": 98572,
       "keyword": "龙",
-      "searchMs": 678,
+      "searchMs": 564,
       "searchCount": 20,
       "sampleId": "99803",
       "sampleTitle": "璀璨之城粤语",
@@ -320,7 +312,7 @@
         }
       ],
       "error": "fewer than two playable titles: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 17067
+      "elapsedMs": 10500
     },
     {
       "name": "暴风资源",
@@ -330,28 +322,34 @@
       "apiOk": true,
       "searchOk": true,
       "detailOk": true,
-      "playbackOk": false,
-      "apiMs": 323,
+      "playbackOk": true,
+      "apiMs": 63,
       "total": 164969,
       "keyword": "龙",
-      "searchMs": 475,
+      "searchMs": 149,
       "searchCount": 20,
-      "sampleId": "22133",
-      "sampleTitle": "美凤有约",
-      "playlistUrl": "https://v.fengbao14.com/video/yishengsuoai/17c3ee993b50/index.m3u8",
-      "segmentUrl": "https://v.fengbao14.com/video/yishengsuoai/17c3ee993b50/0000000.ts",
+      "sampleId": "149073",
+      "sampleTitle": "龙之家族 第三季",
+      "playlistUrl": "https://bfeng10.com/video/longzhijiazudisanji/015a0499e84c/index.m3u8",
+      "segmentUrl": "https://bfeng10.com/video/longzhijiazudisanji/015a0499e84c/0000000.ts",
       "segmentBytes": 1024,
       "playbackSamples": [
         {
-          "playlistUrl": "https://v.fengbao14.com/video/yishengsuoai/17c3ee993b50/index.m3u8",
-          "segmentUrl": "https://v.fengbao14.com/video/yishengsuoai/17c3ee993b50/0000000.ts",
+          "playlistUrl": "https://bfeng10.com/video/longzhixinlingjietanfangji/623fa6cdfa43/index.m3u8",
+          "segmentUrl": "https://bfeng10.com/video/longzhixinlingjietanfangji/623fa6cdfa43/0000000.ts",
           "segmentBytes": 1024,
-          "sampleId": "168142",
-          "sampleTitle": "一生所爱"
+          "sampleId": "149079",
+          "sampleTitle": "龙之心：灵界探访记"
+        },
+        {
+          "playlistUrl": "https://bfeng10.com/video/longzhijiazudisanji/015a0499e84c/index.m3u8",
+          "segmentUrl": "https://bfeng10.com/video/longzhijiazudisanji/015a0499e84c/0000000.ts",
+          "segmentBytes": 1024,
+          "sampleId": "149073",
+          "sampleTitle": "龙之家族 第三季"
         }
       ],
-      "error": "fewer than two playable titles: HTTP Error 404: Not Found; HTTP Error 404: Not Found; 'ascii' codec can't encode character '\\u671f' in position 33: ordinal not in range(128)",
-      "elapsedMs": 8515
+      "elapsedMs": 4426
     },
     {
       "name": "最大资源",
@@ -362,16 +360,16 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": false,
-      "apiMs": 390,
-      "total": 124296,
+      "apiMs": 46,
+      "total": 124294,
       "keyword": "龙",
-      "searchMs": 407,
+      "searchMs": 358,
       "searchCount": 20,
-      "sampleId": "131112",
-      "sampleTitle": "爱情盲选：荷兰篇",
+      "sampleId": "73739",
+      "sampleTitle": "全民星攻略",
       "playbackSamples": [],
       "error": "fewer than two playable titles: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 5114
+      "elapsedMs": 1866
     },
     {
       "name": "无尽资源",
@@ -382,16 +380,16 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": false,
-      "apiMs": 235,
+      "apiMs": 51,
       "total": 122461,
       "keyword": "龙",
-      "searchMs": 226,
+      "searchMs": 91,
       "searchCount": 20,
       "sampleId": "172565",
       "sampleTitle": "伟大的长征",
       "playbackSamples": [],
       "error": "fewer than two playable titles: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 5664
+      "elapsedMs": 958
     },
     {
       "name": "新浪资源",
@@ -402,10 +400,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 573,
+      "apiMs": 194,
       "total": 115430,
       "keyword": "龙",
-      "searchMs": 502,
+      "searchMs": 563,
       "searchCount": 20,
       "sampleId": "237013",
       "sampleTitle": "魔晶猎人之龙曜之战",
@@ -428,7 +426,7 @@
           "sampleTitle": "魔晶猎人之龙曜之战"
         }
       ],
-      "elapsedMs": 3271
+      "elapsedMs": 2343
     },
     {
       "name": "旺旺资源",
@@ -440,7 +438,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 844
+      "elapsedMs": 507
     },
     {
       "name": "速播资源",
@@ -451,10 +449,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 654,
+      "apiMs": 363,
       "total": 115323,
       "keyword": "龙",
-      "searchMs": 444,
+      "searchMs": 290,
       "searchCount": 20,
       "sampleId": "161541",
       "sampleTitle": "魔晶猎人之龙曜之战",
@@ -477,7 +475,7 @@
           "sampleTitle": "魔晶猎人之龙曜之战"
         }
       ],
-      "elapsedMs": 3467
+      "elapsedMs": 2177
     },
     {
       "name": "金鹰点播",
@@ -488,10 +486,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 783,
+      "apiMs": 143,
       "total": 115410,
       "keyword": "龙",
-      "searchMs": 574,
+      "searchMs": 312,
       "searchCount": 20,
       "sampleId": "161063",
       "sampleTitle": "魔晶猎人之龙曜之战",
@@ -514,7 +512,7 @@
           "sampleTitle": "魔晶猎人之龙曜之战"
         }
       ],
-      "elapsedMs": 9363
+      "elapsedMs": 5639
     },
     {
       "name": "飘零资源",
@@ -526,7 +524,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "HTTP Error 403: Forbidden",
-      "elapsedMs": 238
+      "elapsedMs": 64
     },
     {
       "name": "U酷影视",
@@ -537,16 +535,16 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": false,
-      "apiMs": 317,
+      "apiMs": 62,
       "total": 59166,
       "keyword": "龙",
-      "searchMs": 173,
+      "searchMs": 61,
       "searchCount": 20,
       "sampleId": "72215",
       "sampleTitle": "灵境行者",
       "playbackSamples": [],
       "error": "fewer than two playable titles: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 7162
+      "elapsedMs": 6002
     },
     {
       "name": "光速资源",
@@ -557,10 +555,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 176,
+      "apiMs": 49,
       "total": 115399,
       "keyword": "龙",
-      "searchMs": 262,
+      "searchMs": 408,
       "searchCount": 20,
       "sampleId": "221107",
       "sampleTitle": "魔晶猎人之龙曜之战",
@@ -583,7 +581,7 @@
           "sampleTitle": "魔晶猎人之龙曜之战"
         }
       ],
-      "elapsedMs": 3404
+      "elapsedMs": 2518
     },
     {
       "name": "红牛资源",
@@ -594,10 +592,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 161,
+      "apiMs": 21,
       "total": 114807,
       "keyword": "龙",
-      "searchMs": 475,
+      "searchMs": 304,
       "searchCount": 20,
       "sampleId": "196982",
       "sampleTitle": "魔晶猎人之龙曜之战",
@@ -620,7 +618,7 @@
           "sampleTitle": "魔晶猎人之龙曜之战"
         }
       ],
-      "elapsedMs": 9478
+      "elapsedMs": 9049
     },
     {
       "name": "魔都动漫",
@@ -631,10 +629,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 636,
+      "apiMs": 428,
       "total": 90262,
       "keyword": "龙",
-      "searchMs": 362,
+      "searchMs": 193,
       "searchCount": 20,
       "sampleId": "89733",
       "sampleTitle": "龙图录：绣衣定乾坤",
@@ -657,7 +655,7 @@
           "sampleTitle": "龙图录：绣衣定乾坤"
         }
       ],
-      "elapsedMs": 3802
+      "elapsedMs": 1653
     },
     {
       "name": "如意资源",
@@ -668,10 +666,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 2251,
+      "apiMs": 2110,
       "total": 87672,
       "keyword": "龙",
-      "searchMs": 2828,
+      "searchMs": 1901,
       "searchCount": 20,
       "sampleId": "88302",
       "sampleTitle": "龙医出山，从离婚后开始崛起",
@@ -694,7 +692,7 @@
           "sampleTitle": "龙医出山，从离婚后开始崛起"
         }
       ],
-      "elapsedMs": 17145
+      "elapsedMs": 12687
     },
     {
       "name": "豪华资源",
@@ -705,10 +703,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 370,
+      "apiMs": 182,
       "total": 114492,
       "keyword": "龙",
-      "searchMs": 455,
+      "searchMs": 314,
       "searchCount": 20,
       "sampleId": "181021",
       "sampleTitle": "魔晶猎人之龙曜之战",
@@ -731,7 +729,7 @@
           "sampleTitle": "魔晶猎人之龙曜之战"
         }
       ],
-      "elapsedMs": 3897
+      "elapsedMs": 2819
     },
     {
       "name": "百度云zy",
@@ -741,17 +739,34 @@
       "apiOk": true,
       "searchOk": true,
       "detailOk": true,
-      "playbackOk": false,
-      "apiMs": 237,
+      "playbackOk": true,
+      "apiMs": 101,
       "total": 49062,
       "keyword": "龙",
-      "searchMs": 369,
+      "searchMs": 223,
       "searchCount": 20,
-      "sampleId": "51773",
-      "sampleTitle": "假装在月亮心口撒个娇",
-      "playbackSamples": [],
-      "error": "fewer than two playable titles: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 6904
+      "sampleId": "51128",
+      "sampleTitle": "卧龙",
+      "playlistUrl": "https://b3.bdzybf22.com/videos/202609/15/6aa832f11163f3d4efbe6f93/e96c29/index.m3u8",
+      "segmentUrl": "https://tsb3.bdzybf22.com/videos/202609/15/6aa832f11163f3d4efbe6f93/e96c29/index0.jpeg",
+      "segmentBytes": 1024,
+      "playbackSamples": [
+        {
+          "playlistUrl": "https://b3.bdzybf22.com/videos/202610/12/6acc4fd513f8cfc0dd5c81a8/d59b5a/index.m3u8",
+          "segmentUrl": "https://tsb3.bdzybf22.com/videos/202610/12/6acc4fd513f8cfc0dd5c81a8/d59b5a/index0.jpeg",
+          "segmentBytes": 1024,
+          "sampleId": "51729",
+          "sampleTitle": "七龙珠超：比鲁斯"
+        },
+        {
+          "playlistUrl": "https://b3.bdzybf22.com/videos/202609/15/6aa832f11163f3d4efbe6f93/e96c29/index.m3u8",
+          "segmentUrl": "https://tsb3.bdzybf22.com/videos/202609/15/6aa832f11163f3d4efbe6f93/e96c29/index0.jpeg",
+          "segmentBytes": 1024,
+          "sampleId": "51128",
+          "sampleTitle": "卧龙"
+        }
+      ],
+      "elapsedMs": 1502
     },
     {
       "name": "艾旦影视",
@@ -761,18 +776,25 @@
       "apiOk": true,
       "searchOk": true,
       "detailOk": true,
-      "playbackOk": false,
-      "apiMs": 2633,
+      "playbackOk": true,
+      "apiMs": 1185,
       "total": 185308,
       "keyword": "龙",
-      "searchMs": 660,
+      "searchMs": 457,
       "searchCount": 20,
-      "sampleId": "207721",
-      "sampleTitle": "美人余",
+      "sampleId": "14182",
+      "sampleTitle": "魔晶猎人之龙曜之战",
       "playlistUrl": "https://hd.kuktxu.com/play/eXD7L8ge/index.m3u8",
       "segmentUrl": "https://c.baisiweiting.com:18443/hls/955/20261013/4524072/plist0.ts",
       "segmentBytes": 1024,
       "playbackSamples": [
+        {
+          "playlistUrl": "https://v.lzcdn27.com/20261009/18575_42eb76c2/2000k/hls/index.m3u8",
+          "segmentUrl": "https://v.lzcdn27.com/20261009/18575_42eb76c2/2000k/hls/66f8ecb1c2c000000.ts",
+          "segmentBytes": 1024,
+          "sampleId": "207726",
+          "sampleTitle": "潜龙无意惹红妆"
+        },
         {
           "playlistUrl": "https://hd.kuktxu.com/play/eXD7L8ge/index.m3u8",
           "segmentUrl": "https://c.baisiweiting.com:18443/hls/955/20261013/4524072/plist0.ts",
@@ -781,8 +803,7 @@
           "sampleTitle": "魔晶猎人之龙曜之战"
         }
       ],
-      "error": "fewer than two playable titles: HTTP Error 404: Not Found; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 10923
+      "elapsedMs": 6580
     },
     {
       "name": "山海资源",
@@ -794,7 +815,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -3] Temporary failure in name resolution",
-      "elapsedMs": 10015
+      "elapsedMs": 10014
     },
     {
       "name": "金蝉影视",
@@ -806,7 +827,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 117
+      "elapsedMs": 16
     },
     {
       "name": "量子影视",
@@ -816,17 +837,34 @@
       "apiOk": true,
       "searchOk": true,
       "detailOk": true,
-      "playbackOk": false,
-      "apiMs": 277,
+      "playbackOk": true,
+      "apiMs": 35,
       "total": 158962,
       "keyword": "龙",
-      "searchMs": 335,
+      "searchMs": 87,
       "searchCount": 20,
-      "sampleId": "161143",
-      "sampleTitle": "璀璨之城国语",
-      "playbackSamples": [],
-      "error": "fewer than two playable titles: HTTP Error 404: Not Found; HTTP Error 404: Not Found; HTTP Error 404: Not Found; HTTP Error 404: Not Found",
-      "elapsedMs": 5136
+      "sampleId": "32467",
+      "sampleTitle": "龙八",
+      "playlistUrl": "https://v.lzcdn24.com/20250602/31389_6e57a1cf/2000k/hls/mixed.m3u8",
+      "segmentUrl": "https://v.lzcdn24.com/20250602/31389_6e57a1cf/2000k/hls/1ad7f688477000000.ts",
+      "segmentBytes": 1024,
+      "playbackSamples": [
+        {
+          "playlistUrl": "https://v.cdnlz21.com/20250227/6292_45057277/2000k/hls/mixed.m3u8",
+          "segmentUrl": "https://v.cdnlz21.com/20250227/6292_45057277/2000k/hls/1deda63f07b000000.ts",
+          "segmentBytes": 1024,
+          "sampleId": "102603",
+          "sampleTitle": "龙塔罗"
+        },
+        {
+          "playlistUrl": "https://v.lzcdn24.com/20250602/31389_6e57a1cf/2000k/hls/mixed.m3u8",
+          "segmentUrl": "https://v.lzcdn24.com/20250602/31389_6e57a1cf/2000k/hls/1ad7f688477000000.ts",
+          "segmentBytes": 1024,
+          "sampleId": "32467",
+          "sampleTitle": "龙八"
+        }
+      ],
+      "elapsedMs": 5265
     },
     {
       "name": "最大点播",
@@ -837,16 +875,16 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": false,
-      "apiMs": 487,
+      "apiMs": 306,
       "total": 124296,
       "keyword": "龙",
-      "searchMs": 464,
+      "searchMs": 352,
       "searchCount": 20,
       "sampleId": "131112",
       "sampleTitle": "爱情盲选：荷兰篇",
       "playbackSamples": [],
       "error": "fewer than two playable titles: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 4182
+      "elapsedMs": 1708
     },
     {
       "name": "无尽影视",
@@ -857,16 +895,16 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": false,
-      "apiMs": 368,
+      "apiMs": 60,
       "total": 122461,
       "keyword": "龙",
-      "searchMs": 421,
+      "searchMs": 117,
       "searchCount": 20,
       "sampleId": "172565",
       "sampleTitle": "伟大的长征",
       "playbackSamples": [],
       "error": "fewer than two playable titles: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 5512
+      "elapsedMs": 1458
     },
     {
       "name": "旺旺短剧",
@@ -878,7 +916,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 716
+      "elapsedMs": 407
     },
     {
       "name": "优质资源",
@@ -889,16 +927,16 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": false,
-      "apiMs": 1375,
+      "apiMs": 179,
       "total": 106312,
       "keyword": "龙",
-      "searchMs": 1726,
+      "searchMs": 126,
       "searchCount": 20,
       "sampleId": "107174",
       "sampleTitle": "熊洞",
       "playbackSamples": [],
       "error": "fewer than two playable titles: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 13815
+      "elapsedMs": 8667
     },
     {
       "name": "虎牙资源",
@@ -909,10 +947,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 560,
+      "apiMs": 54,
       "total": 114345,
       "keyword": "龙",
-      "searchMs": 517,
+      "searchMs": 331,
       "searchCount": 20,
       "sampleId": "159217",
       "sampleTitle": "魔晶猎人之龙曜之战",
@@ -935,7 +973,7 @@
           "sampleTitle": "魔晶猎人之龙曜之战"
         }
       ],
-      "elapsedMs": 4715
+      "elapsedMs": 2597
     },
     {
       "name": "鸭鸭资源",
@@ -946,10 +984,10 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "apiMs": 434,
+      "apiMs": 162,
       "total": 122343,
       "error": "no relevant search results: Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 1198
+      "elapsedMs": 651
     },
     {
       "name": "索尼资源",
@@ -960,10 +998,10 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "apiMs": 363,
+      "apiMs": 253,
       "total": 146592,
       "error": "no relevant search results: Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 1547
+      "elapsedMs": 941
     },
     {
       "name": "快车资源",
@@ -974,10 +1012,10 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "apiMs": 361,
+      "apiMs": 141,
       "total": 125696,
       "error": "no relevant search results: Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 1187
+      "elapsedMs": 555
     },
     {
       "name": "闪电资源",
@@ -988,10 +1026,10 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "apiMs": 490,
+      "apiMs": 228,
       "total": 124086,
       "error": "no relevant search results: Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 1402
+      "elapsedMs": 818
     },
     {
       "name": "樱花资源",
@@ -1002,10 +1040,10 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "apiMs": 483,
+      "apiMs": 517,
       "total": 104033,
       "error": "no relevant search results: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 1937
+      "elapsedMs": 1804
     },
     {
       "name": "360资源（原站）",
@@ -1015,10 +1053,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 1425,
+      "apiMs": 1389,
       "total": 72948,
       "keyword": "龙",
-      "searchMs": 1298,
+      "searchMs": 1111,
       "searchCount": 20,
       "sampleId": "107486",
       "sampleTitle": "蒸蒸日上",
@@ -1027,11 +1065,11 @@
       "segmentBytes": 1024,
       "playbackSamples": [
         {
-          "playlistUrl": "https://vod1.maowushi.com/20261009/Wnu8patt/1155kb/hls/index.m3u8",
-          "segmentUrl": "https://vod1.maowushi.com/20261009/Wnu8patt/1155kb/hls/11Rjyhle.ts",
+          "playlistUrl": "https://vod1.maowushi.com/20261012/ec5JL2v1/2403kb/hls/index.m3u8",
+          "segmentUrl": "https://vod1.maowushi.com/20261012/ec5JL2v1/2403kb/hls/ent3B56t.ts",
           "segmentBytes": 1024,
-          "sampleId": "107404",
-          "sampleTitle": "潜龙无意惹红妆"
+          "sampleId": "107599",
+          "sampleTitle": "七龙珠超：比鲁斯"
         },
         {
           "playlistUrl": "https://vod1.maowushi.com/20261010/F1Xqq0sf/1039kb/hls/index.m3u8",
@@ -1041,7 +1079,7 @@
           "sampleTitle": "蒸蒸日上"
         }
       ],
-      "elapsedMs": 19493
+      "elapsedMs": 18164
     },
     {
       "name": "天涯资源",
@@ -1051,10 +1089,10 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "apiMs": 202,
+      "apiMs": 137,
       "total": 71690,
       "error": "no relevant search results: Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 859
+      "elapsedMs": 523
     },
     {
       "name": "黑木耳",
@@ -1065,7 +1103,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 1023
+      "elapsedMs": 544
     },
     {
       "name": "非凡（旧接口）",
@@ -1075,10 +1113,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": false,
-      "apiMs": 1139,
+      "apiMs": 673,
       "total": 98572,
       "keyword": "龙",
-      "searchMs": 1525,
+      "searchMs": 142,
       "searchCount": 20,
       "sampleId": "99803",
       "sampleTitle": "璀璨之城粤语",
@@ -1095,7 +1133,7 @@
         }
       ],
       "error": "fewer than two playable titles: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 12424
+      "elapsedMs": 8092
     },
     {
       "name": "开放电影",
@@ -1106,7 +1144,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "HTTP Error 404: Not Found",
-      "elapsedMs": 233
+      "elapsedMs": 111
     },
     {
       "name": "优质（旧接口）",
@@ -1117,7 +1155,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 755
+      "elapsedMs": 596
     },
     {
       "name": "39影视",
@@ -1128,7 +1166,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "HTTP Error 523: <none>",
-      "elapsedMs": 2814
+      "elapsedMs": 2974
     },
     {
       "name": "天堂资源",
@@ -1138,8 +1176,8 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "error": "Remote end closed connection without response",
-      "elapsedMs": 1699
+      "error": "Expecting value: line 2 column 1 (char 1)",
+      "elapsedMs": 3991
     },
     {
       "name": "乐活影视",
@@ -1150,7 +1188,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'lehootv.com'. (_ssl.c:1000)>",
-      "elapsedMs": 941
+      "elapsedMs": 1105
     },
     {
       "name": "唐人街",
@@ -1161,7 +1199,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [Errno 111] Connection refused>",
-      "elapsedMs": 112
+      "elapsedMs": 58
     },
     {
       "name": "酷点资源",
@@ -1172,7 +1210,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 106
+      "elapsedMs": 61
     },
     {
       "name": "卧龙（采集站）",
@@ -1183,7 +1221,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 868
+      "elapsedMs": 1334
     },
     {
       "name": "酷点（备用）",
@@ -1194,7 +1232,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'kudian10.com'. (_ssl.c:1000)>",
-      "elapsedMs": 734
+      "elapsedMs": 359
     },
     {
       "name": "影库资源网",
@@ -1205,7 +1243,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 67
+      "elapsedMs": 33
     },
     {
       "name": "快车（旧接口）",
@@ -1216,7 +1254,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)>",
-      "elapsedMs": 212
+      "elapsedMs": 365
     },
     {
       "name": "探探资源",
@@ -1227,7 +1265,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error timed out>",
-      "elapsedMs": 16237
+      "elapsedMs": 26954
     },
     {
       "name": "红牛（备用）",
@@ -1237,10 +1275,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 357,
+      "apiMs": 221,
       "total": 114807,
       "keyword": "龙",
-      "searchMs": 406,
+      "searchMs": 347,
       "searchCount": 20,
       "sampleId": "196982",
       "sampleTitle": "魔晶猎人之龙曜之战",
@@ -1263,7 +1301,7 @@
           "sampleTitle": "魔晶猎人之龙曜之战"
         }
       ],
-      "elapsedMs": 8554
+      "elapsedMs": 5723
     },
     {
       "name": "非凡资源",
@@ -1273,10 +1311,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": false,
-      "apiMs": 883,
+      "apiMs": 96,
       "total": 98571,
       "keyword": "龙",
-      "searchMs": 431,
+      "searchMs": 80,
       "searchCount": 20,
       "sampleId": "99803",
       "sampleTitle": "璀璨之城粤语",
@@ -1293,7 +1331,7 @@
         }
       ],
       "error": "fewer than two playable titles: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 12303
+      "elapsedMs": 6763
     },
     {
       "name": "无水印资源",
@@ -1303,10 +1341,10 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "apiMs": 438,
+      "apiMs": 193,
       "total": 126775,
       "error": "no relevant search results: Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 1196
+      "elapsedMs": 628
     },
     {
       "name": "非凡",
@@ -1316,10 +1354,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": false,
-      "apiMs": 237,
+      "apiMs": 86,
       "total": 98572,
       "keyword": "龙",
-      "searchMs": 352,
+      "searchMs": 105,
       "searchCount": 20,
       "sampleId": "99803",
       "sampleTitle": "璀璨之城粤语",
@@ -1336,7 +1374,7 @@
         }
       ],
       "error": "fewer than two playable titles: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 10002
+      "elapsedMs": 7133
     },
     {
       "name": "横院",
@@ -1346,14 +1384,14 @@
       "searchOk": true,
       "detailOk": false,
       "playbackOk": false,
-      "apiMs": 717,
+      "apiMs": 580,
       "total": 158952,
       "keyword": "龙",
-      "searchMs": 385,
+      "searchMs": 160,
       "searchCount": 20,
       "playbackSamples": [],
       "error": "fewer than two playable titles: no compatible HLS episode; no compatible HLS episode; no compatible HLS episode; no compatible HLS episode",
-      "elapsedMs": 2437
+      "elapsedMs": 1376
     },
     {
       "name": "金鹰资源",
@@ -1363,10 +1401,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 234,
+      "apiMs": 33,
       "total": 115410,
       "keyword": "龙",
-      "searchMs": 287,
+      "searchMs": 132,
       "searchCount": 20,
       "sampleId": "161063",
       "sampleTitle": "魔晶猎人之龙曜之战",
@@ -1389,7 +1427,7 @@
           "sampleTitle": "魔晶猎人之龙曜之战"
         }
       ],
-      "elapsedMs": 7533
+      "elapsedMs": 4517
     },
     {
       "name": "lurenjia",
@@ -1400,7 +1438,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 126
+      "elapsedMs": 17
     },
     {
       "name": "zzdj",
@@ -1411,7 +1449,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 902
+      "elapsedMs": 534
     },
     {
       "name": "csp_非凡资源",
@@ -1421,10 +1459,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": false,
-      "apiMs": 507,
+      "apiMs": 230,
       "total": 98572,
       "keyword": "龙",
-      "searchMs": 1351,
+      "searchMs": 308,
       "searchCount": 20,
       "sampleId": "99803",
       "sampleTitle": "璀璨之城粤语",
@@ -1441,7 +1479,7 @@
         }
       ],
       "error": "fewer than two playable titles: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 14019
+      "elapsedMs": 8829
     },
     {
       "name": "鸡婆",
@@ -1452,7 +1490,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 44
+      "elapsedMs": 14
     },
     {
       "name": "至圣云(官）",
@@ -1463,7 +1501,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 29
+      "elapsedMs": 14
     },
     {
       "name": "享看",
@@ -1474,7 +1512,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 123
+      "elapsedMs": 23
     },
     {
       "name": "天空资源",
@@ -1485,7 +1523,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 544
+      "elapsedMs": 285
     },
     {
       "name": "天空",
@@ -1496,7 +1534,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 517
+      "elapsedMs": 265
     },
     {
       "name": "49zy",
@@ -1507,7 +1545,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [Errno 111] Connection refused>",
-      "elapsedMs": 1807
+      "elapsedMs": 2054
     },
     {
       "name": "快车资源",
@@ -1518,7 +1556,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)>",
-      "elapsedMs": 250
+      "elapsedMs": 240
     },
     {
       "name": "闪电资源",
@@ -1528,10 +1566,10 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "apiMs": 370,
+      "apiMs": 175,
       "total": 124086,
       "error": "no relevant search results: Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 1162
+      "elapsedMs": 666
     },
     {
       "name": "光速",
@@ -1541,10 +1579,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 265,
+      "apiMs": 36,
       "total": 115399,
       "keyword": "龙",
-      "searchMs": 259,
+      "searchMs": 415,
       "searchCount": 20,
       "sampleId": "221107",
       "sampleTitle": "魔晶猎人之龙曜之战",
@@ -1567,7 +1605,7 @@
           "sampleTitle": "魔晶猎人之龙曜之战"
         }
       ],
-      "elapsedMs": 3688
+      "elapsedMs": 2185
     },
     {
       "name": "飞速",
@@ -1578,7 +1616,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 525
+      "elapsedMs": 128
     },
     {
       "name": "快云资源",
@@ -1589,7 +1627,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 151
+      "elapsedMs": 69
     },
     {
       "name": "jszy",
@@ -1599,16 +1637,16 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": false,
-      "apiMs": 458,
+      "apiMs": 349,
       "total": 113733,
       "keyword": "龙",
-      "searchMs": 346,
+      "searchMs": 331,
       "searchCount": 20,
       "sampleId": "153336",
       "sampleTitle": "妈妈发疯了",
       "playbackSamples": [],
       "error": "fewer than two playable titles: private/reserved address rejected; private/reserved address rejected; private/reserved address rejected; private/reserved address rejected",
-      "elapsedMs": 2152
+      "elapsedMs": 1670
     },
     {
       "name": "高清资源网",
@@ -1618,16 +1656,16 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": false,
-      "apiMs": 2233,
+      "apiMs": 1533,
       "total": 106312,
       "keyword": "龙",
-      "searchMs": 402,
+      "searchMs": 143,
       "searchCount": 20,
       "sampleId": "107174",
       "sampleTitle": "熊洞",
       "playbackSamples": [],
       "error": "fewer than two playable titles: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 12476
+      "elapsedMs": 7970
     },
     {
       "name": "搜狐资源",
@@ -1638,7 +1676,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error timed out>",
-      "elapsedMs": 8854
+      "elapsedMs": 8505
     },
     {
       "name": "xml_大漠",
@@ -1649,7 +1687,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [Errno 111] Connection refused>",
-      "elapsedMs": 2791
+      "elapsedMs": 2022
     },
     {
       "name": "xml_轻简",
@@ -1660,7 +1698,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 707
+      "elapsedMs": 421
     },
     {
       "name": "xml_猫放",
@@ -1671,7 +1709,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "not an Apple CMS JSON list",
-      "elapsedMs": 558
+      "elapsedMs": 365
     },
     {
       "name": "八戒资源",
@@ -1682,7 +1720,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 136
+      "elapsedMs": 72
     },
     {
       "name": "映迷",
@@ -1693,7 +1731,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1000)>",
-      "elapsedMs": 1324
+      "elapsedMs": 914
     },
     {
       "name": "魔都资源",
@@ -1703,10 +1741,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 1635,
+      "apiMs": 1081,
       "total": 90262,
       "keyword": "龙",
-      "searchMs": 1305,
+      "searchMs": 1172,
       "searchCount": 20,
       "sampleId": "89733",
       "sampleTitle": "龙图录：绣衣定乾坤",
@@ -1729,7 +1767,7 @@
           "sampleTitle": "龙图录：绣衣定乾坤"
         }
       ],
-      "elapsedMs": 7618
+      "elapsedMs": 5376
     },
     {
       "name": "ikun",
@@ -1739,10 +1777,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 271,
+      "apiMs": 104,
       "total": 67315,
       "keyword": "龙",
-      "searchMs": 303,
+      "searchMs": 91,
       "searchCount": 20,
       "sampleId": "70560",
       "sampleTitle": "七龙珠超：比鲁斯",
@@ -1765,7 +1803,7 @@
           "sampleTitle": "七龙珠超：比鲁斯"
         }
       ],
-      "elapsedMs": 3086
+      "elapsedMs": 941
     },
     {
       "name": "虎牙",
@@ -1775,10 +1813,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 544,
+      "apiMs": 41,
       "total": 114345,
       "keyword": "龙",
-      "searchMs": 458,
+      "searchMs": 350,
       "searchCount": 20,
       "sampleId": "159217",
       "sampleTitle": "魔晶猎人之龙曜之战",
@@ -1801,7 +1839,7 @@
           "sampleTitle": "魔晶猎人之龙曜之战"
         }
       ],
-      "elapsedMs": 3339
+      "elapsedMs": 2281
     },
     {
       "name": "U酷资源",
@@ -1811,16 +1849,16 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": false,
-      "apiMs": 299,
+      "apiMs": 80,
       "total": 59166,
       "keyword": "龙",
-      "searchMs": 265,
+      "searchMs": 79,
       "searchCount": 20,
       "sampleId": "72215",
       "sampleTitle": "灵境行者",
       "playbackSamples": [],
       "error": "fewer than two playable titles: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 14758
+      "elapsedMs": 12974
     },
     {
       "name": "奇虎资源",
@@ -1831,7 +1869,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 28
+      "elapsedMs": 73
     },
     {
       "name": "q享看",
@@ -1842,7 +1880,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 123
+      "elapsedMs": 68
     },
     {
       "name": "腾讯资源",
@@ -1853,7 +1891,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error timed out>",
-      "elapsedMs": 8566
+      "elapsedMs": 8279
     },
     {
       "name": "csp_WDzy",
@@ -1864,7 +1902,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 77
+      "elapsedMs": 15
     },
     {
       "name": "新片热播",
@@ -1875,7 +1913,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 511
+      "elapsedMs": 357
     },
     {
       "name": "芒果资源",
@@ -1886,7 +1924,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error timed out>",
-      "elapsedMs": 8513
+      "elapsedMs": 8034
     },
     {
       "name": "爱奇艺资源",
@@ -1897,7 +1935,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error timed out>",
-      "elapsedMs": 8161
+      "elapsedMs": 8444
     },
     {
       "name": "优酷资源",
@@ -1908,7 +1946,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error timed out>",
-      "elapsedMs": 8497
+      "elapsedMs": 8364
     },
     {
       "name": "haiwaikan",
@@ -1919,7 +1957,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)>",
-      "elapsedMs": 242
+      "elapsedMs": 416
     },
     {
       "name": "快帆",
@@ -1930,7 +1968,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 27
+      "elapsedMs": 23
     },
     {
       "name": "__看看",
@@ -1941,7 +1979,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 2691
+      "elapsedMs": 3075
     },
     {
       "name": "__影录",
@@ -1952,7 +1990,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 84
+      "elapsedMs": 24
     },
     {
       "name": "__m3u",
@@ -1963,7 +2001,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 121
+      "elapsedMs": 23
     },
     {
       "name": "__影视",
@@ -1974,7 +2012,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 65
+      "elapsedMs": 12
     },
     {
       "name": "8090资源",
@@ -1985,7 +2023,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 136
+      "elapsedMs": 68
     },
     {
       "name": "麒麟资源",
@@ -1996,7 +2034,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 569
+      "elapsedMs": 221
     },
     {
       "name": "诺讯资源",
@@ -2007,7 +2045,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 421
+      "elapsedMs": 695
     },
     {
       "name": "江北资源",
@@ -2018,7 +2056,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1000)>",
-      "elapsedMs": 328
+      "elapsedMs": 432
     },
     {
       "name": "思古官采",
@@ -2029,7 +2067,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 53
+      "elapsedMs": 17
     },
     {
       "name": "星一官采",
@@ -2040,7 +2078,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 65
+      "elapsedMs": 47
     },
     {
       "name": "片库",
@@ -2051,7 +2089,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 59
+      "elapsedMs": 235
     },
     {
       "name": "看猫",
@@ -2062,7 +2100,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error timed out>",
-      "elapsedMs": 8024
+      "elapsedMs": 8027
     },
     {
       "name": "忆梦",
@@ -2073,7 +2111,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 258
+      "elapsedMs": 53
     },
     {
       "name": "土狗官采",
@@ -2084,7 +2122,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 169
+      "elapsedMs": 209
     },
     {
       "name": "晓成云",
@@ -2095,7 +2133,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "HTTP Error 403: Forbidden",
-      "elapsedMs": 426
+      "elapsedMs": 92
     },
     {
       "name": "首涂官采",
@@ -2106,7 +2144,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error timed out>",
-      "elapsedMs": 9587
+      "elapsedMs": 9076
     },
     {
       "name": "奥特曼资源",
@@ -2117,7 +2155,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 62
+      "elapsedMs": 24
     },
     {
       "name": "雪人官采",
@@ -2128,7 +2166,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 207
+      "elapsedMs": 25
     },
     {
       "name": "木子看剧",
@@ -2139,7 +2177,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 332
+      "elapsedMs": 152
     },
     {
       "name": "TOM资源",
@@ -2150,7 +2188,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 134
+      "elapsedMs": 74
     },
     {
       "name": "松鼠资源",
@@ -2161,7 +2199,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 131
+      "elapsedMs": 68
     },
     {
       "name": "OK资源",
@@ -2172,7 +2210,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 49
+      "elapsedMs": 14
     },
     {
       "name": "猫眼资源",
@@ -2183,7 +2221,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 81
+      "elapsedMs": 15
     },
     {
       "name": "FOX资源",
@@ -2194,7 +2232,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 1996
+      "elapsedMs": 1066
     },
     {
       "name": "神速资源",
@@ -2205,7 +2243,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 175
+      "elapsedMs": 26
     },
     {
       "name": "番茄资源",
@@ -2215,8 +2253,8 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "error": "<urlopen error [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000)>",
-      "elapsedMs": 9078
+      "error": "Expecting value: line 1 column 1 (char 0)",
+      "elapsedMs": 7164
     },
     {
       "name": "北斗星资源",
@@ -2227,7 +2265,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 122
+      "elapsedMs": 15
     },
     {
       "name": "想看资源",
@@ -2238,7 +2276,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 43
+      "elapsedMs": 14
     },
     {
       "name": "酷点资源",
@@ -2249,7 +2287,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "HTTP Error 403: Forbidden",
-      "elapsedMs": 239
+      "elapsedMs": 114
     },
     {
       "name": "速更资源",
@@ -2260,7 +2298,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error timed out>",
-      "elapsedMs": 10794
+      "elapsedMs": 8973
     },
     {
       "name": "飞速资源",
@@ -2271,7 +2309,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 468
+      "elapsedMs": 138
     },
     {
       "name": "鱼乐资源",
@@ -2282,7 +2320,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 30
+      "elapsedMs": 25
     },
     {
       "name": "快播资源",
@@ -2293,7 +2331,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 440
+      "elapsedMs": 324
     },
     {
       "name": "无尽资源2",
@@ -2304,7 +2342,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 115
+      "elapsedMs": 16
     },
     {
       "name": "无尽资源",
@@ -2315,7 +2353,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "HTTP Error 404: Not Found",
-      "elapsedMs": 340
+      "elapsedMs": 175
     },
     {
       "name": "聚合资源",
@@ -2326,7 +2364,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 166
+      "elapsedMs": 43
     },
     {
       "name": "南国影源",
@@ -2337,7 +2375,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 39
+      "elapsedMs": 14
     },
     {
       "name": "淘剧鸭",
@@ -2348,7 +2386,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 261
+      "elapsedMs": 102
     },
     {
       "name": "293影视",
@@ -2359,7 +2397,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "HTTP Error 403: Forbidden",
-      "elapsedMs": 235
+      "elapsedMs": 102
     },
     {
       "name": "看看资源",
@@ -2370,7 +2408,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 1336
+      "elapsedMs": 2098
     },
     {
       "name": "开放云(X5)",
@@ -2381,7 +2419,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 140
+      "elapsedMs": 76
     },
     {
       "name": "唐人资源",
@@ -2392,7 +2430,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 132
+      "elapsedMs": 16
     },
     {
       "name": "789盘",
@@ -2403,7 +2441,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [Errno 111] Connection refused>",
-      "elapsedMs": 334
+      "elapsedMs": 162
     },
     {
       "name": "喵派对蓝光",
@@ -2414,7 +2452,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 297
+      "elapsedMs": 3247
     },
     {
       "name": "酷扑(人人迷)",
@@ -2425,7 +2463,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Remote end closed connection without response",
-      "elapsedMs": 9616
+      "elapsedMs": 1379
     },
     {
       "name": "旋风云",
@@ -2436,7 +2474,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error timed out>",
-      "elapsedMs": 8125
+      "elapsedMs": 8311
     },
     {
       "name": "奈菲迷",
@@ -2447,7 +2485,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 154
+      "elapsedMs": 27
     },
     {
       "name": "鸭奈飞",
@@ -2458,7 +2496,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 32
+      "elapsedMs": 220
     },
     {
       "name": "鸭奈飞1",
@@ -2469,7 +2507,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error timed out>",
-      "elapsedMs": 8024
+      "elapsedMs": 8025
     },
     {
       "name": "皮荼熊TV",
@@ -2480,7 +2518,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 78
+      "elapsedMs": 92
     },
     {
       "name": "XYUI",
@@ -2491,7 +2529,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 320
+      "elapsedMs": 2137
     },
     {
       "name": "饭后电影",
@@ -2502,7 +2540,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 273
+      "elapsedMs": 53
     },
     {
       "name": "考拉TV",
@@ -2513,7 +2551,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "HTTP Error 403: Forbidden",
-      "elapsedMs": 173
+      "elapsedMs": 52
     },
     {
       "name": "荔枝影视",
@@ -2524,7 +2562,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 111
+      "elapsedMs": 9
     },
     {
       "name": "段友影视",
@@ -2535,7 +2573,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 4448
+      "elapsedMs": 307
     },
     {
       "name": "一点影视",
@@ -2546,7 +2584,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 2289
+      "elapsedMs": 2294
     },
     {
       "name": "旧梦影视",
@@ -2557,7 +2595,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 789
+      "elapsedMs": 741
     },
     {
       "name": "51看剧",
@@ -2568,7 +2606,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 5826
+      "elapsedMs": 2889
     },
     {
       "name": "思古影视",
@@ -2579,7 +2617,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 132
+      "elapsedMs": 24
     },
     {
       "name": "天天看",
@@ -2590,7 +2628,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 1436
+      "elapsedMs": 236
     },
     {
       "name": "每天看看",
@@ -2601,7 +2639,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "HTTP Error 404: Not Found",
-      "elapsedMs": 1571
+      "elapsedMs": 449
     },
     {
       "name": "一拳动漫",
@@ -2612,7 +2650,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [Errno 111] Connection refused>",
-      "elapsedMs": 241
+      "elapsedMs": 214
     },
     {
       "name": "BL视频",
@@ -2623,7 +2661,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1000)>",
-      "elapsedMs": 543
+      "elapsedMs": 400
     },
     {
       "name": "畅视影视",
@@ -2634,7 +2672,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 28
+      "elapsedMs": 16
     },
     {
       "name": "OmoFun动漫",
@@ -2645,7 +2683,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 3183
+      "elapsedMs": 628
     },
     {
       "name": "人人资源",
@@ -2656,7 +2694,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 54
+      "elapsedMs": 126
     },
     {
       "name": "人人影视",
@@ -2667,7 +2705,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [Errno 111] Connection refused>",
-      "elapsedMs": 505
+      "elapsedMs": 159
     },
     {
       "name": "小蜻蜓APP",
@@ -2678,7 +2716,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 114
+      "elapsedMs": 30
     },
     {
       "name": "星一蓝光",
@@ -2689,7 +2727,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "HTTP Error 400: Bad Request",
-      "elapsedMs": 910
+      "elapsedMs": 855
     },
     {
       "name": "筋斗云",
@@ -2700,7 +2738,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [SSL: TLSV1_UNRECOGNIZED_NAME] tlsv1 unrecognized name (_ssl.c:1000)>",
-      "elapsedMs": 580
+      "elapsedMs": 77
     },
     {
       "name": "影图",
@@ -2711,7 +2749,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "HTTP Error 403: Forbidden",
-      "elapsedMs": 454
+      "elapsedMs": 195
     },
     {
       "name": "猪猪影视",
@@ -2722,7 +2760,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 267
+      "elapsedMs": 1698
     },
     {
       "name": "初恋云影视",
@@ -2733,7 +2771,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 100
+      "elapsedMs": 82
     },
     {
       "name": "绿地影视",
@@ -2744,7 +2782,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 58
+      "elapsedMs": 8
     },
     {
       "name": "天天影视",
@@ -2755,7 +2793,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 145
+      "elapsedMs": 89
     },
     {
       "name": "小猫咪",
@@ -2766,7 +2804,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "HTTP Error 404: Not Found",
-      "elapsedMs": 195
+      "elapsedMs": 227
     },
     {
       "name": "酷点影视",
@@ -2777,7 +2815,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 238
+      "elapsedMs": 17
     },
     {
       "name": "小城影视",
@@ -2788,7 +2826,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error timed out>",
-      "elapsedMs": 16143
+      "elapsedMs": 16045
     },
     {
       "name": "橘子影视",
@@ -2799,7 +2837,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 51
+      "elapsedMs": 9
     },
     {
       "name": "小慧影视",
@@ -2810,7 +2848,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 293
+      "elapsedMs": 173
     },
     {
       "name": "超高清影视",
@@ -2821,7 +2859,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 68
+      "elapsedMs": 24
     },
     {
       "name": "艾思影视",
@@ -2832,7 +2870,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 53
+      "elapsedMs": 25
     },
     {
       "name": "VV影视",
@@ -2843,7 +2881,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 39
+      "elapsedMs": 248
     },
     {
       "name": "迅播影视",
@@ -2854,7 +2892,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 27
+      "elapsedMs": 69
     },
     {
       "name": "39影视",
@@ -2865,7 +2903,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "HTTP Error 523: <none>",
-      "elapsedMs": 713
+      "elapsedMs": 706
     },
     {
       "name": "剧大神",
@@ -2876,7 +2914,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 43
+      "elapsedMs": 82
     },
     {
       "name": "8K影视",
@@ -2887,7 +2925,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "HTTP Error 403: Forbidden",
-      "elapsedMs": 672
+      "elapsedMs": 451
     },
     {
       "name": "嗨哆咪影视",
@@ -2898,7 +2936,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 156
+      "elapsedMs": 31
     },
     {
       "name": "橘猫影视",
@@ -2909,7 +2947,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error timed out>",
-      "elapsedMs": 8170
+      "elapsedMs": 8112
     },
     {
       "name": "飞鱼影视",
@@ -2920,7 +2958,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 143
+      "elapsedMs": 131
     },
     {
       "name": "飘花电影",
@@ -2931,7 +2969,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 1969
+      "elapsedMs": 1566
     },
     {
       "name": "晓峰影视",
@@ -2942,7 +2980,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 151
+      "elapsedMs": 180
     },
     {
       "name": "千寻时光",
@@ -2964,7 +3002,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 2036
+      "elapsedMs": 1062
     },
     {
       "name": "网民电影",
@@ -2975,7 +3013,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error _ssl.c:983: The handshake operation timed out>",
-      "elapsedMs": 8327
+      "elapsedMs": 11067
     },
     {
       "name": "兔子窝",
@@ -2986,7 +3024,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 67
+      "elapsedMs": 68
     },
     {
       "name": "哇可可影视",
@@ -2997,7 +3035,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 307
+      "elapsedMs": 394
     },
     {
       "name": "共青春",
@@ -3008,7 +3046,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "HTTP Error 404: Not Found",
-      "elapsedMs": 2178
+      "elapsedMs": 567
     },
     {
       "name": "酷猫影视",
@@ -3019,7 +3057,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 117
+      "elapsedMs": 69
     },
     {
       "name": "胖猫影视",
@@ -3030,7 +3068,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "HTTP Error 503: Service Temporarily Unavailable",
-      "elapsedMs": 695
+      "elapsedMs": 639
     },
     {
       "name": "海外电影",
@@ -3041,7 +3079,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 138
+      "elapsedMs": 25
     },
     {
       "name": "金鹰点播",
@@ -3052,14 +3090,14 @@
       "searchOk": true,
       "detailOk": false,
       "playbackOk": false,
-      "apiMs": 513,
+      "apiMs": 37,
       "total": 115410,
       "keyword": "龙",
-      "searchMs": 403,
+      "searchMs": 396,
       "searchCount": 20,
       "playbackSamples": [],
       "error": "fewer than two playable titles: no compatible HLS episode; no compatible HLS episode; no compatible HLS episode; no compatible HLS episode",
-      "elapsedMs": 2214
+      "elapsedMs": 1262
     },
     {
       "name": "TV-wujinapi无尽",
@@ -3069,16 +3107,16 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": false,
-      "apiMs": 358,
+      "apiMs": 135,
       "total": 122461,
       "keyword": "龙",
-      "searchMs": 273,
+      "searchMs": 146,
       "searchCount": 20,
       "sampleId": "172565",
       "sampleTitle": "伟大的长征",
       "playbackSamples": [],
       "error": "fewer than two playable titles: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 5428
+      "elapsedMs": 1631
     },
     {
       "name": "TV-卧龙资源",
@@ -3089,7 +3127,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -5] No address associated with hostname",
-      "elapsedMs": 116
+      "elapsedMs": 35
     },
     {
       "name": "TV-小猫咪资源",
@@ -3101,7 +3139,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 69
+      "elapsedMs": 191
     },
     {
       "name": "TV-无尽资源",
@@ -3111,16 +3149,16 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": false,
-      "apiMs": 405,
+      "apiMs": 162,
       "total": 122461,
       "keyword": "龙",
-      "searchMs": 283,
+      "searchMs": 131,
       "searchCount": 20,
       "sampleId": "172565",
       "sampleTitle": "伟大的长征",
       "playbackSamples": [],
       "error": "fewer than two playable titles: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 4006
+      "elapsedMs": 1367
     },
     {
       "name": "TV-牛牛点播",
@@ -3131,10 +3169,10 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "apiMs": 363,
+      "apiMs": 275,
       "total": 124300,
       "error": "no relevant search results: Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 1135
+      "elapsedMs": 772
     },
     {
       "name": "TV-豆瓣资源",
@@ -3146,7 +3184,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -5] No address associated with hostname",
-      "elapsedMs": 238
+      "elapsedMs": 18
     },
     {
       "name": "TV-豆瓣资源",
@@ -3157,10 +3195,10 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "apiMs": 1714,
-      "total": 147405,
+      "apiMs": 775,
+      "total": 147406,
       "error": "no relevant search results: not an Apple CMS JSON list; not an Apple CMS JSON list; not an Apple CMS JSON list",
-      "elapsedMs": 4183
+      "elapsedMs": 3130
     },
     {
       "name": "TV-金鹰资源",
@@ -3171,10 +3209,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 164,
+      "apiMs": 400,
       "total": 115410,
       "keyword": "龙",
-      "searchMs": 415,
+      "searchMs": 294,
       "searchCount": 20,
       "sampleId": "161063",
       "sampleTitle": "魔晶猎人之龙曜之战",
@@ -3197,7 +3235,7 @@
           "sampleTitle": "魔晶猎人之龙曜之战"
         }
       ],
-      "elapsedMs": 9647
+      "elapsedMs": 6368
     },
     {
       "name": "TV-魔爪资源",
@@ -3209,7 +3247,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [Errno 111] Connection refused>",
-      "elapsedMs": 2629
+      "elapsedMs": 2290
     },
     {
       "name": "TV-黑木耳点播",
@@ -3221,7 +3259,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 500
+      "elapsedMs": 277
     },
     {
       "name": "华为吧资源",
@@ -3232,7 +3270,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error timed out>",
-      "elapsedMs": 8972
+      "elapsedMs": 8417
     },
     {
       "name": "红牛资源",
@@ -3242,10 +3280,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 286,
+      "apiMs": 205,
       "total": 114807,
       "keyword": "龙",
-      "searchMs": 423,
+      "searchMs": 291,
       "searchCount": 20,
       "sampleId": "196982",
       "sampleTitle": "魔晶猎人之龙曜之战",
@@ -3268,7 +3306,7 @@
           "sampleTitle": "魔晶猎人之龙曜之战"
         }
       ],
-      "elapsedMs": 10202
+      "elapsedMs": 6516
     },
     {
       "name": "蜂巢片库",
@@ -3279,7 +3317,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 37
+      "elapsedMs": 13
     },
     {
       "name": "金马资源网",
@@ -3289,8 +3327,8 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "error": "<urlopen error [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000)>",
-      "elapsedMs": 7303
+      "error": "<urlopen error timed out>",
+      "elapsedMs": 8197
     },
     {
       "name": "优质资源库1080zyk6.com高清",
@@ -3301,18 +3339,43 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 669
+      "elapsedMs": 123
     },
     {
       "name": "iqiyi资源",
       "url": "https://www.iqiyizyapi.com/api.php/provide/vod",
       "discoveredAt": "https://github.com/666zmy/moontv-v0/blob/main/config.json",
-      "apiOk": false,
-      "searchOk": false,
-      "detailOk": false,
-      "playbackOk": false,
-      "error": "HTTP Error 503: Service Temporarily Unavailable",
-      "elapsedMs": 1202
+      "apiOk": true,
+      "searchOk": true,
+      "detailOk": true,
+      "playbackOk": true,
+      "apiMs": 1220,
+      "total": 69216,
+      "keyword": "龙",
+      "searchMs": 1851,
+      "searchCount": 20,
+      "sampleId": "86487",
+      "sampleTitle": "七龙珠超：比鲁斯",
+      "playlistUrl": "https://play.ly166.com:65/videos/20261012/6acc5656339f684cac405907/c3990f/index.m3u8",
+      "segmentUrl": "https://play.ly166.com:65/videos/20261012/6acc5656339f684cac405907/c3990f/indexBgGa6eEfCdAbB38C.jpeg",
+      "segmentBytes": 1024,
+      "playbackSamples": [
+        {
+          "playlistUrl": "https://play.ly166.com:65/videos/20261009/6ac863d05c14f34ca51cccd1/c7e489/index.m3u8",
+          "segmentUrl": "https://play.ly166.com:65/videos/20261009/6ac863d05c14f34ca51cccd1/c7e489/indexFb4b3ad77Ga2D0eA.jpeg",
+          "segmentBytes": 1024,
+          "sampleId": "86319",
+          "sampleTitle": "潜龙无意惹红妆"
+        },
+        {
+          "playlistUrl": "https://play.ly166.com:65/videos/20261012/6acc5656339f684cac405907/c3990f/index.m3u8",
+          "segmentUrl": "https://play.ly166.com:65/videos/20261012/6acc5656339f684cac405907/c3990f/indexBgGa6eEfCdAbB38C.jpeg",
+          "segmentBytes": 1024,
+          "sampleId": "86487",
+          "sampleTitle": "七龙珠超：比鲁斯"
+        }
+      ],
+      "elapsedMs": 11535
     },
     {
       "name": "七七影视",
@@ -3323,7 +3386,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1000)>",
-      "elapsedMs": 719
+      "elapsedMs": 612
     },
     {
       "name": "饭团影视",
@@ -3334,7 +3397,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 54
+      "elapsedMs": 15
     },
     {
       "name": "TV-豆瓣资源3",
@@ -3345,10 +3408,10 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "apiMs": 750,
-      "total": 147080,
+      "apiMs": 1030,
+      "total": 147081,
       "error": "no relevant search results: not an Apple CMS JSON list; not an Apple CMS JSON list; not an Apple CMS JSON list",
-      "elapsedMs": 2840
+      "elapsedMs": 3338
     },
     {
       "name": "TV-海洋资源",
@@ -3359,7 +3422,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "The read operation timed out",
-      "elapsedMs": 8172
+      "elapsedMs": 8083
     },
     {
       "name": "💎无限资源🍏2",
@@ -3370,7 +3433,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 145
+      "elapsedMs": 68
     },
     {
       "name": "💎虾米资源🍏2",
@@ -3381,7 +3444,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 77
+      "elapsedMs": 8
     },
     {
       "name": "💎天翼影视🍏2",
@@ -3392,7 +3455,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 782
+      "elapsedMs": 315
     },
     {
       "name": "💎忆梦影视🍏2",
@@ -3403,7 +3466,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 701
+      "elapsedMs": 379
     },
     {
       "name": "💎乐视LS🍎1",
@@ -3414,7 +3477,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -5] No address associated with hostname",
-      "elapsedMs": 123
+      "elapsedMs": 68
     },
     {
       "name": "💎360资源🍎1",
@@ -3424,10 +3487,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 1106,
+      "apiMs": 1272,
       "total": 72948,
       "keyword": "龙",
-      "searchMs": 1210,
+      "searchMs": 781,
       "searchCount": 20,
       "sampleId": "107599",
       "sampleTitle": "七龙珠超：比鲁斯",
@@ -3450,7 +3513,7 @@
           "sampleTitle": "七龙珠超：比鲁斯"
         }
       ],
-      "elapsedMs": 11221
+      "elapsedMs": 7292
     },
     {
       "name": "💎OK资源🍎1",
@@ -3461,7 +3524,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -2] Name or service not known",
-      "elapsedMs": 121
+      "elapsedMs": 30
     },
     {
       "name": "💎1080P资源🍎1",
@@ -3472,7 +3535,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "[Errno -5] No address associated with hostname",
-      "elapsedMs": 113
+      "elapsedMs": 183
     },
     {
       "name": "💎快看KK🍎1",
@@ -3483,7 +3546,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)>",
-      "elapsedMs": 877
+      "elapsedMs": 363
     },
     {
       "name": "💎樱花YH🍎1",
@@ -3493,10 +3556,10 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "apiMs": 588,
+      "apiMs": 541,
       "total": 104033,
       "error": "no relevant search results: HTTP Error 403: Forbidden; HTTP Error 403: Forbidden",
-      "elapsedMs": 2168
+      "elapsedMs": 2355
     },
     {
       "name": "💎鱼乐LY🍎2",
@@ -3507,7 +3570,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1000)>",
-      "elapsedMs": 236
+      "elapsedMs": 266
     },
     {
       "name": "第一资源",
@@ -3517,10 +3580,10 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "apiMs": 398,
+      "apiMs": 274,
       "total": 52302,
       "error": "no relevant search results: Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 1248
+      "elapsedMs": 846
     },
     {
       "name": "吉吉资源",
@@ -3530,10 +3593,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 1649,
+      "apiMs": 2744,
       "total": 84315,
       "keyword": "龙",
-      "searchMs": 1787,
+      "searchMs": 1458,
       "searchCount": 20,
       "sampleId": "84698",
       "sampleTitle": "七龙珠超：比鲁斯",
@@ -3556,7 +3619,7 @@
           "sampleTitle": "七龙珠超：比鲁斯"
         }
       ],
-      "elapsedMs": 9712
+      "elapsedMs": 9989
     },
     {
       "name": "天涯（新接口）",
@@ -3566,10 +3629,10 @@
       "searchOk": false,
       "detailOk": false,
       "playbackOk": false,
-      "apiMs": 271,
+      "apiMs": 146,
       "total": 71690,
       "error": "no relevant search results: Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0); Expecting value: line 1 column 1 (char 0)",
-      "elapsedMs": 1069
+      "elapsedMs": 539
     },
     {
       "name": "淘片资源",
@@ -3580,7 +3643,7 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1000)>",
-      "elapsedMs": 677
+      "elapsedMs": 3139
     },
     {
       "name": "金鹰M3U8",
@@ -3590,10 +3653,10 @@
       "searchOk": true,
       "detailOk": true,
       "playbackOk": true,
-      "apiMs": 786,
+      "apiMs": 168,
       "total": 115410,
       "keyword": "龙",
-      "searchMs": 454,
+      "searchMs": 348,
       "searchCount": 20,
       "sampleId": "161063",
       "sampleTitle": "魔晶猎人之龙曜之战",
@@ -3616,7 +3679,7 @@
           "sampleTitle": "魔晶猎人之龙曜之战"
         }
       ],
-      "elapsedMs": 7149
+      "elapsedMs": 4835
     },
     {
       "name": "暴风App",
@@ -3627,7 +3690,36 @@
       "detailOk": false,
       "playbackOk": false,
       "error": "HTTP Error 404: Not Found",
-      "elapsedMs": 315
+      "elapsedMs": 145
     }
+  ],
+  "defaultCount": 25,
+  "selection": "Defaults must pass at least two distinct titles in both the second and third runs; a newly passing endpoint is not automatically promoted.",
+  "defaultUrls": [
+    "https://ikunzyapi.com/api.php/provide/vod",
+    "https://api.guangsuapi.com/api.php/provide/vod/from/gsm3u8",
+    "https://api.guangsuapi.com/api.php/provide/vod",
+    "https://jyzyapi.com/provide/vod",
+    "https://ikunzyapi.com/api.php/provide/vod/from/ikm3u8/at/json",
+    "https://caiji.moduapi.cc/api.php/provide/vod",
+    "https://hongniuzy2.com/api.php/provide/vod/from/hnm3u8",
+    "https://jyzyapi.com/api.php/provide/vod",
+    "https://www.hongniuzy3.com/api.php/provide/vod",
+    "https://subocaiji.com/api.php/provide/vod",
+    "https://jyzyapi.com/provide/vod/from/jinyingm3u8",
+    "https://hhzyapi.com/api.php/provide/vod",
+    "https://www.huyaapi.com/api.php/provide/vod/from/hym3u8",
+    "https://www.hongniuzy2.com/api.php/provide/vod",
+    "https://api.xinlangapi.com/xinlangapi.php/provide/vod",
+    "https://www.huyaapi.com/api.php/provide/vod",
+    "https://360zyzz.com/api.php/provide/vod",
+    "https://jinyingzy.com/api.php/provide/vod",
+    "https://www.mdzyapi.com/api.php/provide/vod",
+    "https://360zy.tv/api.php/provide/vod",
+    "https://360zy.com/api.php/provide/vod",
+    "https://www.moduzy.com/api.php/provide/vod",
+    "https://api.maoyanapi.top/api.php/provide/vod",
+    "https://caiji.jjzyapi.com/api.php/provide/vod",
+    "https://cj.rycjapi.com/api.php/provide/vod"
   ]
 }

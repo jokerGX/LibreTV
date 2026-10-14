@@ -1,8 +1,8 @@
 # 点播源接入与连通性报告
 
-默认接口由 17 个更新为 **26 个**：新增 11 个通过播放抽查的接口，移出本次两轮播放检查均未通过的暴风资源与艾旦影视。它们仍在搜索/详情备选列表中，可以在部署网络复测后自行导入。接口数量不等于独立片库数量；M3U8专用入口、备用域名可能共享同一个资源站。
+默认接口由 17 个更新为 **25 个**：新增 10 个通过播放抽查的接口，移出本次两轮播放检查均未通过的暴风资源与艾旦影视。它们仍在搜索/详情备选列表中，可以在部署网络复测后自行导入。接口数量不等于独立片库数量；M3U8专用入口、备用域名可能共享同一个资源站。
 
-检测时间：2026-10-14T12:50:53.821463+00:00。最新一轮检测 **238** 个候选，67 个返回 CMS JSON，51 个能搜到相关结果，49 个通过详情检查，**26 个通过播放检查**。两轮记录：[第一轮](https://github.com/jokerGX/LibreTV/actions/runs/38566395902)、[第二轮](https://github.com/jokerGX/LibreTV/actions/runs/38566680256)。新增源在最终提交检查中再次复测。
+检测时间：2026-10-14T12:50:53.821463+00:00。最新一轮检测 **238** 个候选，67 个返回 CMS JSON，51 个能搜到相关结果，49 个通过详情检查，**26 个通过播放检查**；第三轮有31个通过，其中25个在最近两轮持续通过，最终仅将这25个设为默认。爱奇艺首两轮通过、第三轮失败，移回备选。两轮记录：[第一轮](https://github.com/jokerGX/LibreTV/actions/runs/38566395902)、[第二轮](https://github.com/jokerGX/LibreTV/actions/runs/38566680256)。[第三轮检查](https://github.com/jokerGX/LibreTV/actions/runs/38567377644)。新增源均在最近两轮通过两部影片检查；第三轮新通过的6个接口未自动加入默认。
 
 ## 检测标准与范围
 
@@ -60,7 +60,6 @@ Actions → Source connectivity and validation → Run workflow 可以复测，�
 | 魔都（备用域名） | https://www.moduzy.com/api.php/provide/vod |
 | 猫眼资源 | https://api.maoyanapi.top/api.php/provide/vod |
 | 吉吉资源 | https://caiji.jjzyapi.com/api.php/provide/vod |
-| 爱奇艺资源 | https://iqiyizyapi.com/api.php/provide/vod |
 | 如意资源 | https://cj.rycjapi.com/api.php/provide/vod |
 
 ## 逐源检测

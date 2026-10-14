@@ -112,11 +112,6 @@
       "url": "https://caiji.jjzyapi.com/api.php/provide/vod"
     },
     {
-      "name": "爱奇艺资源",
-      "url": "https://iqiyizyapi.com/api.php/provide/vod",
-      "detail": "https://iqiyizyapi.com"
-    },
-    {
       "name": "如意资源",
       "url": "https://cj.rycjapi.com/api.php/provide/vod",
       "detail": "https://www.ryzyw.com"
