@@ -1,0 +1,336 @@
+{
+  "name": "LibreTV 待检测点播接口",
+  "sources": [
+    {
+      "name": "爱奇艺",
+      "url": "https://iqiyizyapi.com/api.php/provide/vod",
+      "detail": "https://iqiyizyapi.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "豆瓣资源",
+      "url": "https://caiji.dbzy5.com/api.php/provide/vod",
+      "detail": "https://dbzy.tv",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "茅台资源",
+      "url": "https://caiji.maotaizy.cc/api.php/provide/vod",
+      "detail": "https://mtzy.me",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "卧龙资源",
+      "url": "https://wolongzyw.com/api.php/provide/vod",
+      "detail": "https://wolongzyw.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "iKun资源",
+      "url": "https://ikunzyapi.com/api.php/provide/vod",
+      "detail": "https://ikunzy.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "电影天堂",
+      "url": "http://caiji.dyttzyapi.com/api.php/provide/vod",
+      "detail": "http://caiji.dyttzyapi.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "猫眼资源",
+      "url": "https://api.maoyanapi.top/api.php/provide/vod",
+      "detail": "https://www.maoyanzy.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "量子资源",
+      "url": "https://cj.lzcaiji.com/api.php/provide/vod",
+      "detail": "https://cj.lzcaiji.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "360 资源",
+      "url": "https://360zyzz.com/api.php/provide/vod",
+      "detail": "https://360zy.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "极速资源",
+      "url": "https://jszyapi.com/api.php/provide/vod",
+      "detail": "https://jszyapi.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "魔都资源",
+      "url": "https://www.mdzyapi.com/api.php/provide/vod",
+      "detail": "https://www.moduzy.net",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "非凡资源",
+      "url": "https://api.ffzyapi.com/api.php/provide/vod",
+      "detail": "https://cj.ffzyapi.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "暴风资源",
+      "url": "https://bfzyapi.com/api.php/provide/vod",
+      "detail": "https://bfzy.tv",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "最大资源",
+      "url": "https://api.zuidapi.com/api.php/provide/vod",
+      "detail": "https://zuida.xyz",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "无尽资源",
+      "url": "https://api.wujinapi.me/api.php/provide/vod",
+      "detail": "https://wujinzy.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "新浪资源",
+      "url": "https://api.xinlangapi.com/xinlangapi.php/provide/vod",
+      "detail": "https://xinlangapi.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "旺旺资源",
+      "url": "https://api.wwzy.tv/api.php/provide/vod",
+      "detail": "https://api.wwzy.tv",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "速播资源",
+      "url": "https://subocaiji.com/api.php/provide/vod",
+      "detail": "https://www.subozy.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "金鹰点播",
+      "url": "https://jinyingzy.com/api.php/provide/vod",
+      "detail": "https://jinyingzy.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "飘零资源",
+      "url": "https://p2100.net/api.php/provide/vod",
+      "detail": "https://p2100.net",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "U酷影视",
+      "url": "https://api.ukuapi88.com/api.php/provide/vod",
+      "detail": "https://www.ukuzy.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "光速资源",
+      "url": "https://api.guangsuapi.com/api.php/provide/vod",
+      "detail": "https://api.guangsuapi.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "红牛资源",
+      "url": "https://www.hongniuzy2.com/api.php/provide/vod",
+      "detail": "https://www.hongniuzy.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "魔都动漫",
+      "url": "https://caiji.moduapi.cc/api.php/provide/vod",
+      "detail": "https://caiji.moduapi.cc",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "如意资源",
+      "url": "https://cj.rycjapi.com/api.php/provide/vod",
+      "detail": "https://www.ryzyw.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "豪华资源",
+      "url": "https://hhzyapi.com/api.php/provide/vod",
+      "detail": "https://www.haohuazy.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "百度云zy",
+      "url": "https://api.apibdzy.com/api.php/provide/vod",
+      "detail": "https://bdzy1.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "艾旦影视",
+      "url": "https://lovedan.net/api.php/provide/vod",
+      "detail": "https://lovedan.net",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "山海资源",
+      "url": "https://zy.sh0o.cn/api.php/provide/vod",
+      "detail": "https://zy.sh0o.cn",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "金蝉影视",
+      "url": "https://zy.jinchancaiji.com/api.php/provide/vod",
+      "detail": "https://zy.jinchancaiji.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "量子影视",
+      "url": "https://cj.lziapi.com/api.php/provide/vod",
+      "detail": "https://lzizy.net",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "最大点播",
+      "url": "https://zuidazy.me/api.php/provide/vod",
+      "detail": "https://zuidazy.co",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "无尽影视",
+      "url": "https://api.wujinapi.com/api.php/provide/vod",
+      "detail": "https://wujinzy.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "旺旺短剧",
+      "url": "https://wwzy.tv/api.php/provide/vod",
+      "detail": "https://wwzy.tv",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "优质资源",
+      "url": "https://api.yzzy-api.com/inc/apijson.php",
+      "detail": "https://1080zyk4.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "虎牙资源",
+      "url": "https://www.huyaapi.com/api.php/provide/vod",
+      "detail": "https://www.huyaapi.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "鸭鸭资源",
+      "url": "https://cj.yayazy.net/api.php/provide/vod",
+      "detail": "https://yayazy3.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "索尼资源",
+      "url": "https://suoniapi.com/api.php/provide/vod",
+      "detail": "https://suonizy.net",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "快车资源",
+      "url": "https://caiji.kuaichezy.org/api.php/provide/vod",
+      "detail": "https://kuaichezy.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "闪电资源",
+      "url": "https://xsd.sdzyapi.com/api.php/provide/vod",
+      "detail": "https://shandianzy.com",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "樱花资源",
+      "url": "https://m3u8.apiyhzy.com/api.php/provide/vod",
+      "detail": "https://yhzy.cc",
+      "discoveredAt": "https://github.com/vodtv/api/blob/main/LunaTV-config.json"
+    },
+    {
+      "name": "360资源（原站）",
+      "url": "https://360zy.com/api.php/provide/vod",
+      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+    },
+    {
+      "name": "天涯资源",
+      "url": "https://tyyszy.com/api.php/provide/vod",
+      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+    },
+    {
+      "name": "黑木耳",
+      "url": "https://json.heimuer.xyz/api.php/provide/vod",
+      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+    },
+    {
+      "name": "非凡（旧接口）",
+      "url": "http://ffzy5.tv/api.php/provide/vod",
+      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+    },
+    {
+      "name": "开放电影",
+      "url": "https://vod-demo.onrender.com/pubdovod.php",
+      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+    },
+    {
+      "name": "优质（旧接口）",
+      "url": "http://api.1080zyku.com/inc/api.php/provide/vod",
+      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+    },
+    {
+      "name": "39影视",
+      "url": "https://39kan.com/api.php/provide/vod",
+      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+    },
+    {
+      "name": "天堂资源",
+      "url": "https://vipmv.cc/api.php/provide/vod",
+      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+    },
+    {
+      "name": "乐活影视",
+      "url": "https://lehootv.com/api.php/provide/vod",
+      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+    },
+    {
+      "name": "唐人街",
+      "url": "https://tangrenjie.tv/api.php/provide/vod",
+      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+    },
+    {
+      "name": "酷点资源",
+      "url": "https://api.kuapi.cc/api.php/provide/vod",
+      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+    },
+    {
+      "name": "卧龙（采集集站）",
+      "url": "https://collect.wolongzyw.com/api.php/provide/vod",
+      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+    },
+    {
+      "name": "酷点（备用）",
+      "url": "https://kudian10.com/api.php/provide/vod",
+      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+    },
+    {
+      "name": "影库资源网",
+      "url": "https://api.ykapi.net/api.php/provide/vod",
+      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+    },
+    {
+      "name": "快车（旧接口）",
+      "url": "https://caiji.kczyapi.com/api.php/provide/vod/from/kcm3u8",
+      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+    },
+    {
+      "name": "探探资源",
+      "url": "https://apittzy.com/api.php/provide/vod",
+      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+    },
+    {
+      "name": "红牛（备用）",
+      "url": "https://hongniuzy2.com/api.php/provide/vod/from/hnm3u8",
+      "discoveredAt": "https://github.com/LibreSpark/LibreTV/discussions/652"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+name: Source connectivity and validation
+
+on:
+  push:
+    branches: [codex/verified-vod-sources]
+    paths:
+      - 'scripts/check-sources.py'
+      - 'data/source-candidates.json'
+      - '.github/workflows/source-health.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check API, relevant search, details, HLS and segment
+        run: python3 scripts/check-sources.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: source-connectivity-report
+          path: source-check-output/
+          retention-days: 14
+
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
