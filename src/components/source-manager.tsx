@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Drawer } from './drawer';
+import { PlaybackStatusBadge } from './playback-status-badge';
 import { ConfirmDialog } from './confirm-dialog';
 import { Icon, type IconName } from './icon';
 import { LiveSourceManager } from './live-source-manager';
@@ -482,8 +483,9 @@ function VodSourceRow({
           aria-label={`选择 ${api.name}`}
         />
         <div className="flex-1 min-w-0">
-          <div className="text-sm font-medium text-content truncate">
+          <div className="flex flex-wrap items-center gap-y-1 text-sm font-medium text-content">
             {api.name}
+            <PlaybackStatusBadge url={api.url} />
             {api.isAdult && <span className="text-pink-400 text-xs ml-1">(18+)</span>}
             {isEnv && (
               <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded bg-chip text-faint align-middle">

@@ -5,6 +5,8 @@ import type { SearchResultItem } from '@/lib/types';
 import { useAppStore } from '@/lib/store';
 import { cn } from '@/lib/utils';
 import { SmartImage } from './smart-image';
+import { PlaybackStatusBadge } from './playback-status-badge';
+import { orderPlaybackSources } from '@/lib/source-playback';
 
 // —— 跨源同名聚合 ——
 
@@ -20,7 +22,8 @@ export interface AggregatedGroup {
 
 function buildGroup(name: string, year: string | undefined, items: SearchResultItem[]): AggregatedGroup {
   return {
-    key: `${name}|${year ?? ''}|${items.map((i) => `${i.sourceKey}_${i.vodId}`).join(',')}`,
+    // 来源增量返回时保持卡片标识，避免已展开的卡片被重新挂载。
+    key: JSON.stringify([name, year ?? null]),
     name,
     year,
     typeName: items.find((i) => i.typeName)?.typeName,
@@ -77,6 +80,8 @@ export function AggregatedCard({
   const [expanded, setExpanded] = useState(false);
   const showImg = !!group.pic && !imgFailed;
 
+  const orderedItems = useMemo(() => orderPlaybackSources(group.items), [group.items]);
+  useEffect(() => setImgFailed(false), [group.pic]);
   const multi = group.items.length > 1;
   const adult = useMemo(() => group.items.some((i) => i.isAdult), [group.items]);
 
@@ -147,6 +152,7 @@ export function AggregatedCard({
             <span className="tag bg-chip text-muted truncate max-w-[80%]">
               {multi ? `${group.items.length} 个来源` : group.items[0].sourceName}
             </span>
+            {!multi && <PlaybackStatusBadge url={group.items[0].sourceUrl} />}
             {multi && (
               <svg
                 className={cn('w-4 h-4 text-faint transition-transform', expanded && 'rotate-180')}
@@ -166,7 +172,7 @@ export function AggregatedCard({
         <div className="border-t border-line p-2.5 animate-fade-in">
           <p className="text-[10px] text-faint mb-1.5">选择来源播放</p>
           <div className="flex flex-wrap gap-1.5">
-            {group.items.map((item) => (
+            {orderedItems.map((item) => (
               <button
                 key={`${item.sourceKey}_${item.vodId}`}
                 className={cn(
@@ -182,6 +188,7 @@ export function AggregatedCard({
                 aria-label={`使用 ${item.sourceName} 播放`}
               >
                 <span className="font-medium text-content truncate max-w-[9em]">{item.sourceName}</span>
+                <PlaybackStatusBadge url={item.sourceUrl} />
                 <span className="text-faint truncate max-w-[7em]">{item.remarks || '暂无介绍'}</span>
                 <svg
                   className="w-3.5 h-3.5 text-accent shrink-0 transition-transform group-hover:scale-110"

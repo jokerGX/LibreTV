@@ -26,7 +26,8 @@ jobs:
         run: |
           python3 - <<'PY'
           import json, os, time, urllib.request
-          expected = {s['url'] for s in json.load(open('public/verified-sources.json'))['sources']}
+          sources = json.load(open('public/verified-sources.json'))['sources'] + json.load(open('public/api-sources.json'))['sources']
+          expected = {s['url'].rstrip('/') for s in sources}
           url = os.environ['NETLIFY_SITE_URL'].rstrip('/') + '/api/status'
           for attempt in range(24):
               try:

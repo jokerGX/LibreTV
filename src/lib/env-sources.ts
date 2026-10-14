@@ -1,9 +1,19 @@
 import type { SourceConfig } from './types';
 import verifiedSources from '../../public/verified-sources.json';
+import searchSources from '../../public/api-sources.json';
+
+// 已验证源排在配置列表前面，所有可搜索接口均下发；按地址去重。
+const seenBundledUrls = new Set<string>();
+const bundledSources = [...verifiedSources.sources, ...searchSources.sources].filter((source) => {
+  const url = source.url.trim().replace(/\/+$/, '');
+  if (seenBundledUrls.has(url)) return false;
+  seenBundledUrls.add(url);
+  return true;
+});
 
 /**
  * 部署者通过 DEFAULT_SOURCES 环境变量预置的采集站。
- * 未配置时使用本 fork 中经过搜索、详情与播放分片检测的源列表。
+ * 未配置时下发全部搜索/详情验证过的源，播放已验证的源优先。
  * 显式设置 [] 可关闭默认源；部署者配置始终优先。
  * 格式为 JSON 数组：[{"name":"源名","url":"https://.../api.php/provide/vod","detail":"https://...","isAdult":false}]
  * 解析失败时告警并整体忽略，不影响站点运行。
@@ -12,7 +22,7 @@ export function getEnvSources(): SourceConfig[] {
   const raw = process.env.DEFAULT_SOURCES;
   const useBundled = !raw || !raw.trim();
   try {
-    const parsed: unknown = useBundled ? verifiedSources.sources : JSON.parse(raw!);
+    const parsed: unknown = useBundled ? bundledSources : JSON.parse(raw!);
     if (!Array.isArray(parsed)) throw new Error('必须是 JSON 数组');
     const list: SourceConfig[] = parsed.map((item, i) => {
       if (typeof item !== 'object' || item === null) {

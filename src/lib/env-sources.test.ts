@@ -1,5 +1,8 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { getEnvSources } from './env-sources';
+import searchSources from '../../public/api-sources.json';
+import verifiedSources from '../../public/verified-sources.json';
+import { getPlaybackStatus } from './source-playback';
 
 afterEach(() => vi.unstubAllEnvs());
 
@@ -7,9 +10,12 @@ describe('默认点播源与部署者覆盖', () => {
   it('未配置时直接下发实测源，URL key 在重复读取时保持稳定', () => {
     vi.stubEnv('DEFAULT_SOURCES', '');
     const sources = getEnvSources();
-    expect(sources.length).toBeGreaterThan(0);
+    expect(sources.length).toBe(49);
+    expect(new Set(sources.map((s) => s.url))).toEqual(new Set(searchSources.sources.map((s) => s.url)));
+    expect(sources.slice(0, verifiedSources.sources.length).every((s) => getPlaybackStatus(s.url) === 'verified')).toBe(true);
+    expect(sources.filter((s) => getPlaybackStatus(s.url) === 'pending')).toHaveLength(24);
     expect(new Set(sources.map((s) => s.url)).size).toBe(sources.length);
-    expect(sources.every((s) => s.key.startsWith('builtin_') && s.url.startsWith('https://'))).toBe(true);
+    expect(sources.every((s) => s.key.startsWith('builtin_') && /^https?:\/\//.test(s.url))).toBe(true);
     expect(getEnvSources()).toEqual(sources);
   });
 

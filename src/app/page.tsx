@@ -16,6 +16,7 @@ import { useToast } from '@/components/toast';
 import { EmptyState } from '@/components/states';
 import { Icon } from '@/components/icon';
 import { SiteFooter } from '@/components/site-footer';
+import { normalizeSourceUrl } from '@/lib/source-playback';
 
 /**
  * 首页：搜索（URL ?s= 驱动，可后退/分享）+ 豆瓣推荐。
@@ -63,13 +64,15 @@ function HomeContent() {
     key;
 
   const selectedSources = useMemo(() => {
-    // selectedKeys 可能含历史残留的重复 key：按 key 去重，避免同源重复搜索
+    // 按接口地址去重，预置、订阅与手动源共享同一接口时只搜索一次
     const seen = new Set<string>();
     return selectedKeys
       .map((key) => resolveSource({ customAPIs, envSources }, key))
       .filter((s): s is NonNullable<typeof s> => {
-        if (!s || !validateSourceUrl(s.url) || seen.has(s.key)) return false;
-        seen.add(s.key);
+        if (!s || !validateSourceUrl(s.url)) return false;
+        const url = normalizeSourceUrl(s.url);
+        if (seen.has(url)) return false;
+        seen.add(url);
         return true;
       })
       // 自动停用期内的源不参与搜索（到期自动恢复）
