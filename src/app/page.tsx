@@ -70,15 +70,13 @@ function HomeContent() {
       .map((key) => resolveSource({ customAPIs, envSources }, key))
       .filter((s): s is NonNullable<typeof s> => {
         if (!s || !validateSourceUrl(s.url)) return false;
+        // 先排除停用项，避免它按 URL 去重时遮住同地址的可用手动源。
+        if (isSourceDisabled({ sourceHealth }, s.key) || isInDisabledSubscription({ subscriptions }, s.key)) return false;
         const url = normalizeSourceUrl(s.url);
         if (seen.has(url)) return false;
         seen.add(url);
         return true;
-      })
-      // 自动停用期内的源不参与搜索（到期自动恢复）
-      .filter((s) => !isSourceDisabled({ sourceHealth }, s.key))
-      // 所属订阅被整体停用的源同样跳过（无损：各源勾选状态保留，重新启用即恢复）
-      .filter((s) => !isInDisabledSubscription({ subscriptions }, s.key));
+      });
   }, [customAPIs, envSources, selectedKeys, sourceHealth, subscriptions]);
   const disabledSources = useMemo(
     () => selectedKeys.filter((key) => isSourceDisabled({ sourceHealth }, key)),
