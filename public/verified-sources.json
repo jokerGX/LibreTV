@@ -8,9 +8,8 @@
       "detail": "https://ikunzy.com"
     },
     {
-      "name": "暴风资源",
-      "url": "https://bfzyapi.com/api.php/provide/vod",
-      "detail": "https://bfzy.tv"
+      "name": "光速（M3U8入口）",
+      "url": "https://api.guangsuapi.com/api.php/provide/vod/from/gsm3u8"
     },
     {
       "name": "光速资源",
@@ -18,48 +17,12 @@
       "detail": "https://api.guangsuapi.com"
     },
     {
-      "name": "魔都资源",
-      "url": "https://www.mdzyapi.com/api.php/provide/vod",
-      "detail": "https://www.moduzy.net"
+      "name": "金鹰资源（新接口）",
+      "url": "https://jyzyapi.com/provide/vod"
     },
     {
-      "name": "豪华资源",
-      "url": "https://hhzyapi.com/api.php/provide/vod",
-      "detail": "https://www.haohuazy.com"
-    },
-    {
-      "name": "速播资源",
-      "url": "https://subocaiji.com/api.php/provide/vod",
-      "detail": "https://www.subozy.com"
-    },
-    {
-      "name": "红牛资源",
-      "url": "https://www.hongniuzy2.com/api.php/provide/vod",
-      "detail": "https://www.hongniuzy.com"
-    },
-    {
-      "name": "虎牙资源",
-      "url": "https://www.huyaapi.com/api.php/provide/vod",
-      "detail": "https://www.huyaapi.com"
-    },
-    {
-      "name": "红牛（备用）",
-      "url": "https://hongniuzy2.com/api.php/provide/vod/from/hnm3u8"
-    },
-    {
-      "name": "金鹰点播",
-      "url": "https://jinyingzy.com/api.php/provide/vod",
-      "detail": "https://jinyingzy.com"
-    },
-    {
-      "name": "360 资源",
-      "url": "https://360zyzz.com/api.php/provide/vod",
-      "detail": "https://360zy.com"
-    },
-    {
-      "name": "新浪资源",
-      "url": "https://api.xinlangapi.com/xinlangapi.php/provide/vod",
-      "detail": "https://xinlangapi.com"
+      "name": "iKun（M3U8入口）",
+      "url": "https://ikunzyapi.com/api.php/provide/vod/from/ikm3u8/at/json"
     },
     {
       "name": "魔都动漫",
@@ -67,9 +30,77 @@
       "detail": "https://caiji.moduapi.cc"
     },
     {
-      "name": "艾旦影视",
-      "url": "https://lovedan.net/api.php/provide/vod",
-      "detail": "https://lovedan.net"
+      "name": "红牛（备用）",
+      "url": "https://hongniuzy2.com/api.php/provide/vod/from/hnm3u8"
+    },
+    {
+      "name": "金鹰资源（备用接口）",
+      "url": "https://jyzyapi.com/api.php/provide/vod",
+      "detail": "https://jyzyapi.com"
+    },
+    {
+      "name": "红牛（备用域名）",
+      "url": "https://www.hongniuzy3.com/api.php/provide/vod"
+    },
+    {
+      "name": "速播资源",
+      "url": "https://subocaiji.com/api.php/provide/vod",
+      "detail": "https://www.subozy.com"
+    },
+    {
+      "name": "金鹰资源（M3U8入口）",
+      "url": "https://jyzyapi.com/provide/vod/from/jinyingm3u8"
+    },
+    {
+      "name": "豪华资源",
+      "url": "https://hhzyapi.com/api.php/provide/vod",
+      "detail": "https://www.haohuazy.com"
+    },
+    {
+      "name": "虎牙（M3U8入口）",
+      "url": "https://www.huyaapi.com/api.php/provide/vod/from/hym3u8"
+    },
+    {
+      "name": "红牛资源",
+      "url": "https://www.hongniuzy2.com/api.php/provide/vod",
+      "detail": "https://www.hongniuzy.com"
+    },
+    {
+      "name": "新浪资源",
+      "url": "https://api.xinlangapi.com/xinlangapi.php/provide/vod",
+      "detail": "https://xinlangapi.com"
+    },
+    {
+      "name": "虎牙资源",
+      "url": "https://www.huyaapi.com/api.php/provide/vod",
+      "detail": "https://www.huyaapi.com"
+    },
+    {
+      "name": "360 资源",
+      "url": "https://360zyzz.com/api.php/provide/vod",
+      "detail": "https://360zy.com"
+    },
+    {
+      "name": "金鹰点播",
+      "url": "https://jinyingzy.com/api.php/provide/vod",
+      "detail": "https://jinyingzy.com"
+    },
+    {
+      "name": "魔都资源",
+      "url": "https://www.mdzyapi.com/api.php/provide/vod",
+      "detail": "https://www.moduzy.net"
+    },
+    {
+      "name": "360资源（备用域名）",
+      "url": "https://360zy.tv/api.php/provide/vod"
+    },
+    {
+      "name": "360资源（原站）",
+      "url": "https://360zy.com/api.php/provide/vod"
+    },
+    {
+      "name": "魔都（备用域名）",
+      "url": "https://www.moduzy.com/api.php/provide/vod"
     },
     {
       "name": "猫眼资源",
@@ -77,13 +108,18 @@
       "detail": "https://www.maoyanzy.com"
     },
     {
+      "name": "吉吉资源",
+      "url": "https://caiji.jjzyapi.com/api.php/provide/vod"
+    },
+    {
+      "name": "爱奇艺资源",
+      "url": "https://iqiyizyapi.com/api.php/provide/vod",
+      "detail": "https://iqiyizyapi.com"
+    },
+    {
       "name": "如意资源",
       "url": "https://cj.rycjapi.com/api.php/provide/vod",
       "detail": "https://www.ryzyw.com"
-    },
-    {
-      "name": "360资源（原站）",
-      "url": "https://360zy.com/api.php/provide/vod"
     }
   ]
 }
