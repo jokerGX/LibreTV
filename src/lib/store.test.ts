@@ -101,6 +101,25 @@ describe('订阅同步的 store 语义', () => {
     expect(store().customAPIs[0].key.startsWith('sub_')).toBe(true);
   });
 
+  it('过滤开启时不自动启用带标记的直播源，重新打开过滤会取消其启用', () => {
+    useAppStore.setState({
+      yellowFilter: true,
+      liveEnvSources: [],
+      liveEnvKeysSeen: [],
+      liveSelectedUrls: [],
+      liveSubscriptions: [],
+    });
+    store().setLiveEnvSources([{ key: 'builtin_live', name: '扩展直播', url: '/ext-live.m3u', isAdult: true }]);
+    expect(store().liveSelectedUrls).not.toContain('/ext-live.m3u');
+    store().toggleLiveSelected('/ext-live.m3u');
+    expect(store().liveSelectedUrls).not.toContain('/ext-live.m3u');
+    store().updateSettings({ yellowFilter: false });
+    store().toggleLiveSelected('/ext-live.m3u');
+    expect(store().liveSelectedUrls).toContain('/ext-live.m3u');
+    store().updateSettings({ yellowFilter: true });
+    expect(store().liveSelectedUrls).not.toContain('/ext-live.m3u');
+  });
+
   it('直播源：新导入自动启用、停用不勾回、消失的源清理启用状态但保留收藏', () => {
     const url = 'https://a.example.com/list.json';
     const m1 = 'https://live.example.com/1.m3u';

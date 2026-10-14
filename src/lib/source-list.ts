@@ -106,6 +106,7 @@ export function parseSourceListPayload(json: unknown): SourceListPayload {
       name: optionalString(s?.name) || hostnameOf(url),
       url,
       epg,
+      ...(s?.isAdult === true ? { isAdult: true } : {}),
     });
   }
 

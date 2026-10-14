@@ -17,6 +17,13 @@ export class ApiError extends Error {
 
 const UNAUTHORIZED_EVENT = 'libretv:unauthorized';
 
+/** 站内播放列表（以 / 开头）在请求前补成当前站点的绝对地址 */
+function resolveLiveUrl(url: string): string {
+  if (/^https?:\/\//i.test(url)) return url;
+  if (typeof window !== 'undefined' && url.startsWith('/')) return new URL(url, window.location.origin).href;
+  return url;
+}
+
 /** 单条测活结果（/api/live/probe，JSON 与 NDJSON 流共用同一结构） */
 export interface LiveProbeResult {
   url: string;
@@ -201,7 +208,7 @@ export const api = {
 
   /** 拉取并解析 M3U 订阅；force=1 跳过服务端缓存 */
   livePlaylist: (url: string, force = false, signal?: AbortSignal) => {
-    const sp = new URLSearchParams({ url });
+    const sp = new URLSearchParams({ url: resolveLiveUrl(url) });
     if (force) sp.set('force', '1');
     return request<LivePlaylistResponse>(`/api/live/playlist?${sp.toString()}`, { signal });
   },
@@ -226,7 +233,7 @@ export const api = {
 
   /** 订阅导出（.m3u）下载地址 */
   liveExportUrl: (url: string) => {
-    const sp = new URLSearchParams({ url, format: 'm3u' });
+    const sp = new URLSearchParams({ url: resolveLiveUrl(url), format: 'm3u' });
     return `/api/live/playlist?${sp.toString()}`;
   },
 

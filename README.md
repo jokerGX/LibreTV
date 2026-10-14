@@ -1,6 +1,6 @@
 # LibreTV
 
-> 本 fork 默认下发 49 个搜索和详情检查通过的点播接口，其中 25 个播放已验证、24 个播放待验证；搜索边返回边显示，展开来源时已验证接口优先，未配置 `DEFAULT_SOURCES` 时自动加载。完整清单、检测结果与部署方式见 [接口接入报告](docs/source-connectivity.md)。
+> 本 fork 默认下发 68 个搜索和详情检查通过的点播接口，其中 43 个播放已验证、25 个播放待验证；另有 1 份内置直播列表（24 个频道）。部分源带过滤标记，对应开关开启时不会自动勾选。搜索边返回边显示，展开来源时已验证接口优先，未配置 `DEFAULT_SOURCES` 时自动加载。完整清单、检测结果与部署方式见 [接口接入报告](docs/source-connectivity.md)。
 
 LibreTV Next.js 迁移版：免费在线视频聚合搜索与观看平台。基于 Next.js 15（App Router）+ TypeScript + Tailwind CSS，播放内核为 ArtPlayer + hls.js，支持亮暗双主题。
 
