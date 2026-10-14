@@ -1225,6 +1225,21 @@
       "name": "天涯（新接口）",
       "url": "https://tyyszyapi.com/api.php/provide/vod",
       "discoveredAt": "https://tyyszy.com/"
+    },
+    {
+      "name": "淘片资源",
+      "url": "https://taopianapi.com/cjapi/mc/vod/json.html",
+      "discoveredAt": "https://github.com/aliluya1977/TVBox/blob/master/shg1.json"
+    },
+    {
+      "name": "金鹰M3U8",
+      "url": "https://jyzyapi.com/provide/vod/from/jinyingm3u8",
+      "discoveredAt": "https://github.com/aliluya1977/TVBox/blob/master/shg1.json"
+    },
+    {
+      "name": "暴风App",
+      "url": "https://app.bfzyapi.com/api.php/provide/vod",
+      "discoveredAt": "https://github.com/aliluya1977/TVBox/blob/master/shg1.json"
     }
   ]
 }
