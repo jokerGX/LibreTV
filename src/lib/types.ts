@@ -1,4 +1,7 @@
 // 采集站（Apple CMS 资源站）描述
+/** 搜索的内容范围：不含 18+、仅 18+、或全部 */
+export type AdultMode = 'exclude' | 'only' | 'all';
+
 export interface SourceConfig {
   /** 唯一标识，如 "custom_0"；内置源直接用短名 */
   key: string;
@@ -98,7 +101,7 @@ export interface AuthStatusResponse {
   version: string;
   /** 部署者通过 DEFAULT_SOURCES 环境变量预置的采集站（未配置时为空数组） */
   defaultSources: SourceConfig[];
-  /** 部署者通过 DEFAULT_LIVE_SOURCES 环境变量预置的直播源（未配置时为空数组） */
+  /** 部署者通过 DEFAULT_LIVE_SOURCES 环境变量预置的直播源（未配置时为内置列表） */
   defaultLiveSources: LiveSourceConfig[];
   /** 部署者通过 DEFAULT_SUBSCRIPTIONS 环境变量预置的 SourceList 订阅链接（未配置时为空数组） */
   defaultSubscriptions: { url: string; name?: string }[];

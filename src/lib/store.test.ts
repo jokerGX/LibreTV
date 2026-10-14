@@ -24,6 +24,7 @@ beforeEach(() => {
     liveSelectedUrls: [],
     liveFavorites: [],
     liveRecent: [],
+    adultMode: 'all',
     yellowFilter: false,
   });
 });
@@ -99,6 +100,28 @@ describe('订阅同步的 store 语义', () => {
 
     expect(store().customAPIs).toHaveLength(1);
     expect(store().customAPIs[0].key.startsWith('sub_')).toBe(true);
+  });
+
+  it('仅 18+ 会勾上带标记的点播源，不含 18+ 会取消勾选', () => {
+    useAppStore.setState({
+      adultMode: 'exclude',
+      yellowFilter: true,
+      envSources: [],
+      customAPIs: [
+        { key: 'n', name: '普通', url: 'https://n.example/api.php/provide/vod' },
+        { key: 'a', name: '标记', url: 'https://a.example/api.php/provide/vod', isAdult: true },
+      ],
+      selectedKeys: ['n'],
+    });
+    store().updateSettings({ adultMode: 'only' });
+    expect(store().adultMode).toBe('only');
+    expect(store().yellowFilter).toBe(false);
+    expect(store().selectedKeys).toEqual(expect.arrayContaining(['n', 'a']));
+
+    store().updateSettings({ adultMode: 'exclude' });
+    expect(store().adultMode).toBe('exclude');
+    expect(store().yellowFilter).toBe(true);
+    expect(store().selectedKeys).toEqual(['n']);
   });
 
   it('过滤开启时不自动启用带标记的直播源，重新打开过滤会取消其启用', () => {

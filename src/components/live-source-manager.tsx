@@ -207,7 +207,7 @@ export function LiveSourceManager() {
                         aria-label={enabled ? `停用 ${row.label}` : `启用 ${row.label}`}
                         title={
                           adultBlocked
-                            ? '成人内容过滤开启中，需先关闭过滤才能启用此源'
+                            ? '内容范围是「不含 18+」时无法启用此源'
                             : enabled
                               ? '已启用，取消勾选可停用'
                               : '已停用，勾选后生效'

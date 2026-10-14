@@ -88,7 +88,7 @@ export function SwitchSourceModal({
       // 1) 并行搜索所有选中源
       setPhase('searching');
       try {
-        const { list } = await api.search(currentTitle, sources, store.yellowFilter, { signal: controller.signal });
+        const { list } = await api.search(currentTitle, sources, store.adultMode, { signal: controller.signal });
         if (cancelled) return;
 
         // 匹配口径：优先完全同名，其次名称以标题开头（兼容「小偷 HD」「小偷[电影解说]」这类修饰名）。
@@ -133,7 +133,7 @@ export function SwitchSourceModal({
       controller.abort();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentTitle, store.yellowFilter]);
+  }, [currentTitle, store.adultMode]);
 
   const sorted = [...candidates].sort((a, b) => {
     const aCurrent = a.source.key === currentSourceKey && String(a.result.vodId) === String(currentVodId);

@@ -3,8 +3,10 @@ import {
   extractEpisodesFromPlayUrl,
   extractM3u8FromText,
   filterAdultResults,
+  filterByAdultMode,
   filterRelevantResults,
   isAdultContent,
+  resultIsAdult,
   isRelevant,
   normalizeTitle,
   parseDetail,
@@ -147,6 +149,20 @@ describe('成人内容过滤', () => {
     const items = [{ typeName: '伦理片' }, { typeName: '剧情片' }];
     expect(filterAdultResults(items, true)).toEqual([{ typeName: '剧情片' }]);
     expect(filterAdultResults(items, false)).toHaveLength(2);
+  });
+
+  it('仅 18+ 保留带标记源的全部结果，以及其它源里的伦理片', () => {
+    const items = [
+      { name: '标记源普通分类', typeName: '国产视频', isAdult: true },
+      { name: '其它源伦理', typeName: '伦理片', isAdult: false },
+      { name: '剧情', typeName: '剧情片' },
+    ];
+    expect(resultIsAdult(items[0])).toBe(true);
+    expect(resultIsAdult(items[1])).toBe(true);
+    expect(resultIsAdult(items[2])).toBe(false);
+    expect(filterByAdultMode(items, 'only').map((i) => i.name)).toEqual(['标记源普通分类', '其它源伦理']);
+    expect(filterByAdultMode(items, 'exclude').map((i) => i.name)).toEqual(['剧情']);
+    expect(filterByAdultMode(items, 'all')).toHaveLength(3);
   });
 });
 

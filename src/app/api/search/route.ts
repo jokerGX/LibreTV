@@ -1,25 +1,28 @@
 import { NextResponse } from 'next/server';
 import { guardRequest } from '@/lib/api-guard';
-import { cmsRequestHeaders, filterAdultResults, filterRelevantResults, normalizeTitle, parseSearchList } from '@/lib/cms-parser';
+import { cmsRequestHeaders, filterByAdultMode, filterRelevantResults, normalizeTitle, parseSearchList, resolveAdultMode } from '@/lib/cms-parser';
 import { fetchUpstream, getCache, setCache } from '@/lib/fetch-utils';
+import { MAX_VOD_SOURCES } from '@/lib/source-list';
 import { checkUpstreamAllowed } from '@/lib/ssrf';
-import type { SearchResponse, SearchStreamEvent, SourceConfig, SourceSearchOutcome } from '@/lib/types';
+import type { AdultMode, SearchResponse, SearchStreamEvent, SourceConfig, SourceSearchOutcome } from '@/lib/types';
 
 export const runtime = 'nodejs';
 
 interface SearchBody {
   wd: string;
   sources: SourceConfig[];
+  adultMode?: AdultMode;
+  /** 旧客户端：false 表示全部，缺省或 true 表示不含 18+ */
   filterAdult?: boolean;
 }
 
 /** 搜索结果短缓存：同一关键词 + 同一组源在 TTL 内直接返回（播放页返回搜索页等场景） */
 const SEARCH_CACHE_TTL = 60 * 1000;
 
-/** 缓存键：wd + 成人过滤 + 排序后的源地址集合（直接用完整字符串，避免哈希碰撞串缓存） */
-function searchCacheKey(wd: string, sources: SourceConfig[], filterAdult: boolean): string {
+/** 缓存键：wd + 内容范围 + 排序后的源地址集合（直接用完整字符串，避免哈希碰撞串缓存） */
+function searchCacheKey(wd: string, sources: SourceConfig[], adultMode: AdultMode): string {
   const urls = sources.map((s) => s.url.replace(/\/+$/, '')).sort().join('|');
-  return `search:${wd}\n${filterAdult ? 1 : 0}\n${urls}`;
+  return `search:${wd}\n${adultMode}\n${urls}`;
 }
 
 /**
@@ -151,7 +154,7 @@ async function searchSource(source: SourceConfig, wd: string): Promise<SourceSea
 }
 
 /** 合并 + 去重 + 过滤 + 排序，stream 与非 stream 两种模式共用 */
-function aggregateOutcomes(outcomes: SourceSearchOutcome[], wd: string, filterAdult: boolean): SearchResponse {
+function aggregateOutcomes(outcomes: SourceSearchOutcome[], wd: string, adultMode: AdultMode): SearchResponse {
   const seen = new Set<string>();
   let list = outcomes.flatMap((o) => o.list).filter((item) => {
     const key = `${item.sourceKey}_${item.vodId}`;
@@ -160,7 +163,7 @@ function aggregateOutcomes(outcomes: SourceSearchOutcome[], wd: string, filterAd
     return true;
   });
 
-  list = filterAdultResults(list, filterAdult);
+  list = filterByAdultMode(list, adultMode);
   // 部分源站做分词/OR 模糊搜索（搜「摔跤吧！爸爸」返回一堆「爸爸XXX」），按关键词过滤
   list = filterRelevantResults(list, wd);
 
@@ -206,10 +209,10 @@ export async function POST(req: Request) {
   if (!Array.isArray(body.sources) || body.sources.length === 0) {
     return NextResponse.json({ error: '请至少选择一个点播源' }, { status: 400 });
   }
-  const sources = body.sources.slice(0, 50);
-  const filterAdult = body.filterAdult !== false;
+  const sources = body.sources.slice(0, MAX_VOD_SOURCES);
+  const adultMode = resolveAdultMode(body);
 
-  const cacheKey = searchCacheKey(wd, sources, filterAdult);
+  const cacheKey = searchCacheKey(wd, sources, adultMode);
   const cached = getCache<SearchResponse>(cacheKey);
   if (cached) {
     // 流式模式下缓存命中也要走 done 事件，客户端解析逻辑保持单一
@@ -225,7 +228,7 @@ export async function POST(req: Request) {
   const isStream = new URL(req.url).searchParams.get('stream') === '1';
   if (!isStream) {
     const outcomes = await Promise.all(sources.map((source) => searchSource(source, wd)));
-    const payload = aggregateOutcomes(outcomes, wd, filterAdult);
+    const payload = aggregateOutcomes(outcomes, wd, adultMode);
     setCache(cacheKey, payload, SEARCH_CACHE_TTL);
     return NextResponse.json(payload);
   }
@@ -248,12 +251,13 @@ export async function POST(req: Request) {
       await Promise.all(
         sources.map(async (source, i) => {
           const outcome = await searchSource(source, wd);
-          outcomes[i] = outcome;
-          send({ type: 'source', ...outcome });
+          const visible = { ...outcome, list: filterByAdultMode(outcome.list, adultMode) };
+          outcomes[i] = visible;
+          send({ type: 'source', ...visible });
         })
       );
 
-      const payload = aggregateOutcomes(outcomes, wd, filterAdult);
+      const payload = aggregateOutcomes(outcomes, wd, adultMode);
       setCache(cacheKey, payload, SEARCH_CACHE_TTL);
       send({ type: 'done', list: payload.list, failures: payload.failures });
       closed = true;

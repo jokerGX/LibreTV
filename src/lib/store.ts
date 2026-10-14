@@ -2,7 +2,7 @@
 
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import type { SourceConfig, LiveSourceConfig, SourceSearchOutcome } from './types';
+import type { AdultMode, SourceConfig, LiveSourceConfig, SourceSearchOutcome } from './types';
 import { clearLiveProbeResultsDb, loadLiveProbeResults, saveLiveProbeResults } from './db';
 import { PERSIST_KEY, createThrottledStorage } from './persist-storage';
 
@@ -14,6 +14,8 @@ import { PERSIST_KEY, createThrottledStorage } from './persist-storage';
 export interface AppSettings {
   customAPIs: SourceConfig[];
   selectedKeys: string[];
+  /** 搜索范围。exclude 与 yellowFilter=true 对齐，供勾选闸门继续使用 */
+  adultMode: AdultMode;
   yellowFilter: boolean;
   adFilter: boolean;
   doubanEnabled: boolean;
@@ -307,6 +309,7 @@ export const useAppStore = create<AppState>()(
       sourceHealth: {},
       envSubsSeen: [],
       selectedKeys: [],
+      adultMode: 'exclude',
       yellowFilter: true,
       adFilter: true,
       doubanEnabled: true,
@@ -749,30 +752,37 @@ export const useAppStore = create<AppState>()(
         // DEFAULT_RECOMMEND_SOURCE / DEFAULT_IMAGE_MODE 默认值不再覆盖该用户的选择
         const touched = 'recommendSource' in patch;
         const imageTouched = 'imageProxyMode' in patch;
-        // 打开成人内容过滤时，同步取消勾选所有成人源，避免两者并存
-        if (patch.yellowFilter === true) {
-          const adultKeys = new Set(
-            [...get().customAPIs, ...get().envSources]
-              .filter((s) => s.isAdult)
-              .map((s) => s.key)
-          );
-          const adultLiveUrls = new Set(
-            [...get().liveEnvSources, ...get().liveSubscriptions].filter((s) => s.isAdult).map((s) => s.url)
-          );
-          set({
-            ...patch,
-            ...(touched ? { recommendSourceTouched: true } : null),
-            ...(imageTouched ? { imageProxyModeTouched: true } : null),
-            selectedKeys: get().selectedKeys.filter((k) => !adultKeys.has(k)),
-            liveSelectedUrls: get().liveSelectedUrls.filter((u) => !adultLiveUrls.has(u)),
-          });
-          return;
-        }
-        set({
+        let mode: AdultMode | undefined =
+          patch.adultMode === 'exclude' || patch.adultMode === 'only' || patch.adultMode === 'all'
+            ? patch.adultMode
+            : undefined;
+        if (!mode && patch.yellowFilter === true) mode = 'exclude';
+        if (!mode && patch.yellowFilter === false) mode = 'all';
+
+        const next: Partial<AppState> = {
           ...patch,
-          ...(touched ? { recommendSourceTouched: true } : null),
-          ...(imageTouched ? { imageProxyModeTouched: true } : null),
-        });
+          ...(touched ? { recommendSourceTouched: true } : {}),
+          ...(imageTouched ? { imageProxyModeTouched: true } : {}),
+        };
+        if (mode) {
+          next.adultMode = mode;
+          // 勾选闸门仍看 yellowFilter：只有「不含 18+」才禁止勾选带标记的源
+          next.yellowFilter = mode === 'exclude';
+          const vod = [...get().customAPIs, ...get().envSources];
+          if (mode === 'exclude') {
+            const adultKeys = new Set(vod.filter((s) => s.isAdult).map((s) => s.key));
+            const adultLiveUrls = new Set(
+              [...get().liveEnvSources, ...get().liveSubscriptions].filter((s) => s.isAdult).map((s) => s.url)
+            );
+            next.selectedKeys = get().selectedKeys.filter((k) => !adultKeys.has(k));
+            next.liveSelectedUrls = get().liveSelectedUrls.filter((u) => !adultLiveUrls.has(u));
+          } else if (mode === 'only') {
+            // 仅 18+ 需要带标记的源参与搜索；其它源保持原勾选，用来覆盖伦理片等分类
+            const adultKeys = vod.filter((s) => s.isAdult).map((s) => s.key);
+            next.selectedKeys = [...new Set([...get().selectedKeys, ...adultKeys])];
+          }
+        }
+        set(next);
       },
     }),
     {
@@ -781,8 +791,9 @@ export const useAppStore = create<AppState>()(
       storage: createJSONStorage(createThrottledStorage),
       // v1：直播源新增归属字段、最近观看新增 sourceUrl。
       // v2：直播源归属改为多引用（fromSubscription 单值 → fromSubscriptions 数组）。
+      // v3：内容范围从布尔过滤扩展为 exclude / only / all。
       // 此前未声明 version 的存量数据会被视为 v0 并走 migrate 补齐。
-      version: 2,
+      version: 3,
       migrate: (persisted, version) => {
         const state = { ...((persisted ?? {}) as Partial<AppState>) };
         if (!Array.isArray(state.liveRecent)) state.liveRecent = [];
@@ -801,9 +812,17 @@ export const useAppStore = create<AppState>()(
               name: legacy.name,
               epg: legacy.epg,
               lastSync: legacy.lastSync,
+              isAdult: legacy.isAdult === true ? true : undefined,
               fromSubscriptions,
             };
           });
+        }
+        if (version < 3) {
+          const yellow = state.yellowFilter !== false;
+          if (state.adultMode !== 'exclude' && state.adultMode !== 'only' && state.adultMode !== 'all') {
+            state.adultMode = yellow ? 'exclude' : 'all';
+          }
+          state.yellowFilter = state.adultMode === 'exclude';
         }
         return state as AppState;
       },
@@ -821,6 +840,7 @@ export const useAppStore = create<AppState>()(
         liveRecent: s.liveRecent,
         sourceHealth: s.sourceHealth,
         envSubsSeen: s.envSubsSeen,
+        adultMode: s.adultMode,
         yellowFilter: s.yellowFilter,
         adFilter: s.adFilter,
         doubanEnabled: s.doubanEnabled,
