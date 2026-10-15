@@ -1,0 +1,20 @@
+#EXTM3U
+#PLAYLIST:成人直播
+#EXTINF:-1 tvg-id="jenny-live" group-title="成人",Jenny Live
+https://59ec5453559f0.streamlock.net/JennyLive/JennyLive/playlist.m3u8
+#EXTINF:-1 tvg-id="brazzers-tv" group-title="成人",Brazzers TV (H.265)
+http://88.212.7.11/live/test_brazzers_hd_hevc/playlist.m3u8
+#EXTINF:-1 tvg-id="desire" group-title="成人",Desire (H.265)
+http://88.212.7.11/live/test_desire_hd_hevc/playlist.m3u8
+#EXTINF:-1 tvg-id="dorcel-tv" group-title="成人",Dorcel TV (H.265)
+http://88.212.7.11/live/test_dorcel_hd_hevc/playlist.m3u8
+#EXTINF:-1 tvg-id="erox-hd" group-title="成人",EroX HD (H.265)
+http://88.212.7.11/live/test_erox_hd_hevc/playlist.m3u8
+#EXTINF:-1 tvg-id="eroxxx-hd" group-title="成人",EroXXX HD (H.265)
+http://88.212.7.11/live/test_eroxxx_hd_hevc/playlist.m3u8
+#EXTINF:-1 tvg-id="extasy" group-title="成人",Extasy (H.265)
+http://88.212.7.11/live/test_extasy_hd_hevc/playlist.m3u8
+#EXTINF:-1 tvg-id="leo-tv" group-title="成人",Leo TV (H.265)
+http://88.212.7.11/live/test_leo_hd_hevc/playlist.m3u8
+#EXTINF:-1 tvg-id="reality-kings" group-title="成人",Reality Kings (H.265)
+http://88.212.7.11/live/test_realitykings_sd_hevc/playlist.m3u8

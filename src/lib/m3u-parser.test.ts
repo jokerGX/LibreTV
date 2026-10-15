@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { normalizeStreamUrl, parseM3u } from './m3u-parser';
 
@@ -113,6 +115,24 @@ https://s.example.com/ok.m3u8`;
     const a = parseM3u('#EXTINF:-1,X\nhttps://s.example.com/x.m3u8');
     const b = parseM3u('#EXTINF:-1,X\nhttps://s.example.com/x.m3u8');
     expect(a[0].id).toBe(b[0].id);
+  });
+
+  it('内置成人列表能解析，且不含未成年向名称', () => {
+    const text = readFileSync(path.join(process.cwd(), 'public/adult-live.m3u'), 'utf8');
+    const channels = parseM3u(text, 'https://playlist.local/adult-live.m3u');
+    expect(channels.map((c) => c.name)).toEqual([
+      'Jenny Live',
+      'Brazzers TV (H.265)',
+      'Desire (H.265)',
+      'Dorcel TV (H.265)',
+      'EroX HD (H.265)',
+      'EroXXX HD (H.265)',
+      'Extasy (H.265)',
+      'Leo TV (H.265)',
+      'Reality Kings (H.265)',
+    ]);
+    expect(channels.every((c) => /^https?:\/\//.test(c.url))).toBe(true);
+    expect(channels.some((c) => /teen|young|未成年|幼/i.test(`${c.name} ${c.url}`))).toBe(false);
   });
 
   it('空输入与异常输入不抛错', () => {
