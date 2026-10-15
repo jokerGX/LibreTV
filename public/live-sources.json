@@ -9,6 +9,11 @@
     {
       "name": "卫视频道",
       "url": "https://raw.githubusercontent.com/best-fan/iptv-sources/main/cn_province.m3u8"
+    },
+    {
+      "name": "成人直播",
+      "url": "/adult-live.m3u",
+      "isAdult": true
     }
   ]
 }
