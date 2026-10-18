@@ -1,11 +1,7 @@
 /**
  * 下载文件的保存目标：
- * - Chromium（Edge/Chrome）：showSaveFilePicker 边下边写盘（FS Access API），
- *   必须在**用户手势内**调用（点击处理器的同步栈中）；
- * - 其余环境：生成文件后等待用户点击保存；iOS 使用系统文件分享，不自动导航到 blob URL。
- *
- * 有意不做 StreamSaver（mitm.html + SW 中转）：云平台域名下 SW 注册受限，
- * 复杂度高、收益边际——大文件场景建议直接使用 FS Access 浏览器。
+ * - 电脑：生成文件后交给浏览器下载，遵循浏览器默认目录及询问设置。
+ * - 手机/平板：等待用户点击保存；iOS 使用系统文件分享，不自动导航到 blob URL。
  */
 
 export interface SaveTarget {
@@ -20,12 +16,13 @@ export interface SaveTarget {
   abort(): Promise<void>;
 }
 
-export function supportsFileSystemAccess(): boolean {
-  return typeof window !== 'undefined' && 'showSaveFilePicker' in window;
-}
+export type SavingCapability = 'automatic' | 'manual';
 
-export function detectSavingCapability(): 'fs-access' | 'memory' {
-  return supportsFileSystemAccess() ? 'fs-access' : 'memory';
+export function detectSavingCapability(): SavingCapability {
+  if (typeof navigator === 'undefined') return 'manual';
+  const mobileHint = (navigator as Navigator & { userAgentData?: { mobile?: boolean } }).userAgentData?.mobile;
+  const mobile = mobileHint === true || /Android|iPad|iPhone|iPod/i.test(navigator.userAgent) || isIOS();
+  return mobile ? 'manual' : 'automatic';
 }
 
 export class UserCancelledError extends Error {
@@ -39,7 +36,7 @@ function isIOS(): boolean {
     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 }
 
-export function memoryTarget(filename: string, confirmOverBytes = 500 * 1024 * 1024): SaveTarget {
+export function memoryTarget(filename: string, confirmOverBytes = 500 * 1024 * 1024, automatic = false): SaveTarget {
   // Snapshot each chunk into a Blob as it arrives, then release the typed array.
   // This also respects byteOffset/byteLength rather than exporting an entire backing buffer.
   const chunks: Blob[] = [];
@@ -47,7 +44,7 @@ export function memoryTarget(filename: string, confirmOverBytes = 500 * 1024 * 1
   let done = false;
   let file: File | undefined;
   let saving = false;
-  return {
+  const target: SaveTarget = {
     kind: 'memory',
     get file() { return file; },
     async write(data) {
@@ -65,6 +62,7 @@ export function memoryTarget(filename: string, confirmOverBytes = 500 * 1024 * 1
       done = true;
       file = new File(chunks, filename, { type: /\.mp4$/i.test(filename) ? 'video/mp4' : 'video/mp2t' });
       chunks.length = 0;
+      if (automatic) await target.save!();
     },
     async save() {
       if (!file) throw new Error('文件尚未生成或已释放，请重新生成');
@@ -72,7 +70,7 @@ export function memoryTarget(filename: string, confirmOverBytes = 500 * 1024 * 1
       saving = true;
       try {
         // No await before share(): iOS requires a fresh user gesture.
-        if (typeof navigator.share === 'function' && navigator.canShare?.({ files: [file] })) {
+        if (!automatic && typeof navigator.share === 'function' && navigator.canShare?.({ files: [file] })) {
           await navigator.share({ files: [file] });
         } else {
           if (isIOS()) {
@@ -86,9 +84,12 @@ export function memoryTarget(filename: string, confirmOverBytes = 500 * 1024 * 1
           a.target = '_blank';
           a.rel = 'noopener';
           document.body.appendChild(a);
-          a.click();
-          a.remove();
-          setTimeout(() => URL.revokeObjectURL(url), 60_000);
+          try {
+            a.click();
+          } finally {
+            a.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 60_000);
+          }
         }
         file = undefined;
       } finally {
@@ -102,52 +103,18 @@ export function memoryTarget(filename: string, confirmOverBytes = 500 * 1024 * 1
       file = undefined;
     },
   };
+  return target;
 }
 
 /**
- * 选择保存目标并打开写入流。showSaveFilePicker 必须在用户手势内调用，
- * 因此本函数应在点击处理器里被 await（调用方负责）。
- * 用户取消文件选择器时抛出 UserCancelledError。
+ * 电脑不调用文件选择器；完成后由浏览器按其下载设置保存。
+ * 手机保留用户手势内的显式分享/保存操作。
  */
 export async function pickSaveTarget(filename: string, estimatedBytes?: number): Promise<SaveTarget> {
-  if (supportsFileSystemAccess()) {
-    try {
-      // Safari 会暴露 showSaveFilePicker 之外的旧实现；直接 try/catch 兜底
-      const picker = (
-        window as unknown as {
-          showSaveFilePicker: (opts: {
-            suggestedName: string;
-          }) => Promise<{ createWritable: () => Promise<WritableStream> }>;
-        }
-      ).showSaveFilePicker;
-      const handle = await picker({ suggestedName: filename });
-      const writable = await handle.createWritable();
-      const writer = writable.getWriter();
-      return {
-        kind: 'fs',
-        async write(data) {
-          await writer.write(data);
-        },
-        async close() {
-          await writer.close();
-        },
-        async abort() {
-          try {
-            await writer.abort();
-          } catch { /* 已关闭则忽略 */ }
-        },
-      };
-    } catch (err) {
-      if (err instanceof DOMException && err.name === 'AbortError') {
-        throw new UserCancelledError();
-      }
-      // 文件选择失败（权限/环境）→ 落到内存聚合
-    }
-  }
   if (estimatedBytes && estimatedBytes > 500 * 1024 * 1024) {
-    if (!window.confirm('该视频体积较大（未提供磁盘直写能力的环境），将暂存在内存中，可能导致页面卡顿。是否继续？')) {
+    if (!window.confirm('该视频体积较大，生成文件需要暂存，可能占用较多内存。是否继续？')) {
       throw new UserCancelledError();
     }
   }
-  return memoryTarget(filename);
+  return memoryTarget(filename, undefined, detectSavingCapability() === 'automatic');
 }
