@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { patchInitSegmentDuration } from './mp4-transmuxer';
+import { readFileSync } from 'node:fs';
+import { patchInitSegmentDuration, StreamingTransmuxer, transmuxTSToMP4 } from './mp4-transmuxer';
 
 const u32 = (v: number) =>
   new Uint8Array([(v >>> 24) & 0xff, (v >>> 16) & 0xff, (v >>> 8) & 0xff, v & 0xff]);
@@ -65,5 +66,77 @@ describe('patchInitSegmentDuration', () => {
     const init = initSegment(0xffffffff, 0xffffffff);
     patchInitSegmentDuration(init, 60);
     expect(readU32(init, MVHD_PAYLOAD + 16)).toBe(0xffffffff);
+  });
+});
+
+// Three one-second H.264/AAC TS segments with an original timestamp near 26 hours.
+// Generated from testsrc2/sine; no external media or network requests are needed.
+const offsetSegments = [0, 1, 2].map((i) =>
+  new Uint8Array(readFileSync(new URL(`./fixtures/download-offset-${i}.ts.bin`, import.meta.url)))
+);
+
+/** Read actual fragment decode times, rather than trusting the moov duration. */
+function fragmentTimes(data: Uint8Array): Map<number, number[]> {
+  const tracks = new Map<number, number[]>();
+  function boxes(start: number, end: number, visit: (type: string, payload: number, end: number) => void) {
+    for (let pos = start; pos + 8 <= end;) {
+      const size = readU32(data, pos);
+      if (size < 8 || pos + size > end) throw new Error('Invalid MP4 box');
+      const type = String.fromCharCode(...data.subarray(pos + 4, pos + 8));
+      visit(type, pos + 8, pos + size);
+      pos += size;
+    }
+  }
+  boxes(0, data.length, (type, start, end) => {
+    if (type !== 'moof') return;
+    boxes(start, end, (type, start, end) => {
+      if (type !== 'traf') return;
+      let track = 0;
+      let time: number | undefined;
+      boxes(start, end, (type, payload) => {
+        if (type === 'tfhd') track = readU32(data, payload + 4);
+        if (type === 'tfdt') {
+          time = data[payload] === 1
+            ? readU32(data, payload + 4) * 2 ** 32 + readU32(data, payload + 8)
+            : readU32(data, payload + 4);
+        }
+      });
+      if (track && time !== undefined) tracks.set(track, [...(tracks.get(track) ?? []), time]);
+    });
+  });
+  return tracks;
+}
+
+function expectZeroBasedTimeline(data: Uint8Array) {
+  const tracks = fragmentTimes(data);
+  expect(tracks.size).toBe(2); // Both video and audio survived transmuxing.
+  for (const times of tracks.values()) {
+    expect(times[0]).toBe(0);
+    expect(times.every((time) => time >= 0 && time < 3 * 90_000)).toBe(true);
+    // Every subsequent fragment must advance, not restart at zero after each flush.
+    for (let i = 1; i < times.length; i++) expect(times[i]).toBeGreaterThan(times[i - 1]);
+  }
+}
+
+describe('MP4 download timeline', () => {
+  it('normalizes long source timestamps and preserves continuity across streaming flushes', async () => {
+    const chunks: Uint8Array[] = [];
+    let closed = false;
+    const writer = {
+      async write(data: Uint8Array) { chunks.push(data); },
+      async close() { closed = true; },
+    };
+    const transmuxer = new StreamingTransmuxer(writer, { durationSeconds: 3 });
+    for (const segment of offsetSegments) await transmuxer.pushAndTransmux(segment);
+    await transmuxer.finish();
+    expect(closed).toBe(true);
+    const data = new Uint8Array(await new Blob(chunks.map((c) => c.buffer as ArrayBuffer)).arrayBuffer());
+    expectZeroBasedTimeline(data);
+    for (const times of fragmentTimes(data).values()) expect(times.length).toBeGreaterThanOrEqual(3);
+  });
+
+  it('normalizes long source timestamps in the batch export too', async () => {
+    const blob = transmuxTSToMP4(offsetSegments, 3);
+    expectZeroBasedTimeline(new Uint8Array(await blob.arrayBuffer()));
   });
 });

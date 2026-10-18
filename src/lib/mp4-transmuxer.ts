@@ -104,7 +104,10 @@ export class StreamingTransmuxer {
   ) {
     this.writer = writer;
     this.durationSeconds = options?.durationSeconds;
-    this.transmuxer = new muxjs.mp4.Transmuxer({ keepOriginalTimestamps: true });
+    // Downloads are standalone files: start at zero instead of keeping a source
+    // clock that may begin many hours in. Reuse this instance across flushes
+    // so later fragments keep their relative timing and audio/video alignment.
+    this.transmuxer = new muxjs.mp4.Transmuxer({ keepOriginalTimestamps: false });
     this.transmuxer.on('data', (segment: any) => {
       const media = new Uint8Array(segment.data);
       const data: Uint8Array = this.initWritten
@@ -168,7 +171,7 @@ function concat(a: Uint8Array, b: Uint8Array): Uint8Array {
 
 /** 批量转封装：push 全部分片后一次 flush，聚合为 MP4 Blob（内存型，适合小体量） */
 export function transmuxTSToMP4(tsSegments: Uint8Array[], duration?: number): Blob {
-  const transmuxer = new muxjs.mp4.Transmuxer({ keepOriginalTimestamps: true });
+  const transmuxer = new muxjs.mp4.Transmuxer({ keepOriginalTimestamps: false });
   const chunks: Uint8Array[] = [];
   let initWritten = false;
   transmuxer.on('data', (segment: any) => {
