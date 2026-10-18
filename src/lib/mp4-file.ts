@@ -137,7 +137,17 @@ export class Mp4FileAssembler {
           : u32(media, tfdt.payload + 4);
         if (!Number.isSafeInteger(decodeTime)) throw fail();
         if (track.base === undefined) track.base = decodeTime;
-        if (track.end !== undefined && Math.abs(decodeTime - track.end) > 1) throw fail();
+        if (track.end !== undefined) {
+          // TS timestamps use 90 kHz, while AAC uses its sample-rate clock.
+          // Real sources can round each segment boundary by multiple audio ticks.
+          // Preserve this small offset in the preceding sample's duration so
+          // stts still matches the source clock without cumulative A/V drift.
+          const delta = decodeTime - track.end;
+          const tolerance = Math.max(1, Math.floor(track.scale / 1000)); // 1 ms in this track's clock.
+          const previous = track.samples[track.samples.length - 1];
+          if (Math.abs(delta) > tolerance || !previous || previous.duration + delta <= 0) throw fail();
+          previous.duration += delta;
+        }
         for (const trun of boxes(media, traf.payload, traf.end).filter((b) => b.type === 'trun')) {
           const trunFlags = u32(media, trun.payload) & 0xffffff;
           const count = u32(media, trun.payload + 4);
