@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { memoryTarget, pickSaveTarget, UserCancelledError } from './download-saver';
+import { detectSavingCapability, memoryTarget, pickSaveTarget, UserCancelledError } from './download-saver';
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -95,18 +95,72 @@ describe('prepared download file', () => {
     expect(revoke).toHaveBeenCalledWith('blob:test');
   });
 
-  it('keeps desktop disk streaming and propagates cancellation of its save picker', async () => {
-    const writer = { write: vi.fn(async () => {}), close: vi.fn(async () => {}), abort: vi.fn() };
-    const picker = vi.fn(async () => ({ createWritable: async () => ({ getWriter: () => writer }) }));
+  it('automatically downloads desktop files without invoking a save picker or share menu', async () => {
+    vi.useFakeTimers();
+    const share = vi.fn();
+    vi.stubGlobal('navigator', { userAgent: 'Chrome Windows', platform: 'Win32', maxTouchPoints: 0, share, canShare: () => true });
+    const picker = vi.fn();
     vi.stubGlobal('window', { showSaveFilePicker: picker });
+    const anchor = { click: vi.fn(), remove: vi.fn(), href: '', download: '', target: '', rel: '' };
+    vi.stubGlobal('document', { createElement: () => anchor, body: { appendChild: vi.fn() } });
+    const createURL = vi.spyOn(URL, 'createObjectURL').mockReturnValue('blob:test');
+    const revoke = vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => {});
     const target = await pickSaveTarget('episode.mp4');
-    expect(target.kind).toBe('fs');
+    await target.write(new Uint8Array([9, 1, 2, 8]).subarray(1, 3));
+    expect(anchor.click).not.toHaveBeenCalled();
+    await target.close();
+    expect(anchor.click).toHaveBeenCalledOnce();
+    expect(anchor.download).toBe('episode.mp4');
+    expect(picker).not.toHaveBeenCalled();
+    expect(share).not.toHaveBeenCalled();
+    const file = createURL.mock.calls[0][0] as File;
+    expect(new Uint8Array(await file.arrayBuffer())).toEqual(new Uint8Array([1, 2]));
+    expect(target.file).toBeUndefined();
+    await target.close();
+    expect(anchor.click).toHaveBeenCalledOnce();
+    vi.runAllTimers();
+    expect(revoke).toHaveBeenCalledWith('blob:test');
+  });
+
+  it('keeps the mobile factory on explicit file sharing even if a picker exists', async () => {
+    const share = mobile();
+    const picker = vi.fn();
+    vi.stubGlobal('window', { showSaveFilePicker: picker });
+    const createURL = vi.spyOn(URL, 'createObjectURL');
+    const target = await pickSaveTarget('episode.mp4');
     await target.write(new Uint8Array([1]));
     await target.close();
-    expect(writer.write).toHaveBeenCalledOnce();
-    expect(writer.close).toHaveBeenCalledOnce();
-    expect(target.file).toBeUndefined();
-    picker.mockRejectedValueOnce(new DOMException('Cancelled', 'AbortError'));
-    await expect(pickSaveTarget('episode.mp4')).rejects.toBeInstanceOf(UserCancelledError);
+    expect(target.file).toBeDefined();
+    expect(share).not.toHaveBeenCalled();
+    expect(createURL).not.toHaveBeenCalled();
+    expect(picker).not.toHaveBeenCalled();
+    await target.save!();
+    expect(share).toHaveBeenCalledOnce();
+  });
+
+  it('retains the large-file memory confirmation for browsers without streaming to disk', async () => {
+    vi.stubGlobal('navigator', { userAgent: 'Chrome Windows', platform: 'Win32', maxTouchPoints: 0 });
+    vi.stubGlobal('window', { confirm: vi.fn(() => false) });
+    await expect(pickSaveTarget('episode.mp4', 700 * 1024 * 1024)).rejects.toBeInstanceOf(UserCancelledError);
+  });
+});
+
+describe('device-specific saving', () => {
+  it.each([
+    [{ userAgent: 'iPhone CriOS', platform: 'iPhone', maxTouchPoints: 5 }, 'manual'],
+    [{ userAgent: 'Android Chrome', platform: 'Linux', maxTouchPoints: 5 }, 'manual'],
+    [{ userAgent: 'Macintosh Safari', platform: 'MacIntel', maxTouchPoints: 5 }, 'manual'],
+    [{ userAgent: 'Windows Chrome', platform: 'Win32', maxTouchPoints: 10 }, 'automatic'],
+    [{ userAgent: 'Macintosh Safari', platform: 'MacIntel', maxTouchPoints: 0 }, 'automatic'],
+    [{ userAgent: 'Linux Chrome', platform: 'Linux', maxTouchPoints: 0, userAgentData: { mobile: true } }, 'manual'],
+    [{ userAgent: 'Linux Firefox', platform: 'Linux', maxTouchPoints: 0 }, 'automatic'],
+  ] as const)('selects saving for %j', (navigator, expected) => {
+    vi.stubGlobal('navigator', navigator);
+    expect(detectSavingCapability()).toBe(expected);
+  });
+
+  it('uses the conservative manual mode before browser hydration', () => {
+    vi.stubGlobal('navigator', undefined);
+    expect(detectSavingCapability()).toBe('manual');
   });
 });

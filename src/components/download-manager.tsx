@@ -13,19 +13,19 @@ import {
   type DownloadProgress,
 } from '@/lib/m3u8-downloader';
 import { loadDownloadSettings, saveDownloadSettings } from '@/lib/download-settings';
-import { detectSavingCapability, pickSaveTarget, type SaveTarget } from '@/lib/download-saver';
+import { detectSavingCapability, pickSaveTarget, type SaveTarget, type SavingCapability } from '@/lib/download-saver';
 import { downloadProgressStatus, recoverDownloadStatus } from '@/lib/download-state';
 import { Switch } from './settings-shared';
 
 /**
  * 全局下载管理器（UI 采用本站 Drawer 模式）：
  * - 入口：header 下载图标 + 播放页「下载本集」（均派发 window 事件）；
- * - 并发：全局最多同时进行 3 个任务，其余排队（waiting）；
+ * - 并发：一次处理一集，降低文件聚合时的内存占用，其余排队（waiting）；
  * - 断点：已下载分片写入 Cache Storage（网络层断点）；
- *   保存目标（FS Access / 内存）活不过页面刷新，恢复时由用户点击「继续」重新选择。
+ *   正在生成的文件活不过页面刷新，恢复时由用户点击「继续」重新生成。
  */
 
-const MAX_CONCURRENT_DOWNLOADS = 3;
+const MAX_CONCURRENT_DOWNLOADS = 1;
 /** 进度落库节流间隔：整集动辄上千分片，逐片「写库 + 全量查询 + setState」会把长任务页面拖垮 */
 const PROGRESS_PERSIST_INTERVAL_MS = 1000;
 const ADD_TASK_EVENT = 'libretv:add-download';
@@ -47,14 +47,14 @@ interface RunningHandle {
 export function DownloadManager({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const { toast } = useToast();
   const [tasks, setTasks] = useState<DownloadTaskEntry[]>([]);
-  const [capability, setCapability] = useState<'fs-access' | 'memory'>('memory');
+  const [capability, setCapability] = useState<SavingCapability>('manual');
   const [chunkCache, setChunkCache] = useState(true);
   const [proxy, setProxy] = useState(false);
   const running = useRef(new Map<string, RunningHandle>());
   const targets = useRef(new Map<string, SaveTarget>());
   const initialization = useRef<Promise<void>>(Promise.resolve());
   const [savingId, setSavingId] = useState<string | null>(null);
-  const maxConcurrent = capability === 'memory' ? 1 : MAX_CONCURRENT_DOWNLOADS;
+  const maxConcurrent = MAX_CONCURRENT_DOWNLOADS;
 
   const refresh = useCallback(() => {
     void db.downloads.orderBy('createdAt').reverse().toArray().then(setTasks);
@@ -139,7 +139,7 @@ export function DownloadManager({ isOpen, onClose }: { isOpen: boolean; onClose:
           await updateEntry(entry.id, { status: 'completed' });
           targets.current.delete(entry.id);
           void clearDownloadChunks(entry.id);
-          toast(`《${entry.title}》下载完成`, 'success');
+          toast(`《${entry.title}》已交给浏览器下载，请在下载列表确认`, 'success');
         })
         .catch(async (err: Error) => {
           if (abort.signal.aborted) return; // 用户取消：状态已在取消处理里写好
@@ -175,7 +175,7 @@ export function DownloadManager({ isOpen, onClose }: { isOpen: boolean; onClose:
     })();
   }, [startTask, maxConcurrent]);
 
-  // —— 事件：新增任务（用户手势内触发，可安全弹文件选择器） ——
+  // —— 事件：新增任务 ——
   // 监听器必须常驻：播放页「下载本集」在抽屉关闭时也会派发事件，
   // 若仅 isOpen 时注册，事件会凭空丢失——toast 提示了入队，实际什么都没发生
   useEffect(() => {
@@ -203,7 +203,7 @@ export function DownloadManager({ isOpen, onClose }: { isOpen: boolean; onClose:
           createdAt: Date.now(),
           updatedAt: Date.now(),
         };
-        // 用户手势内预选保存目标（FS Access 弹窗必须在手势内）
+        // 准备保存目标：电脑完成后交给浏览器，手机完成后等待用户点击保存。
         try {
           const target = await pickSaveTarget(`${detail.title}.${format.toLowerCase()}`);
           targets.current.set(id, target);
@@ -262,7 +262,7 @@ export function DownloadManager({ isOpen, onClose }: { isOpen: boolean; onClose:
       return;
     }
     if (entry.status === 'paused' || entry.status === 'waiting' || entry.status === 'error') {
-      // 恢复：需要用户手势内重选保存目标（浏览器限制）
+      // 重载后重新生成文件，已有网络分片缓存仍可复用。
       try {
         const target = await pickSaveTarget(`${entry.title}.${entry.format.toLowerCase()}`);
         targets.current.set(entry.id, target);
@@ -344,12 +344,14 @@ export function DownloadManager({ isOpen, onClose }: { isOpen: boolean; onClose:
           <Switch checked={proxy} onChange={onToggleProxy} label="经服务器中转下载" />
         </div>
         <p className="text-xs text-faint">
-          保存方式：{capability === 'fs-access' ? '磁盘直写（边下边存）' : '文件生成后点击保存'}
+          保存方式：{capability === 'automatic' ? '完成后自动交给浏览器下载' : '文件生成后点击保存'}
           {chunkCache ? ' · 支持断点续传' : ' · 当前环境无断点缓存（需 HTTPS 访问）'} ·
           同时进行 {Math.min(running.current.size, maxConcurrent)}/{maxConcurrent} 个任务
         </p>
-        {capability === 'memory' && (
+        {capability === 'manual' ? (
           <p className="text-xs text-faint">生成文件期间请保持页面在前台。生成后点击「保存文件」，在系统菜单中选择「存储到文件」。刷新后可点击「继续」重新生成。</p>
+        ) : (
+          <p className="text-xs text-faint">文件将按浏览器设置下载到默认目录。若希望不询问位置，请关闭浏览器的「每次下载前询问保存位置」；连续下载多集时，可能需要允许本站下载多个文件。</p>
         )}
         {tasks.length === 0 && (
           <div className="py-10 text-center text-sm text-faint">
