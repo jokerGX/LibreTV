@@ -199,7 +199,7 @@ async function runStreamingJob(ctx: {
   const { parsed, format, aesKey, target, pause, signal, total, report } = ctx;
   // MP4 转封装同样是流式的：push 一片立刻产出 fMP4 片段写出，无需聚合整集
   const transmuxer =
-    format === 'MP4' ? new StreamingTransmuxer(target, { durationSeconds: parsed.totalDuration }) : undefined;
+    format === 'MP4' ? new StreamingTransmuxer(target) : undefined;
   for (let i = 1; i <= total; i++) {
     if (signal.aborted) return;
     await pause.waitIfPaused();
@@ -356,9 +356,8 @@ export async function runDownloadJob(opts: DownloadJobOptions): Promise<void> {
   // —— 顺序写出（转封装 / 拼接） ——
   report(total, total, 'processing');
   if (format === 'MP4') {
-    // 传入整集时长：mux.js 恒把 moov 时长写成 0xFFFFFFFF（timescale 90000
-    // → 播放器显示 13:15:21），必须在写出 initSegment 前回填真实值
-    const transmuxer = new StreamingTransmuxer(target, { durationSeconds: parsed.totalDuration });
+    // 写出常规 MP4：最终索引和时长由实际样本计算，而非仅回填播放列表时长。
+    const transmuxer = new StreamingTransmuxer(target);
     for (let i = 1; i <= total; i++) {
       if (jobSignal.aborted) return;
       await pause.waitIfPaused();
