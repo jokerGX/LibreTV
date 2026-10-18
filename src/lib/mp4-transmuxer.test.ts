@@ -118,6 +118,42 @@ function expectZeroBasedTimeline(data: Uint8Array) {
   }
 }
 
+/** Inspect every init duration, including mdhd which Apple's player may use. */
+function durationHeaders(data: Uint8Array) {
+  const headers: { type: string; timescale: number; duration: number }[] = [];
+  let movieScale = 90_000;
+  function walk(start: number, end: number) {
+    for (let pos = start; pos + 8 <= end;) {
+      const size = readU32(data, pos);
+      if (size < 8 || pos + size > end) throw new Error('Invalid MP4 box');
+      const type = String.fromCharCode(...data.subarray(pos + 4, pos + 8));
+      const payload = pos + 8;
+      if (['moov', 'trak', 'mdia'].includes(type)) walk(payload, pos + size);
+      if (type === 'mvhd' || type === 'mdhd') {
+        const timescale = readU32(data, payload + 12);
+        if (type === 'mvhd') movieScale = timescale;
+        headers.push({ type, timescale, duration: readU32(data, payload + 16) });
+      }
+      if (type === 'tkhd') {
+        headers.push({ type, timescale: movieScale, duration: readU32(data, payload + 20) });
+      }
+      pos += size;
+    }
+  }
+  walk(0, data.length);
+  return headers;
+}
+
+function expectCompleteDurations(data: Uint8Array, seconds: number, audioScale: number) {
+  const headers = durationHeaders(data);
+  expect(headers.map((h) => h.type).sort()).toEqual(['mdhd', 'mdhd', 'mvhd', 'tkhd', 'tkhd']);
+  expect(headers.find((h) => h.type === 'mdhd' && h.timescale === audioScale)).toBeDefined();
+  for (const header of headers) {
+    expect(header.duration).not.toBe(0xffffffff);
+    expect(header.duration / header.timescale).toBe(seconds);
+  }
+}
+
 describe('MP4 download timeline', () => {
   it('normalizes long source timestamps and preserves continuity across streaming flushes', async () => {
     const chunks: Uint8Array[] = [];
@@ -132,11 +168,38 @@ describe('MP4 download timeline', () => {
     expect(closed).toBe(true);
     const data = new Uint8Array(await new Blob(chunks.map((c) => c.buffer as ArrayBuffer)).arrayBuffer());
     expectZeroBasedTimeline(data);
+    expectCompleteDurations(data, 3, 48_000);
     for (const times of fragmentTimes(data).values()) expect(times.length).toBeGreaterThanOrEqual(3);
   });
 
   it('normalizes long source timestamps in the batch export too', async () => {
     const blob = transmuxTSToMP4(offsetSegments, 3);
-    expectZeroBasedTimeline(new Uint8Array(await blob.arrayBuffer()));
+    const data = new Uint8Array(await blob.arrayBuffer());
+    expectZeroBasedTimeline(data);
+    expectCompleteDurations(data, 3, 48_000);
+  });
+
+  it('reproduces the 27-hour audio header and patches it using its own 44100 Hz clock', async () => {
+    const segment = new Uint8Array(readFileSync(new URL('./fixtures/download-44100.ts.bin', import.meta.url)));
+    const raw = new Uint8Array(await transmuxTSToMP4([segment]).arrayBuffer());
+    const audioHeader = durationHeaders(raw).find((h) => h.type === 'mdhd' && h.timescale === 44_100)!;
+    expect(audioHeader.duration).toBe(0xffffffff);
+    expect(audioHeader.duration / audioHeader.timescale).toBeCloseTo(27 * 3600 + 3 * 60 + 11.55, 1);
+    const fixed = new Uint8Array(await transmuxTSToMP4([segment], 3).arrayBuffer());
+    expectCompleteDurations(fixed, 3, 44_100);
+    // AAC priming can leave a small relative audio offset; it must not become hours.
+    const starts = [...fragmentTimes(fixed).values()].map((times) => times[0]);
+    expect(Math.min(...starts)).toBe(0);
+    expect(starts.every((time) => time >= 0 && time < 9000)).toBe(true);
+  });
+
+  it('uses the movie clock for tkhd and each media clock for mdhd', () => {
+    const init = box('moov',
+      box('mvhd', fullBox([0, 0, 1000, 0xffffffff])),
+      box('trak', box('tkhd', fullBox([0, 0, 1, 0, 0xffffffff])),
+        box('mdia', box('mdhd', fullBox([0, 0, 90000, 0xffffffff])))),
+      box('trak', box('tkhd', fullBox([0, 0, 2, 0, 0xffffffff])),
+        box('mdia', box('mdhd', fullBox([0, 0, 44100, 0xffffffff])))));
+    expectCompleteDurations(patchInitSegmentDuration(init, 2730), 2730, 44100);
   });
 });

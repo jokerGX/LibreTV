@@ -49,34 +49,50 @@ function walkBoxes(
 /**
  * 把 mux.js 初始化段里的「未知时长」哨兵值替换成真实时长。
  *
- * mux.js 的 `moov` 恒为 `mvhd(0xffffffff)`（`trak` 里 `tkhd` 同样），而它的 mvhd
- * timescale 是 90000 —— 于是任何按 mvhd 读时长的播放器/资源管理器都会得到
- * 0xFFFFFFFF / 90000 ≈ 47721.86s ≈ 13:15:21，即「每集下载出来都是 13 小时多」。
- * 与片源无关，是封装层问题，只能在写出 initSegment 前就地回填。
+ * mux.js 在 mvhd、tkhd 和每条轨道的 mdhd 中写入 0xffffffff。
+ * 仅回填 mvhd/tkhd 不够：44100Hz 音频的 mdhd 仍被读成约 27:03:12，
+ * 即使分片时间戳已经从零开始。mvhd/tkhd 用电影时基，mdhd 用各轨道自己的
+ * 时基（视频常为 90000，音频为采样率），必须全部换算后写入。
  *
  * 只处理 version 0（mux.js 实际产物）；version 1 的 8 字节 duration 不改写。
  */
 export function patchInitSegmentDuration(init: Uint8Array, seconds: number): Uint8Array {
   if (!Number.isFinite(seconds) || seconds <= 0) return init;
-  const ticks = Math.min(Math.round(seconds * MOVIE_TIMESCALE), UNKNOWN_DURATION - 1);
+  const ticksFor = (timescale: number) =>
+    Math.min(Math.round(seconds * timescale), UNKNOWN_DURATION - 1);
   // 复制一份：initSegment 由 mux.js 内部生成，直接改可能污染其复用缓冲
   const out = init.slice();
   walkBoxes(out, 0, out.length, (type, payload, boxEnd) => {
     if (type !== 'moov') return;
+    let movieTimescale = MOVIE_TIMESCALE;
+    // Read the movie clock before patching tkhd, independent of box order.
+    walkBoxes(out, payload, boxEnd, (type, start, end) => {
+      if (type === 'mvhd' && out[start] === 0 && start + 20 <= end) {
+        movieTimescale = readU32(out, start + 12) || MOVIE_TIMESCALE;
+      }
+    });
+    const patchMediaHeader = (start: number, end: number) => {
+      if (out[start] !== 0 || start + 20 > end) return;
+      const timescale = readU32(out, start + 12);
+      if (timescale > 0) writeU32(out, start + 16, ticksFor(timescale));
+    };
     walkBoxes(out, payload, boxEnd, (childType, childPayload, childEnd) => {
       if (childType === 'mvhd') {
-        // payload: version(1) flags(3) creation(4) modification(4) timescale(4) duration(4)
-        if (out[childPayload] === 0 && childPayload + 20 <= childEnd) {
-          writeU32(out, childPayload + 16, ticks);
-        }
+        patchMediaHeader(childPayload, childEnd);
         return;
       }
       if (childType !== 'trak') return;
       walkBoxes(out, childPayload, childEnd, (leafType, leafPayload, leafEnd) => {
+        if (leafType === 'mdia') {
+          walkBoxes(out, leafPayload, leafEnd, (type, start, end) => {
+            if (type === 'mdhd') patchMediaHeader(start, end);
+          });
+          return;
+        }
         if (leafType !== 'tkhd') return;
         // payload: version(1) flags(3) creation(4) modification(4) track_ID(4) reserved(4) duration(4)
         if (out[leafPayload] === 0 && leafPayload + 24 <= leafEnd) {
-          writeU32(out, leafPayload + 20, ticks);
+          writeU32(out, leafPayload + 20, ticksFor(movieTimescale));
         }
       });
     });
