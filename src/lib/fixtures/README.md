@@ -19,3 +19,9 @@ ffmpeg -f lavfi -i testsrc2=size=64x48:rate=10 \
 
 Copy each `segment-N.ts` to `download-offset-N.ts.bin`. The tests use the
 checked-in bytes and do not require FFmpeg, a browser, or network access.
+
+`download-44100.ts.bin` uses the same synthetic sources and encoding settings,
+with `sample_rate=44100` and `-f mpegts download-44100.ts.bin` instead of the HLS
+output options. Its unpatched AAC `mdhd` duration is `0xffffffff / 44100`, or
+27 hours, 3 minutes, 11.55 seconds. It reproduces the metadata duration that the
+previous timestamp-only regression tests missed.
