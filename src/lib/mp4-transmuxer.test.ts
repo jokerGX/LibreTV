@@ -75,131 +75,112 @@ const offsetSegments = [0, 1, 2].map((i) =>
   new Uint8Array(readFileSync(new URL(`./fixtures/download-offset-${i}.ts.bin`, import.meta.url)))
 );
 
-/** Read actual fragment decode times, rather than trusting the moov duration. */
-function fragmentTimes(data: Uint8Array): Map<number, number[]> {
-  const tracks = new Map<number, number[]>();
-  function boxes(start: number, end: number, visit: (type: string, payload: number, end: number) => void) {
-    for (let pos = start; pos + 8 <= end;) {
-      const size = readU32(data, pos);
-      if (size < 8 || pos + size > end) throw new Error('Invalid MP4 box');
-      const type = String.fromCharCode(...data.subarray(pos + 4, pos + 8));
-      visit(type, pos + 8, pos + size);
-      pos += size;
-    }
-  }
-  boxes(0, data.length, (type, start, end) => {
-    if (type !== 'moof') return;
-    boxes(start, end, (type, start, end) => {
-      if (type !== 'traf') return;
-      let track = 0;
-      let time: number | undefined;
-      boxes(start, end, (type, payload) => {
-        if (type === 'tfhd') track = readU32(data, payload + 4);
-        if (type === 'tfdt') {
-          time = data[payload] === 1
-            ? readU32(data, payload + 4) * 2 ** 32 + readU32(data, payload + 8)
-            : readU32(data, payload + 4);
-        }
-      });
-      if (track && time !== undefined) tracks.set(track, [...(tracks.get(track) ?? []), time]);
-    });
-  });
-  return tracks;
-}
-
-function expectZeroBasedTimeline(data: Uint8Array) {
-  const tracks = fragmentTimes(data);
-  expect(tracks.size).toBe(2); // Both video and audio survived transmuxing.
-  for (const times of tracks.values()) {
-    expect(times[0]).toBe(0);
-    expect(times.every((time) => time >= 0 && time < 3 * 90_000)).toBe(true);
-    // Every subsequent fragment must advance, not restart at zero after each flush.
-    for (let i = 1; i < times.length; i++) expect(times[i]).toBeGreaterThan(times[i - 1]);
-  }
-}
-
-/** Inspect every init duration, including mdhd which Apple's player may use. */
-function durationHeaders(data: Uint8Array) {
-  const headers: { type: string; timescale: number; duration: number }[] = [];
-  let movieScale = 90_000;
+/** Independently walk the finalized file and inspect its static sample tables. */
+function inspect(data: Uint8Array) {
+  const found = new Map<string, { payload: number; end: number }[]>();
   function walk(start: number, end: number) {
     for (let pos = start; pos + 8 <= end;) {
       const size = readU32(data, pos);
       if (size < 8 || pos + size > end) throw new Error('Invalid MP4 box');
       const type = String.fromCharCode(...data.subarray(pos + 4, pos + 8));
       const payload = pos + 8;
-      if (['moov', 'trak', 'mdia'].includes(type)) walk(payload, pos + size);
-      if (type === 'mvhd' || type === 'mdhd') {
-        const timescale = readU32(data, payload + 12);
-        if (type === 'mvhd') movieScale = timescale;
-        headers.push({ type, timescale, duration: readU32(data, payload + 16) });
-      }
-      if (type === 'tkhd') {
-        headers.push({ type, timescale: movieScale, duration: readU32(data, payload + 20) });
-      }
+      found.set(type, [...(found.get(type) ?? []), { payload, end: pos + size }]);
+      if (['moov', 'trak', 'mdia', 'minf', 'stbl', 'edts'].includes(type)) walk(payload, pos + size);
       pos += size;
     }
   }
   walk(0, data.length);
-  return headers;
+  return found;
 }
 
-function expectCompleteDurations(data: Uint8Array, seconds: number, audioScale: number) {
-  const headers = durationHeaders(data);
-  expect(headers.map((h) => h.type).sort()).toEqual(['mdhd', 'mdhd', 'mvhd', 'tkhd', 'tkhd']);
-  expect(headers.find((h) => h.type === 'mdhd' && h.timescale === audioScale)).toBeDefined();
-  for (const header of headers) {
-    expect(header.duration).not.toBe(0xffffffff);
-    expect(header.duration / header.timescale).toBe(seconds);
+function expectStandaloneFile(data: Uint8Array) {
+  const tables = inspect(data);
+  expect(tables.has('moof')).toBe(false);
+  expect(tables.has('mvex')).toBe(false);
+  expect(tables.get('trak')).toHaveLength(2);
+  const movie = tables.get('mvhd')![0];
+  const duration = readU32(data, movie.payload + 16) / readU32(data, movie.payload + 12);
+  expect(duration).toBeGreaterThanOrEqual(3);
+  expect(duration).toBeLessThan(3.15);
+  for (const header of tables.get('mdhd')!) {
+    const duration = readU32(data, header.payload + 16) / readU32(data, header.payload + 12);
+    expect(duration).toBeGreaterThan(2.9);
+    expect(duration).toBeLessThan(3.15);
+  }
+  for (const sampleSizes of tables.get('stsz')!) {
+    expect(readU32(data, sampleSizes.payload + 8)).toBeGreaterThan(20);
+  }
+  for (const index of tables.get('co64')!) {
+    const count = readU32(data, index.payload + 4);
+    expect(count).toBeGreaterThan(0);
+    for (let i = 0; i < count; i++) {
+      const offset = readU32(data, index.payload + 8 + i * 8) * 2 ** 32 + readU32(data, index.payload + 12 + i * 8);
+      expect(tables.get('mdat')!.some((b) => offset === b.payload)).toBe(true);
+    }
   }
 }
 
-describe('MP4 download timeline', () => {
-  it('normalizes long source timestamps and preserves continuity across streaming flushes', async () => {
+describe('standalone MP4 download', () => {
+  it('writes media before finish, then a complete sample index with no playback fragments', async () => {
     const chunks: Uint8Array[] = [];
     let closed = false;
     const writer = {
-      async write(data: Uint8Array) { chunks.push(data); },
+      async write(data: Uint8Array) { chunks.push(data.slice()); },
       async close() { closed = true; },
     };
-    const transmuxer = new StreamingTransmuxer(writer, { durationSeconds: 3 });
+    const transmuxer = new StreamingTransmuxer(writer);
     for (const segment of offsetSegments) await transmuxer.pushAndTransmux(segment);
+    const beforeFinish = new Uint8Array(await new Blob(chunks as Uint8Array<ArrayBuffer>[]).arrayBuffer());
+    expect(inspect(beforeFinish).has('mdat')).toBe(true);
+    expect(inspect(beforeFinish).has('moov')).toBe(false);
+    expect(closed).toBe(false);
     await transmuxer.finish();
     expect(closed).toBe(true);
-    const data = new Uint8Array(await new Blob(chunks.map((c) => c.buffer as ArrayBuffer)).arrayBuffer());
-    expectZeroBasedTimeline(data);
-    expectCompleteDurations(data, 3, 48_000);
-    for (const times of fragmentTimes(data).values()) expect(times.length).toBeGreaterThanOrEqual(3);
+    const data = new Uint8Array(await new Blob(chunks as Uint8Array<ArrayBuffer>[]).arrayBuffer());
+    expectStandaloneFile(data);
+    expect(transmuxer.getSegmentCount()).toBe(3);
   });
 
-  it('normalizes long source timestamps in the batch export too', async () => {
-    const blob = transmuxTSToMP4(offsetSegments, 3);
+  it('builds valid byte offsets in batch exports even when media chunks are subarray views', async () => {
+    const blob = transmuxTSToMP4(offsetSegments);
     const data = new Uint8Array(await blob.arrayBuffer());
-    expectZeroBasedTimeline(data);
-    expectCompleteDurations(data, 3, 48_000);
+    expectStandaloneFile(data);
   });
 
-  it('reproduces the 27-hour audio header and patches it using its own 44100 Hz clock', async () => {
+  it('derives 44100 Hz audio duration from its sample table, without the 27-hour sentinel', async () => {
     const segment = new Uint8Array(readFileSync(new URL('./fixtures/download-44100.ts.bin', import.meta.url)));
-    const raw = new Uint8Array(await transmuxTSToMP4([segment]).arrayBuffer());
-    const audioHeader = durationHeaders(raw).find((h) => h.type === 'mdhd' && h.timescale === 44_100)!;
-    expect(audioHeader.duration).toBe(0xffffffff);
-    expect(audioHeader.duration / audioHeader.timescale).toBeCloseTo(27 * 3600 + 3 * 60 + 11.55, 1);
-    const fixed = new Uint8Array(await transmuxTSToMP4([segment], 3).arrayBuffer());
-    expectCompleteDurations(fixed, 3, 44_100);
-    // AAC priming can leave a small relative audio offset; it must not become hours.
-    const starts = [...fragmentTimes(fixed).values()].map((times) => times[0]);
-    expect(Math.min(...starts)).toBe(0);
-    expect(starts.every((time) => time >= 0 && time < 9000)).toBe(true);
+    const data = new Uint8Array(await transmuxTSToMP4([segment]).arrayBuffer());
+    expectStandaloneFile(data);
+    expect(inspect(data).get('mdhd')!.some((b) => readU32(data, b.payload + 12) === 44100)).toBe(true);
   });
 
-  it('uses the movie clock for tkhd and each media clock for mdhd', () => {
-    const init = box('moov',
-      box('mvhd', fullBox([0, 0, 1000, 0xffffffff])),
-      box('trak', box('tkhd', fullBox([0, 0, 1, 0, 0xffffffff])),
-        box('mdia', box('mdhd', fullBox([0, 0, 90000, 0xffffffff])))),
-      box('trak', box('tkhd', fullBox([0, 0, 2, 0, 0xffffffff])),
-        box('mdia', box('mdhd', fullBox([0, 0, 44100, 0xffffffff])))));
-    expectCompleteDurations(patchInitSegmentDuration(init, 2730), 2730, 44100);
+  it('preserves B-frame presentation offsets and indexes keyframes', async () => {
+    const segment = new Uint8Array(readFileSync(new URL('./fixtures/download-bframes.ts.bin', import.meta.url)));
+    const data = new Uint8Array(await transmuxTSToMP4([segment]).arrayBuffer());
+    expectStandaloneFile(data);
+    const tables = inspect(data);
+    expect(tables.get('ctts')).toHaveLength(1);
+    const ctts = tables.get('ctts')![0];
+    expect(readU32(data, ctts.payload + 4)).toBeGreaterThan(1);
+    expect(tables.get('stss')).toHaveLength(1);
+    expect(readU32(data, tables.get('stss')![0].payload + 4)).toBe(3);
+  });
+
+  it('rejects a backwards source clock instead of exporting overlapping timestamps', async () => {
+    const writer = { async write() {}, async close() {} };
+    const transmuxer = new StreamingTransmuxer(writer);
+    for (const segment of offsetSegments) await transmuxer.pushAndTransmux(segment);
+    await expect(transmuxer.pushAndTransmux(offsetSegments[0])).rejects.toThrow('时间轴');
+  });
+
+  it('does not close a file as successful when media writing fails', async () => {
+    let closed = false;
+    const transmuxer = new StreamingTransmuxer({
+      async write() { throw new Error('disk full'); },
+      async close() { closed = true; },
+    });
+    await expect(transmuxer.pushAndTransmux(offsetSegments[0])).rejects.toThrow('disk full');
+    await expect(transmuxer.finish()).rejects.toThrow('disk full');
+    expect(closed).toBe(false);
   });
 });

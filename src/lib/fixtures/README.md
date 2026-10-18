@@ -25,3 +25,8 @@ with `sample_rate=44100` and `-f mpegts download-44100.ts.bin` instead of the HL
 output options. Its unpatched AAC `mdhd` duration is `0xffffffff / 44100`, or
 27 hours, 3 minutes, 11.55 seconds. It reproduces the metadata duration that the
 previous timestamp-only regression tests missed.
+
+`download-bframes.ts.bin` exercises frame reordering and the static MP4 `ctts`
+and `stss` indexes. It is generated from testsrc2 (96x64 at 24 fps) and a 44100 Hz
+sine wave, for 3 seconds, with libx264 `-preset medium -g 24 -bf 2`, AAC 32k,
+`-output_ts_offset 95000 -f mpegts`. No third-party video is included.

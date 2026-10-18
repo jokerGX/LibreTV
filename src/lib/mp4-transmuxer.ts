@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- mux.js 无完整类型定义 */
 // @ts-expect-error - mux.js 没有完整的 TypeScript 类型定义
 import muxjs from 'mux.js';
+import { Mp4FileAssembler } from './mp4-file';
 
 /**
  * MP4 转封装（基于 mux.js）。
  *
  * HLS 的 TS 分片对浏览器不可直接播放，下载产物要做 TS→fMP4 转封装：
- * mux.js 的 Transmuxer 每次 flush 产出一段 fMP4（首次含 initSegment），
- * 因此可以边下载边流式写入文件，不需要把整集聚合在内存里。
+ * mux.js 每次 flush 产出 fMP4。下载时将它们写成带完整样本索引的常规 MP4，
+ * 媒体数据逐片写出，最后补 moov；无需把整集聚合在内存里。
  */
 
 /** mux.js 写 mvhd 时用的 movie timescale（90kHz） */
@@ -100,51 +101,43 @@ export function patchInitSegmentDuration(init: Uint8Array, seconds: number): Uin
   return out;
 }
 
-export interface StreamingTransmuxerOptions {
-  /** 整集真实时长（秒）；用于回填 moov 时长，缺省则保留「未知时长」哨兵值 */
-  durationSeconds?: number;
+interface Mp4Writer {
+  write(data: Uint8Array): Promise<void>;
+  close?(): Promise<void>;
+  abort?(): Promise<void>;
 }
 
 export class StreamingTransmuxer {
   private transmuxer: any;
-  private writer?: { write(data: Uint8Array): Promise<void>; close?(): Promise<void>; abort?(): Promise<void> };
-  private initWritten = false;
+  private writer?: Mp4Writer;
+  private file = new Mp4FileAssembler();
   private segmentCount = 0;
   private writeChain: Promise<void> = Promise.resolve();
   private writeError: Error | undefined;
-  private durationSeconds: number | undefined;
 
   constructor(
-    writer?: { write(data: Uint8Array): Promise<void> },
-    options?: StreamingTransmuxerOptions
+    writer?: Mp4Writer
   ) {
     this.writer = writer;
-    this.durationSeconds = options?.durationSeconds;
     // Downloads are standalone files: start at zero instead of keeping a source
     // clock that may begin many hours in. Reuse this instance across flushes
     // so later fragments keep their relative timing and audio/video alignment.
     this.transmuxer = new muxjs.mp4.Transmuxer({ keepOriginalTimestamps: false });
     this.transmuxer.on('data', (segment: any) => {
-      const media = new Uint8Array(segment.data);
-      const data: Uint8Array = this.initWritten
-        ? media
-        : concat(
-            this.durationSeconds
-              ? patchInitSegmentDuration(new Uint8Array(segment.initSegment), this.durationSeconds)
-              : new Uint8Array(segment.initSegment),
-            media
-          );
-      this.initWritten = true;
       this.segmentCount += 1;
       // 写入串行化：写失败暂存，下一次 pushAndTransmux 时抛出
-      this.writeChain = this.writeChain.then(() => this.writer?.write(data));
+      this.writeChain = this.writeChain.then(async () => {
+        for (const data of this.file.append(new Uint8Array(segment.initSegment), new Uint8Array(segment.data))) {
+          await this.writer?.write(data);
+        }
+      });
       this.writeChain.catch((err) => {
         this.writeError = err instanceof Error ? err : new Error(String(err));
       });
     });
   }
 
-  setWriter(writer: { write(data: Uint8Array): Promise<void>; close?(): Promise<void>; abort?(): Promise<void> }): void {
+  setWriter(writer: Mp4Writer): void {
     this.writer = writer;
   }
 
@@ -168,6 +161,7 @@ export class StreamingTransmuxer {
   async finish(): Promise<void> {
     this.transmuxer.flush();
     await this.writeChain;
+    await this.writer?.write(this.file.finish());
     await this.writer?.close?.();
   }
 
@@ -178,27 +172,16 @@ export class StreamingTransmuxer {
   }
 }
 
-function concat(a: Uint8Array, b: Uint8Array): Uint8Array {
-  const out = new Uint8Array(a.length + b.length);
-  out.set(a, 0);
-  out.set(b, a.length);
-  return out;
-}
-
 /** 批量转封装：push 全部分片后一次 flush，聚合为 MP4 Blob（内存型，适合小体量） */
-export function transmuxTSToMP4(tsSegments: Uint8Array[], duration?: number): Blob {
+export function transmuxTSToMP4(tsSegments: Uint8Array[]): Blob {
   const transmuxer = new muxjs.mp4.Transmuxer({ keepOriginalTimestamps: false });
+  const file = new Mp4FileAssembler();
   const chunks: Uint8Array[] = [];
-  let initWritten = false;
   transmuxer.on('data', (segment: any) => {
-    if (!initWritten) {
-      const init = new Uint8Array(segment.initSegment);
-      chunks.push(duration ? patchInitSegmentDuration(init, duration) : init);
-      initWritten = true;
-    }
-    chunks.push(new Uint8Array(segment.data));
+    for (const data of file.append(new Uint8Array(segment.initSegment), new Uint8Array(segment.data))) chunks.push(data);
   });
   for (const ts of tsSegments) transmuxer.push(ts);
   transmuxer.flush();
-  return new Blob(chunks.map((c) => c.buffer as ArrayBuffer), { type: 'video/mp4' });
+  chunks.push(file.finish());
+  return new Blob(chunks as Uint8Array<ArrayBuffer>[], { type: 'video/mp4' });
 }
